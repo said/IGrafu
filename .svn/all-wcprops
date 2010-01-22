@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svnroot/igrafu/!svn/ver/37/trunk
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svnroot/igrafu/!svn/ver/30/trunk/.classpath
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svnroot/igrafu/!svn/ver/30/trunk/.project
+END
+build.xml
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svnroot/igrafu/!svn/ver/31/trunk/build.xml
+END

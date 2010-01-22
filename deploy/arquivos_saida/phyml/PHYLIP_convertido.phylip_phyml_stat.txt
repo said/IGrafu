@@ -1,0 +1,29 @@
+
+- PHYML v2.4.5 -
+
+. Sequence file : [/home/gilmar/workspace/IGRAFU_14-12/deploy//arquivos_saida/phyml//PHYLIP_convertido.phylip]
+
+. Model of nucleotides substitution : F84
+
+. Initial tree : [BIONJ]
+
+. Number of taxa : 10
+
+
+. Likelihood : loglk = -5411.45205
+
+. Discrete gamma model : No
+
+. Transition/transversion ratio : 4.000
+
+. Nucleotides frequencies :
+
+  - f(A)= 0.31959
+  - f(C)= 0.27237
+  - f(G)= 0.14605
+  - f(T)= 0.26199
+
+. Time used 0h0m2s
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

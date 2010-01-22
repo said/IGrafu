@@ -1,0 +1,70 @@
+<project name="IGRAFU" basedir="." default="main">
+	
+	<!--Properties-->
+    <property name="build.ver"    value="2.1.1"/> 
+    <property name="src.dir"      value="src"/>
+    <property name="lib.dir"      value="lib"/>
+    <property name="build.dir"    value="build"/>
+	<property name="deploy.dir"    value="deploy"/>
+	<property name="resource.dir" value="resource"/>
+	<!-- E que ninguem mais tenha a brilhante ideia de colocar as figuas
+	num pacote proprio!!!-->
+	<property name="resource.img.dir" value="${resource.dir}/br"/>
+	<property name="cv.src.dir"   value="${src.dir}/"/>
+	<property name="cv.build.dir" value="${build.dir}/"/>
+    <property name="cv.classes.dir"  value="${cv.build.dir}/classes"/>
+    <property name="cv.jar.dir"      value="${cv.build.dir}/jar"/>
+    <property name="main-class"   value="br.uesc.computacao.estagio.aplicacao.controlador.ControladorIGrafu"/>
+	
+    <!--Paths-->
+    <path id="classpath">
+      <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+	
+
+	
+	<!--Targets -->
+	<target name="clean">
+        <delete dir="${cv.build.dir}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${cv.classes.dir}"/>
+        <javac srcdir="${cv.src.dir}" destdir="${cv.classes.dir}" classpathref="classpath" encoding="UTF-8"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${cv.jar.dir}"/>
+        <jar destfile="${cv.jar.dir}/${ant.project.name}.jar" basedir="${cv.classes.dir}" update="true">
+        	<fileset dir="${resource.dir}"/>
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+        </jar>
+    </target>
+	<target name="deploy" depends="jar">
+		<copy file="${cv.jar.dir}/${ant.project.name}.jar" todir="${deploy.dir}"/>
+	</target>
+
+    <target name="run" depends="deploy">
+        <java fork="true" classname="${main-class}">
+        	<classpath>
+        		<path refid="classpath"/>
+        		<path location="${deploy.dir}/${ant.project.name}.jar"/>
+        	</classpath>
+        </java>
+    </target>
+	
+	<target name="tar-all" depends="deploy,clean">
+	        <tar destfile="../IGRAFU_src_${build.ver}.tar.gz" basedir="." compression="gzip" longfile="gnu"/>
+	</target>
+	
+	<target name="tar-binary">
+		        <tar destfile="../IGRAFU_bin_${build.ver}.tar.gz" basedir="${deploy.dir}" compression="gzip" longfile="gnu"/>
+	</target>
+
+    <target name="clean-build" depends="clean,jar"/>
+
+    <target name="main" depends="clean,run"/>
+
+</project>

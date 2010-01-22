@@ -1,0 +1,193 @@
+package br.uesc.computacao.estagio.aplicacao.controlador;
+
+import java.io.File;
+
+import javax.swing.JOptionPane;
+
+import br.uesc.computacao.estagio.aplicacao.util.ManipulaArquivo;
+
+/**
+ * Classe que gerencia os parametros escolhidos na tela DiGrafu
+ * @author Zilton José Maciel Cordeiro Junior - Orientadora: Martha Ximena Torres Delgado
+ */
+
+
+public class GeraParametrosDIGRAFU {
+
+
+	/**
+     * Este metodo trata os dados da aba - Sequencia para poder gerar o arquivo que sera passado ao DiGrafu
+     * Caso alguma opcao esteja errada ou sem preenchimento o tipo de retorno e um byte = 0, assim indica que teve erro e o metodo e
+     * Abortado
+     * Caso o retorno seja um byte = 1, indica que o metodo foi executado com sucesso, todos os dados estavam corretos
+     *
+     * @return byte
+     */
+    //Tratando dados para gerar arquivo
+    public static boolean trataAbaSequecia() {
+    	//Limpa a variável
+    	ControladorDIGRAFU.guardaArquivo = "";
+
+    	if(ControladorModoManualBootstrap.bootstrap == false) {
+//    		Arquivo entrada
+            if(ControladorIGrafu.digrafu.getJTextFieldArquivoSequencia().getText().length() == 0) {
+                JOptionPane.showMessageDialog(null, "Informe o nome do arquivo da seqüência", "Seqüência", JOptionPane.INFORMATION_MESSAGE);
+                return false;
+            }
+            else {
+            	ControladorDIGRAFU.guardaNomeSequencia = "INPUT " + ControladorIGrafu.digrafu.getJTextFieldArquivoSequencia().getText();
+            }
+
+            //Arquivo de saida
+
+            ControladorDIGRAFU.guardaArquivo += " " + "OUTPUT " +  caminho() + "arquivos_saida/digrafu/" + "out_" + ControladorModoExecucao.arquivoSaida;
+
+            //Tempo
+            if(!(ControladorIGrafu.digrafu.getJRadioButtonTempoExatidao().isSelected()) && !(ControladorIGrafu.digrafu.getJRadioButtonTempoExecucao().isSelected())) {
+                JOptionPane.showMessageDialog(null, "Informe o tempo", "Exatidão/Execução", JOptionPane.INFORMATION_MESSAGE);
+                return false;
+            }
+            else {
+                if(ControladorIGrafu.digrafu.getJRadioButtonTempoExatidao().isSelected() && !(ControladorIGrafu.digrafu.getJRadioButtonTempoExecucao().isSelected())) {
+                	ControladorDIGRAFU.guardaArquivo += " " + "PREFERENCE " + "a";
+                }
+                if(ControladorIGrafu.digrafu.getJRadioButtonTempoExatidao().isSelected() && !(ControladorIGrafu.digrafu.getJRadioButtonTempoExecucao().isSelected())) {
+                	ControladorDIGRAFU.guardaArquivo += " " + "PREFERENCE " + "t";
+                }
+                if(ControladorIGrafu.digrafu.getJRadioButtonTempoExatidao().isSelected() && ControladorIGrafu.digrafu.getJRadioButtonTempoExecucao().isSelected()) {
+                	ControladorDIGRAFU.guardaArquivo += " " + "PREFERENCE " + "ta";
+                }
+            }
+            //Tipo de dado DND/AA
+            if(!(ControladorIGrafu.digrafu.getJRadioButtonTipoDadoDNA().isSelected()) && !(ControladorIGrafu.digrafu.getJRadioButtonTipoDadoAA().isSelected())) {
+                JOptionPane.showMessageDialog(null, "Informe o tipo de dado", "DNA/AA", JOptionPane.INFORMATION_MESSAGE);
+                return false;
+            }
+            else {
+                if(ControladorIGrafu.digrafu.getJRadioButtonTipoDadoDNA().isSelected())
+                	ControladorDIGRAFU.guardaArquivo += " " + "TYPE dna";
+                if(ControladorIGrafu.digrafu.getJRadioButtonTipoDadoAA().isSelected())
+                	ControladorDIGRAFU.guardaArquivo += " " + "TYPE prot";
+            }
+    	}
+
+        return true;
+    }
+
+    /**
+     * Este metodo trata os dados da aba Modelo - DNA para poder gerar o arquivo que sera passado ao DiGrafu
+     * Caso alguma opcao esteja errada ou sem preenchimento o tipo de retorno e um byte = 0, assim indica que teve erro e o metodo e
+     * Abortado
+     * Caso o retorno seja um byte = 1, indica que o metodo foi executado com sucesso, todos os dados estavam corretos
+     *
+     * @return byte
+     */
+    public static boolean trataAbaModeloDNA() {
+            //Caso retorne 0 nesta condicao eh por que a aba Modelo - DNA nao esta selecionada
+            if(!(ControladorIGrafu.digrafu.getJRadioButtonTipoDadoDNA().isSelected())) {
+                return false;
+            }
+            //Caso esteja selecionada
+            else {
+                //Nesta condicao o radioButtonSequenciaDNA ja era pra esta selecionado, porem por garantia eh feita a verificacao
+                if(ControladorIGrafu.digrafu.getJRadioButtonTipoDadoDNA().isSelected()) {
+                    //Verifica se algum modelo esta selecionado
+                    if(((ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloLogDet().isSelected()) || (ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloJC69().isSelected()) ||
+                        (ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloKimura().isSelected()) || (ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloF84().isSelected()))) {
+                            //LogDet
+                                if(ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloLogDet().isSelected()) {
+                                	ControladorDIGRAFU.guardaArquivo += " " + "MODEL logdet";
+                                    if(ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoLogDet().isSelected()) {
+                                    	ControladorDIGRAFU.guardaArquivo += " " + "WEIGHT n";
+                                    }
+                                    else {
+                                    	ControladorDIGRAFU.guardaArquivo += " " + "WEIGHT " + ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosLogDet().getText();
+                                    }
+                                }
+                            //Kimura
+                                if(ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloKimura().isSelected()) {
+                                	ControladorDIGRAFU.guardaArquivo += " " + "MODEL kimura";
+                                	ControladorDIGRAFU.guardaArquivo += " " + "ISITE " + ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesKimura().getText();
+                                	ControladorDIGRAFU.guardaArquivo += " " + "ALPHA " + ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAKimura().getText();
+
+                                	ControladorDIGRAFU.guardaArquivo += " " + "RATIO " + ControladorIGrafu.digrafu.getJNumberFloatFieldRelacaoKimura().getText();
+                                    if(ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoKimura().isSelected()) {
+                                    	ControladorDIGRAFU.guardaArquivo += " " + "WEIGHT n";
+                                    }
+                                    else {
+                                    	ControladorDIGRAFU.guardaArquivo += " " + "WEIGHT " + ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosKimura().getText();
+                                    }
+                                }
+                            //JC69
+                                if(ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloJC69().isSelected()) {
+                                	ControladorDIGRAFU.guardaArquivo += " " + "MODEL jc";
+                                	ControladorDIGRAFU.guardaArquivo += " " + "ISITE " + ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesJC69().getText();
+                                	ControladorDIGRAFU.guardaArquivo += " " + "ALPHA " + ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAJC69().getText();
+
+                                    if(ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoJC69().isSelected()) {
+                                    	ControladorDIGRAFU.guardaArquivo += " " + "WEIGHT n";
+                                    }
+                                    else {
+                                    	ControladorDIGRAFU.guardaArquivo += " " + "WEIGHT " + ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosJC69().getText();
+                                    }
+                                }
+                           //F84
+                                if(ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloF84().isSelected()) {
+                                	ControladorDIGRAFU.guardaArquivo += " " + "MODEL f84";
+                                	ControladorDIGRAFU.guardaArquivo += " " + "ISITE " + ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesF84().getText();
+                                	ControladorDIGRAFU.guardaArquivo += " " + "ALPHA " + ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAF84().getText();
+
+                                	ControladorDIGRAFU.guardaArquivo += " " + "RATIO " + ControladorIGrafu.digrafu.getJNumberFloatFieldRelacaoF84().getText();
+                                    if(ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoF84().isSelected()) {
+                                    	ControladorDIGRAFU.guardaArquivo += " " + "WEIGHT n";
+                                    }
+                                    else {
+                                    	ControladorDIGRAFU.guardaArquivo += " " + "WEIGHT " + ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosF84().getText();
+                                    }
+                                    if(ControladorIGrafu.digrafu.getJCheckBoxFrequenciasEmpiricasSim().isSelected()) {
+                                    	ControladorDIGRAFU.guardaArquivo += " " + "FREQUE y";
+                                    }
+                                    else {
+                                    	ControladorDIGRAFU.guardaArquivo += " " + "FREQUE " + ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesAF84().getText() + "," +
+                                        ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesCF84().getText() + "," + ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesGF84().getText() +
+                                        "," + ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesTF84().getText();
+                                    }
+                                }
+                }
+                    //Caso nenhum modelo esteja selecionado
+                    else {
+                        JOptionPane.showMessageDialog(null, "Informe o Modelo a ser utilizado",
+                        "Modelo", JOptionPane.INFORMATION_MESSAGE);
+                        return false;
+                    }
+                }
+            }
+
+        return true;
+    }
+
+
+    public static String caminho() {
+
+    	File file = new File( "pegaCaminho.txt" );
+
+    	String str = file.getAbsolutePath();
+
+    	ManipulaArquivo.deletaArquivo("pegaCaminho.txt");
+
+    	String aux = "";
+    	String caminho = "";
+
+    	for(int i = 1; i <= str.length(); i++) {
+
+    		if(str.substring(i - 1, i).equals("/")) {
+    			caminho = aux + "/";
+    		}
+
+    		aux = str.substring(0, i);
+    	}
+
+    	return caminho;
+    }
+
+}

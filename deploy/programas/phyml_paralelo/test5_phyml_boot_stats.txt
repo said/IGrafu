@@ -1,0 +1,16 @@
+. Sequence file : [test5]
+
+. Model of nucleotides substitution : JC69
+
+. Initial tree : [BIONJ]
+
+
+. Data	Nb of 	Likelihood	Discrete   	Proportion of	Transition/ 	Nucleotides frequencies               	
+  set	taxa	loglk     	gamma model	invariant    	transversion	f(A)      f(C)      f(G)      f(T)    	
+
+  #1	5   	-361.50390	No         	0.000    	1.000     	 0.25000   0.25000   0.25000   0.25000	
+
+  #2	5   	-370.72716	No         	0.000    	1.000     	 0.25000   0.25000   0.25000   0.25000	
+
+  #3	5   	-400.17031	No         	0.000    	1.000     	 0.25000   0.25000   0.25000   0.25000	
+

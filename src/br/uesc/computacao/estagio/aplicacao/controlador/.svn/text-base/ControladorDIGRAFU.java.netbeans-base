@@ -1,0 +1,820 @@
+package br.uesc.computacao.estagio.aplicacao.controlador;
+
+/**
+ * Classe controladora da tela DiGrafu
+ * @author Zilton José Maciel Cordeiro Junior - Orientadora: Martha Ximena Torres Delgado
+ * @version 2.0
+ */
+
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import br.uesc.computacao.estagio.aplicacao.util.ManipulaArquivo;
+import br.uesc.computacao.estagio.aplicacao.util.Navegar;
+import br.uesc.computacao.estagio.aplicacao.util.Processo;
+import br.uesc.computacao.estagio.aplicacao.util.Tradutor;
+import br.uesc.computacao.estagio.apresentacao.GUI.DIGRAFU;
+
+/**
+ * Classe que controla a tela DiGrafu
+ * @author Zilton José Maciel Cordeiro Junior - Orientadora: Martha Ximena Torres Delgado
+ */
+
+public class ControladorDIGRAFU implements ActionListener {
+
+	/*
+	 * Variaveis Globais
+	 */
+
+	public static Processo processo = null;
+
+	public static Navegar navegar = null;
+
+	public static ManipulaArquivo arquivo = null;
+
+	private ButtonGroup grupoBotoesSequenciaTipoDados = null;
+
+	private ButtonGroup grupoBotoesModelosSubstituicaoDNA = null;
+
+	private ButtonGroup grupoBotoesModelosSubstituicaoAA = null;
+
+	private ButtonGroup grupoBotoesConfiguracoes = null;
+
+	public static String ERRO = "Erro";
+	public static String ERRO1 = "Erro - Não foi possível abrir a tela anterior!";
+	public static String FECHAR = "Deseja sair do sistema?";
+	public static String SAIR = "Sair";
+	public static String CANCELAR = "Cancelar";
+
+	public static String guardaArquivo = "";
+
+	public static String guardaNomeSequencia = "";
+
+	public static boolean perfil = false;
+
+	public static String nomePerfil = "";
+
+	/*
+	 * Construtor
+	 */
+	public ControladorDIGRAFU() {
+		ControladorIGrafu.digrafu = new DIGRAFU();
+		init();
+		ControladorIGrafu.digrafu.setVisible(true);
+		System.gc();
+		ControladorIGrafu.digrafu.getJTabbedPaneModelosAA().setToolTipText("O tipo de dado selecionado é DNA.");
+		ControladorIGrafu.digrafu.repaint();
+
+
+	}
+
+	/*
+	 * Metodo de inicializacao de campos e variaveis
+	 */
+	private void init() {
+		ControladorIGrafu.digrafu.setResizable(false);
+
+		ControladorIGrafu.digrafu.getJRadioButtonTipoDadoAA().setEnabled(false);
+		inicializaGruposBotoes();
+
+		inicializaCampos();
+		inicializaGerencia();
+
+		if(ControladorIGrafu.modoManualBootstrap.getJRadioButtonModoManualBootstrapNao().isSelected()) {
+			if(ControladorIGrafu.modoExecucao != null){
+				if(ControladorIGrafu.modoExecucao.getJTextFieldArquivoSequencia().getText() != "") {
+					ControladorIGrafu.digrafu.getJTextFieldArquivoSequencia().setText(ControladorIGrafu.modoExecucao.getJTextFieldArquivoSequencia().getText());
+				}
+			}
+		}
+		else if(ControladorIGrafu.modoManualBootstrap.getJRadioButtonModoManualBootstrapSim().isSelected()) {
+			if(ControladorIGrafu.seqboot != null){
+				if(ControladorIGrafu.seqboot.getJTextFieldArquivoSequencia().getText() != "") {
+					ControladorIGrafu.digrafu.getJTextFieldArquivoSequencia().setText(ControladorIGrafu.seqboot.getJTextFieldArquivoSequencia().getText());
+					ControladorIGrafu.modoExecucao.getJTextFieldArquivoSequencia().setText(ControladorIGrafu.seqboot.getJTextFieldArquivoSequencia().getText());
+				}
+			}
+		}
+
+		ControladorIGrafu.digrafu.getJButtonExecutarSequencial().addActionListener(this);
+		ControladorIGrafu.digrafu.getJDialogModoExecucao().addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(WindowEvent evt) {
+				ControladorIGrafu.digrafu.setEnabled(true);
+				ControladorIGrafu.digrafu.setVisible(true);
+			}
+		});
+	}
+
+	/*
+	 * Metodo que adiciona eventos a botoes
+	 */
+	public void inicializaGerencia() {
+		ControladorIGrafu.digrafu.getJCheckBoxMenuItemPortugues().addActionListener(this);
+		ControladorIGrafu.digrafu.getJCheckBoxMenuItemIngles().addActionListener(this);
+
+		ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloKimura().addActionListener(this);
+		ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloF84().addActionListener(this);
+		ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloJC69().addActionListener(this);
+		ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloLogDet().addActionListener(this);
+
+		ControladorIGrafu.digrafu.getJCheckBoxFrequenciasEmpiricasSim().addActionListener(this);
+
+		ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoLogDet().addActionListener(this);
+		ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoF84().addActionListener(this);
+		ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoJC69().addActionListener(this);
+		ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoKimura().addActionListener(this);
+
+		ControladorIGrafu.digrafu.getJRadioButtonTipoDadoDNA().addActionListener(this);
+		ControladorIGrafu.digrafu.getJRadioButtonTipoDadoDNA().setSelected(true);
+
+		ControladorIGrafu.digrafu.getJRadioButtonTipoDadoAA().addActionListener(this);
+
+		ControladorIGrafu.digrafu.getJButtonEditor().addActionListener(this);
+
+		ControladorIGrafu.digrafu.getJButtonExecutar().addActionListener(this);
+		ControladorIGrafu.digrafu.getJButtonVoltar().addActionListener(this);
+
+		ControladorIGrafu.digrafu.getJButtonArquivoSequencia().addActionListener(this);
+
+		ControladorIGrafu.digrafu.getJButtonVisualizar().addActionListener(this);
+		ControladorIGrafu.digrafu.getJButtonExecutarSequencial().addActionListener(this);
+
+		ControladorIGrafu.digrafu.getJMenuItemFechar().addActionListener(this);
+		ControladorIGrafu.digrafu.getJMenuItemCriarPerfil().addActionListener(this);
+
+		ControladorIGrafu.digrafu.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		ControladorIGrafu.digrafu.addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(WindowEvent evt) {
+				Object[] opcoes = { SAIR, CANCELAR };
+				int opcao = JOptionPane.showOptionDialog(null, FECHAR,
+						"IGRAFU 2.0", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+						null, opcoes, opcoes[1]);
+
+				if (opcao == JOptionPane.YES_OPTION) {
+					System.exit(0);
+				}
+			}
+		});
+	}
+
+	/*
+	 * Metodo de inicializacao dos campos do DiGrafu
+	 */
+	public void inicializaCampos() {
+		//F84
+		ControladorIGrafu.digrafu.getJNumberFloatFieldRelacaoF84().setText("2.0");
+		ControladorIGrafu.digrafu.getJNumberFloatFieldRelacaoF84().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldRelacaoF84().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldRelacaoF84().setText("2.0");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldRelacaoF84().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldRelacaoF84().setText("2.0");
+
+            } });
+
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesAF84().setText("0.0");
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesAF84().setEnabled(false);
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesAF84().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesAF84().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesAF84().setText("0.0");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesAF84().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesAF84().setText("0.0");
+
+            } });
+
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesCF84().setText("0.0");
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesCF84().setEnabled(false);
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesCF84().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesCF84().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesCF84().setText("0.0");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesCF84().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesCF84().setText("0.0");
+
+            } });
+
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesGF84().setText("0.0");
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesGF84().setEnabled(false);
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesGF84().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesGF84().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesGF84().setText("0.0");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesGF84().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesGF84().setText("0.0");
+
+            } });
+
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesTF84().setText("0.0");
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesTF84().setEnabled(false);
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesTF84().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesTF84().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesTF84().setText("0.0");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesTF84().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesTF84().setText("0.0");
+
+            } });
+
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesF84().setText("0.0");
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesF84().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if((ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesF84().getValue() >= 1)) {
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesF84().setText("0.0");
+              }
+
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesF84().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesF84().setText("0.0");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesF84().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesF84().setText("0.0");
+
+            } });
+
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAF84().setText("1.0");
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAF84().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if((ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAF84().getValue() == 0)) {
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAF84().setText("1.0");
+              }
+
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAF84().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAF84().setText("1.0");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAF84().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAF84().setText("1.0");
+
+            } });
+
+		ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoF84().setSelected(true);
+		ControladorIGrafu.digrafu.getJCheckBoxFrequenciasEmpiricasSim().setSelected(true);
+
+		ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosF84().setEnabled(false);
+		ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosF84().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosF84().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosF84().setText("");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosF84().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosF84().setText("");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosF84().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosF84().setText("");
+
+            } });
+
+		//JC64
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesJC69().setText("0.0");
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesJC69().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if((ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesJC69().getValue() >= 1)) {
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesJC69().setText("0.0");
+              }
+
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesJC69().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesJC69().setText("0.0");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesJC69().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesJC69().setText("0.0");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesJC69().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesJC69().setText("0.0");
+
+            } });
+
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAJC69().setText("1.0");
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAJC69().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if((ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAJC69().getValue() == 0)) {
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAJC69().setText("1.0");
+              }
+
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAJC69().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAJC69().setText("1.0");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAJC69().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAJC69().setText("1.0");
+
+            } });
+
+		ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoJC69().setSelected(true);
+
+		ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosJC69().setEnabled(false);
+		ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosJC69().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosJC69().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosJC69().setText("");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosJC69().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosJC69().setText("");
+
+            } });
+
+		//Kimura
+		ControladorIGrafu.digrafu.getJNumberFloatFieldRelacaoKimura().setText("2.0");
+		ControladorIGrafu.digrafu.getJNumberFloatFieldRelacaoKimura().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldRelacaoKimura().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldRelacaoKimura().setText("2.0");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldRelacaoKimura().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldRelacaoKimura().setText("2.0");
+
+            } });
+
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesKimura().setText("0.0");
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesKimura().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if((ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesKimura().getValue() >= 1)) {
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesKimura().setText("0.0");
+              }
+
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesKimura().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesKimura().setText("0.0");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesKimura().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesKimura().setText("0.0");
+
+
+            } });
+
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAKimura().setText("1.0");
+		ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAKimura().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if((ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAKimura().getValue() == 0)) {
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAKimura().setText("1.0");
+              }
+
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAKimura().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAKimura().setText("1.0");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAKimura().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesALPHAKimura().setText("1.0");
+
+
+            } });
+
+		ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoKimura().setSelected(true);
+
+		ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosKimura().setEnabled(false);
+		ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosKimura().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosKimura().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosKimura().setText("");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosKimura().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosKimura().setText("");
+
+            } });
+
+		//LogDet
+		ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoLogDet().setSelected(true);
+
+		ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosLogDet().setEnabled(false);
+		ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosLogDet().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+              if(possuiVarios(ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosLogDet().getText(), "."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosLogDet().setText("");
+
+              if(ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosLogDet().getText().equals("."))
+            	  ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosLogDet().setText("");
+
+            } });
+	}
+
+	/**
+	 * Este metodo cria grupos de botoes, onde somente um pode ficar selecionado
+	 * em no menu configurações
+	 */
+	public void buttonGroupConfiguracoes() {
+		if (grupoBotoesConfiguracoes == null) {
+			grupoBotoesConfiguracoes = new ButtonGroup();
+			grupoBotoesConfiguracoes.add(ControladorIGrafu.digrafu.getJCheckBoxMenuItemPortugues());
+			grupoBotoesConfiguracoes.add(ControladorIGrafu.digrafu.getJCheckBoxMenuItemIngles());
+		}
+	}
+
+	/**
+	 * Este metodo cria grupos de botoes, onde somente um pode ficar selecionado
+	 * em cada grupo da aba Sequencia Os botoes sao da aba sequencia Os botoes
+	 * DNA e Aminoacido estao em um grupo Os botoes Intercalado e Sequencial
+	 * estao em outro grupo
+	 */
+	public void buttonGroupSequencia() {
+		if (grupoBotoesSequenciaTipoDados == null) {
+			grupoBotoesSequenciaTipoDados = new ButtonGroup();
+			grupoBotoesSequenciaTipoDados.add(ControladorIGrafu.digrafu.getJRadioButtonTipoDadoDNA());
+			grupoBotoesSequenciaTipoDados.add(ControladorIGrafu.digrafu.getJRadioButtonTipoDadoAA());
+		}
+	}
+
+	/**
+	 * Este metodo cria um grupo de botoes, onde somente um pode ficar
+	 * selecionado na aba DNA Este grupo serve para garantir que o usuario ira
+	 * escolher somente um tipo de modelo - DNA
+	 */
+	public void grupoBotoesModelosSubstituicaoDNA() {
+		if (grupoBotoesModelosSubstituicaoDNA == null) {
+			grupoBotoesModelosSubstituicaoDNA = new ButtonGroup();
+			grupoBotoesModelosSubstituicaoDNA.add(ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloJC69());
+			grupoBotoesModelosSubstituicaoDNA.add(ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloKimura());
+			grupoBotoesModelosSubstituicaoDNA.add(ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloLogDet());
+			grupoBotoesModelosSubstituicaoDNA.add(ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloF84());
+		}
+	}
+
+	/**
+	 * Selecionado na aba Aminoacido este grupo serve para garantir que o
+	 * usuario ira escolher somente um tipo de modelo - AA
+	 */
+	private void grupoBotoesModelosSubstituicaoAA() {
+		if (grupoBotoesModelosSubstituicaoAA == null) {
+			grupoBotoesModelosSubstituicaoAA = new ButtonGroup();
+			grupoBotoesModelosSubstituicaoAA.add(ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloDayhoff());
+			grupoBotoesModelosSubstituicaoAA.add(ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloJTT());
+			grupoBotoesModelosSubstituicaoAA.add(ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloMtREV());
+			grupoBotoesModelosSubstituicaoAA.add(ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloWAG());
+			grupoBotoesModelosSubstituicaoAA.add(ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloDCMut());
+		}
+	}
+
+	/**
+	 * Metodo utilizado para chamar os metodos geradores de grupos de botoes
+	 */
+	private void inicializaGruposBotoes() {
+		buttonGroupConfiguracoes();
+		buttonGroupSequencia();
+		grupoBotoesModelosSubstituicaoDNA();
+		grupoBotoesModelosSubstituicaoAA();
+	}
+
+
+
+	/**
+	 * Metodo utilizado para alterar o valor dos JLabel�s para HKY (Modelos -
+	 * DNA), informando assim que este eh o modelo selecionado.
+	 */
+	private void trocaModeloUtilizadoJLabelKimura() {
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoKimura.setText("Kimura");
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoF84.setText("Kimura");
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoLogDet.setText("Kimura");
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoJC69.setText("Kimura");
+	}
+
+	/**
+	 * Metodo utilizado para alterar o valor dos JLabel's para K2P (Modelos -
+	 * DNA), informando assim que este eh o modelo selecionado.
+	 */
+	private void trocaModeloUtilizadoJLabelLogDet() {
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoKimura.setText("LogDet");
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoF84.setText("LogDet");
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoLogDet.setText("LogDet");
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoJC69.setText("LogDet");
+	}
+
+	/**
+	 * Metodo utilizado para alterar o valor dos JLabel's para F84 (Modelos -
+	 * DNA), informando assim que este eh o modelo selecionado.
+	 */
+	private void trocaModeloUtilizadoJLabelF84() {
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoKimura.setText("F84");
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoF84.setText("F84");
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoLogDet.setText("F84");
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoJC69.setText("F84");
+	}
+
+	/**
+	 * Metodo utilizado para alterar o valor dos JLabel's para JC69 (Modelos -
+	 * DNA), informando assim que este eh o modelo selecionado.
+	 */
+	private void trocaModeloUtilizadoJLabelJC69() {
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoKimura.setText("JC69");
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoF84.setText("JC69");
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoLogDet.setText("JC69");
+		ControladorIGrafu.digrafu.jLabelModeloUtilizadoJC69.setText("JC69");
+	}
+
+	/*
+	 * Trata Eventos
+	 */
+	public void actionPerformed(ActionEvent e) {
+		// DNA
+		if (e.getSource() == ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloKimura()) {
+			trocaModeloUtilizadoJLabelKimura();
+		} else if (e.getSource() == ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloLogDet()) {
+			trocaModeloUtilizadoJLabelLogDet();
+		} else if (e.getSource() == ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloF84()) {
+			trocaModeloUtilizadoJLabelF84();
+		} else if (e.getSource() == ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloJC69()) {
+			trocaModeloUtilizadoJLabelJC69();
+		}
+
+		// DNA
+		else if (ControladorIGrafu.digrafu.getJPanelF84().isVisible()) {
+			if (e.getSource() == ControladorIGrafu.digrafu.getJCheckBoxFrequenciasEmpiricasSim()) {
+				if(!ControladorIGrafu.digrafu.getJCheckBoxFrequenciasEmpiricasSim().isSelected()) {
+					ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesAF84().setEnabled(true);
+					ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesCF84().setEnabled(true);
+					ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesGF84().setEnabled(true);
+					ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesTF84().setEnabled(true);
+				}
+				else {
+					ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesAF84().setEnabled(false);
+					ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesCF84().setEnabled(false);
+					ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesGF84().setEnabled(false);
+					ControladorIGrafu.digrafu.getJNumberFloatFieldFracaoSitiosInvariantesTF84().setEnabled(false);
+				}
+			}
+			if(e.getSource() == ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoF84()) {
+				if(!ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoF84().isSelected()) {
+					ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosF84().setEnabled(true);
+				}
+				else
+					ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosF84().setEnabled(false);
+			}
+		} else if (ControladorIGrafu.digrafu.getJPanelKimura().isVisible()) {
+
+			if(e.getSource() == ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoKimura()) {
+				if(!ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoKimura().isSelected()) {
+					ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosKimura().setEnabled(true);
+				}
+				else
+					ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosKimura().setEnabled(false);
+			}
+
+		} else if (ControladorIGrafu.digrafu.getJPanelJC69().isVisible()) {
+
+			if(e.getSource() == ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoJC69()) {
+				if(!ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoJC69().isSelected()) {
+					ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosJC69().setEnabled(true);
+				}
+				else
+					ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosJC69().setEnabled(false);
+			}
+
+		} else if (ControladorIGrafu.digrafu.getJPanelLogDet().isVisible()) {
+
+			if(e.getSource() == ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoLogDet()) {
+				if(!ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoLogDet().isSelected()) {
+					ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosLogDet().setEnabled(true);
+				}
+				else
+					ControladorIGrafu.digrafu.getJNumberFloatFieldPesosSitiosLogDet().setEnabled(false);
+			}
+
+		}
+
+		if (e.getSource() == ControladorIGrafu.digrafu.getJRadioButtonTipoDadoAA()) {
+			JOptionPane.showMessageDialog(null, "Aminoácido ainda não implementado!", "Implementação", JOptionPane.INFORMATION_MESSAGE);
+		}
+
+		if (e.getSource() == ControladorIGrafu.digrafu.getJButtonEditor()) {
+			new ControladorEditor();
+			ControladorEditor.traduzir();
+		}
+
+		if (e.getSource() == ControladorIGrafu.digrafu.getJButtonExecutar()) {
+			if (GeraParametrosDIGRAFU.trataAbaSequecia()) {
+				if ((GeraParametrosDIGRAFU.trataAbaModeloDNA())) {
+					ControladorIGrafu.digrafu.setEnabled(false);
+
+					Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+					ControladorIGrafu.digrafu.getJDialogModoExecucao().setLocation((dimension.width - ControladorIGrafu.digrafu.getX()) / 2, (dimension.height - ControladorIGrafu.digrafu.getY()) / 2);
+
+					ControladorIGrafu.digrafu.getJDialogModoExecucao().setEnabled(true);
+					ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(false);
+					ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(true);
+					ControladorIGrafu.digrafu.getJDialogModoExecucao().repaint();
+				}
+			}
+		}
+
+		if (e.getSource() == ControladorIGrafu.digrafu.getJButtonExecutarSequencial()) {
+			ControladorIGrafu.digrafu.getJDialogModoExecucao().removeNotify();
+			ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(false);
+			ControladorIGrafu.digrafu.setEnabled(true);
+			ControladorIGrafu.digrafu.setVisible(true);
+
+			ControladorIGrafu.digrafu.getJProgressBar().setVisible(true);
+			ControladorIGrafu.digrafu.getJProgressBar().setStringPainted(true);
+
+			Thread threadProgress = new Thread(new Runnable() {
+				public void run() {
+					ControladorIGrafu.digrafu.getJProgressBar().setString("Executando DiGrafu");
+					ControladorIGrafu.digrafu.getJProgressBar().setIndeterminate(true);
+				}
+			});
+			threadProgress.setDaemon(true);
+			threadProgress.start();
+
+			Thread threadDigrafu = new Thread(new Runnable() {
+				public void run() {
+					ControlaExecucao.executaDIGRAFU();
+					ControladorIGrafu.digrafu.getJProgressBar().setVisible(false);
+				}
+			});
+			threadDigrafu.start();
+		}
+
+
+		if (e.getSource() == ControladorIGrafu.digrafu.getJButtonArquivoSequencia()) {
+			if(Navegar.navegar == null) {
+				Navegar.navegar = new Navegar();
+				Navegar.navegar.abreArquivos();
+				if(Navegar.getReturnVal() == JFileChooser.APPROVE_OPTION) {
+					ControladorIGrafu.digrafu.getJTextFieldArquivoSequencia().setText(Navegar.file.getAbsolutePath());
+					ControladorModoExecucao.arquivoSaida = "" + Navegar.file.getName();
+				}
+			}
+			else {
+					Navegar.navegar.abreArquivos();
+					if(Navegar.getReturnVal() == JFileChooser.APPROVE_OPTION) {
+						ControladorIGrafu.digrafu.getJTextFieldArquivoSequencia().setText(Navegar.file.getAbsolutePath());
+						ControladorModoExecucao.arquivoSaida = "" + Navegar.file.getName();
+					}
+			}
+		}
+
+		if (e.getSource() == ControladorIGrafu.digrafu.getJButtonVisualizar()) {
+			Processo.processarHyperTreeDIGRAFU();
+		}
+
+
+		if(e.getSource() == ControladorIGrafu.digrafu.getJButtonVoltar()) {
+			try {
+				if(ControladorIGrafu.programas == null) {
+					ControladorIGrafu.digrafu.removeNotify();
+					new ControladorProgramas();
+					ControladorProgramas.traduzir();
+					ControladorIGrafu.programas.setVisible(false);
+					ControladorIGrafu.programas.setVisible(true);
+					ControladorIGrafu.programas.repaint();
+				}
+				else {
+					ControladorIGrafu.digrafu.removeNotify();
+					ControladorProgramas.traduzir();
+					ControladorIGrafu.programas.setVisible(false);
+					ControladorIGrafu.programas.setVisible(true);
+					ControladorIGrafu.programas.repaint();
+				}
+			}
+			catch (NullPointerException nullPointerException) {
+				JOptionPane.showMessageDialog(null, ERRO1, ERRO, JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		if(e.getSource() == ControladorIGrafu.digrafu.getJMenuItemCriarPerfil()) {
+			nomePerfil = JOptionPane.showInputDialog(Tradutor.traduzir("<html>Informe o nome do perfil.<br>O perfil será criado após a<br>próxima execução do Phyml.</html>","<html>Inform the name of the profile.<br>The profile will be created in the<br>next Phyml execution."));
+			perfil = true;
+		}
+
+		if(e.getSource() == ControladorIGrafu.digrafu.getJCheckBoxMenuItemIngles() || e.getSource() == ControladorIGrafu.digrafu.getJCheckBoxMenuItemPortugues()) {
+			if(ControladorIGrafu.digrafu.getJCheckBoxMenuItemIngles().isSelected()) {
+				Tradutor.setLinguage(1);
+				traduzir();
+			}
+			else {
+				Tradutor.setLinguage(0);
+				traduzir();
+			}
+		}
+
+		if(e.getSource() == ControladorIGrafu.digrafu.getJMenuItemFechar()) {
+			Object[] opcoes = { SAIR, CANCELAR };
+			int opcao = JOptionPane.showOptionDialog(null, FECHAR,
+					"IGRAFU 2.0", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+					null, opcoes, opcoes[1]);
+
+			if (opcao == JOptionPane.YES_OPTION) {
+				System.exit(0);
+			}
+		}
+	}
+
+	/*
+	 * Metodo de traducao Portugues/Ingles
+	 */
+	public static void traduzir() {
+		ControladorIGrafu.digrafu.getJRadioButtonTempoExatidao().setText(Tradutor.traduzir("Exatidão", "Accuracy"));
+		ControladorIGrafu.digrafu.getJRadioButtonTempoExecucao().setText(Tradutor.traduzir("Execução", "Execution"));
+
+		ControladorIGrafu.digrafu.getJTabbedPaneGeral().setTitleAt(0, Tradutor.traduzir("Seqüência","Sequence"));
+		ControladorIGrafu.digrafu.getJTabbedPaneGeral().setTitleAt(1, Tradutor.traduzir("Modelo - DNA","Model - DNA"));
+//		ControladorIGrafu.digrafu.getJTabbedPaneGeral().setTitleAt(2, Tradutor.traduzir("Modelo - AA","Model - AA"));
+
+		ControladorIGrafu.digrafu.getJLabelArquivoSequencia().setText(Tradutor.traduzir("Seqüências","Sequences"));
+		ControladorIGrafu.digrafu.getJButtonArquivoSequencia().setToolTipText(Tradutor.traduzir("Informe o local onde está o arquivo da seqüência.", "Inform the place where is the sequence file."));
+		ControladorIGrafu.digrafu.getJRadioButtonTipoDadoAA().setText(Tradutor.traduzir("Aminoácido","Amino-Acid"));
+		ControladorIGrafu.digrafu.getJLabelTipoDado().setText(Tradutor.traduzir("Tipo de dado", "Data type"));
+		ControladorIGrafu.digrafu.getJButtonExecutar().setText(Tradutor.traduzir("Executar","Execute"));
+		ControladorIGrafu.digrafu.getJButtonVoltar().setText(Tradutor.traduzir("Voltar","Back"));
+		ControladorIGrafu.digrafu.getJButtonEditor().setText(Tradutor.traduzir("Editor","Edition"));
+		ControladorIGrafu.digrafu.getJButtonVisualizar().setText(Tradutor.traduzir("Visualizar","Visualize"));
+		ControladorIGrafu.digrafu.getJLabelTempo().setText(Tradutor.traduzir("Tempo", "Time"));
+
+		ControladorIGrafu.digrafu.getJMenuArquivo().setText(Tradutor.traduzir("Arquivo", "File"));
+		ControladorIGrafu.digrafu.getJMenuConfiguracoes().setText(Tradutor.traduzir("Configurações", "Configurations"));
+		ControladorIGrafu.digrafu.getJMenuItemFechar().setText(Tradutor.traduzir("Sair", "Exit"));
+
+		nomePerfil = Tradutor.traduzir("<html>Informe o nome do perfil.<br>O perfil será criado após a<br>próxima execução do Phyml.</html>","<html>Inform the name of the profile.<br>The profile will be created in the<br>next Phyml execution.");
+
+
+		traduzirDNA();
+
+		ControladorIGrafu.digrafu.getJMenuIdiomas().setText(Tradutor.traduzir("Idioma","Language"));
+		ControladorIGrafu.digrafu.getJCheckBoxMenuItemIngles().setText(Tradutor.traduzir("Inglês","English"));
+		ControladorIGrafu.digrafu.getJCheckBoxMenuItemPortugues().setText(Tradutor.traduzir("Português","Portuguese"));
+		ControladorIGrafu.digrafu.getJMenuPerfil().setText(Tradutor.traduzir("Perfil","Profile"));
+		ControladorIGrafu.digrafu.getJMenuItemDeletarPerfil().setText(Tradutor.traduzir("Deletar Perfil","Delete profile"));
+		ControladorIGrafu.digrafu.getJMenuItemCriarPerfil().setText(Tradutor.traduzir("Criar Perfil","Create profile"));
+
+		FECHAR = Tradutor.traduzir("Deseja sair do sistema?", "Do you want to leave the system?");
+		SAIR = Tradutor.traduzir("Sair","Exit");
+		CANCELAR = Tradutor.traduzir("Cancelar","Cancel");
+		ERRO = Tradutor.traduzir("Erro","Error");
+		ERRO1 = Tradutor.traduzir("Não foi possível abrir a tela anterior!","Was not possible open the previous screen!");
+
+		ControladorIGrafu.digrafu.repaint();
+	}
+
+	/*
+	 * Metodo de traducao Portugues/Ingles
+	 */
+	public static void traduzirDNA() {
+		ControladorIGrafu.digrafu.getJTabbedPaneModelosAA().setToolTipText(Tradutor.traduzir("O tipo de dado selecionado é DNA.","The type of selected data is DNA."));
+
+		ControladorIGrafu.digrafu.getJLabelModeloSelecionadoLogDet().setText(Tradutor.traduzir("Modelo selecionado:", "Selected model:"));
+		ControladorIGrafu.digrafu.getJLabelModeloSelecionadoJC69().setText(Tradutor.traduzir("Modelo selecionado:", "Selected model:"));
+		ControladorIGrafu.digrafu.getJLabelModeloSelecionadoF84().setText(Tradutor.traduzir("Modelo selecionado:", "Selected model:"));
+		ControladorIGrafu.digrafu.getJLabelModeloSelecionadoKimura().setText(Tradutor.traduzir("Modelo selecionado:", "Selected model:"));
+
+		ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloF84().setText(Tradutor.traduzir("Utilizar o modelo F84", "Use F84 model"));
+		ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloKimura().setText(Tradutor.traduzir("Utilizar o modelo Kimura", "Use Kimura model"));
+		ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloLogDet().setText(Tradutor.traduzir("Utilizar o modelo LogDet", "Use LogDet model"));
+		ControladorIGrafu.digrafu.getJRadioButtonUtilizarModeloJC69().setText(Tradutor.traduzir("Utilizar o modelo JC69", "Use JC69 model"));
+
+		ControladorIGrafu.digrafu.getJLabelPesosSitiosF84().setText(Tradutor.traduzir("Pesos para sítios", "Weights for sites"));
+		ControladorIGrafu.digrafu.getJLabelPesosSitiosKimura().setText(Tradutor.traduzir("Pesos para sítios", "Weights for sites"));
+		ControladorIGrafu.digrafu.getJLabelPesosSitiosLogDet().setText(Tradutor.traduzir("Pesos para sítios", "Weights for sites"));
+		ControladorIGrafu.digrafu.getJLabelPesosSitiosJC69().setText(Tradutor.traduzir("Pesos para sítios", "Weights for sites"));
+
+		ControladorIGrafu.digrafu.getJLabelRelacaoKimura().setText(Tradutor.traduzir("Relação Transição/Transversão", "Transition/transversion ratio"));
+		ControladorIGrafu.digrafu.getJLabelRelacaoF84().setText(Tradutor.traduzir("Relação Transição/Transversão", "Transition/transversion ratio"));
+
+		ControladorIGrafu.digrafu.getJLabelFrequenciaF84().setText(Tradutor.traduzir("Freqüências empíricas", "Empirical frequencies"));
+
+		ControladorIGrafu.digrafu.getJLabelFracaoSitiosInvariantesF84().setText(Tradutor.traduzir("Fração de sítios invariantes", "Fraction of invariantes sites"));
+		ControladorIGrafu.digrafu.getJLabelFracaoSitiosInvariantesJC69().setText(Tradutor.traduzir("Fração de sítios invariantes", "Fraction of invariantes sites"));
+		ControladorIGrafu.digrafu.getJLabelFracaoSitiosInvariantesKimura().setText(Tradutor.traduzir("Fração de sítios invariantes", "Fraction of invariantes sites"));
+
+		ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoF84().setText(Tradutor.traduzir("Não", "No"));
+		ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoJC69().setText(Tradutor.traduzir("Não", "No"));
+		ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoKimura().setText(Tradutor.traduzir("Não", "No"));
+		ControladorIGrafu.digrafu.getJRadioButtonPesosSitiosNaoLogDet().setText(Tradutor.traduzir("Não", "No"));
+
+		ControladorIGrafu.digrafu.getJCheckBoxFrequenciasEmpiricasSim().setText(Tradutor.traduzir("Sim", "Yes"));
+
+		ControladorIGrafu.digrafu.getJLabelDistribuicaoGamaF84().setText(Tradutor.traduzir("Distribuição Gama", "Distribution Gamma"));
+		ControladorIGrafu.digrafu.getJLabelDistribuicaoGamaJC69().setText(Tradutor.traduzir("Distribuição Gama", "Distribution Gamma"));
+		ControladorIGrafu.digrafu.getJLabelDistribuicaoGamaKimura().setText(Tradutor.traduzir("Distribuição Gama", "Distribution Gamma"));
+		ControladorIGrafu.digrafu.getJButtonExecutarSequencial().setText(Tradutor.traduzir("Executar", "Execute"));
+	}
+
+	/**
+     * Metodo utilizado para retornar se existem mais de um caracter igual no texto
+     *
+     * @return boolean
+     */
+    public boolean possuiVarios(String str, String igual) {
+    	int aux = 0;
+
+    	if(igual.length() > 1)
+    		return false;
+
+    	for(int i = 1; i <= str.length(); i++) {
+    		if(str.substring(i - 1, i).equals(igual))
+    			aux++;
+    	}
+
+    	if(aux > 1)
+			return true;
+    	else
+    		return false;
+    }
+
+}

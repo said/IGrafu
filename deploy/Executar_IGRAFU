@@ -1,0 +1,1 @@
+jre/bin/java -classpath lib/tinylaf.jar:IGRAFU.jar br.uesc.computacao.estagio.aplicacao.controlador.ControladorIGrafu

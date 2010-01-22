@@ -1,0 +1,134 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{floatflt}
+\usepackage{fleqn}
+\usepackage{amssymb,amstext}
+\usepackage{array}
+\usepackage[latin1]{inputenc}
+\usepackage{newicktree}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{psfrag}
+\usepackage{graphicx}
+\usepackage{tablo}
+\usepackage{ae,aecompl,aeguill}
+\usepackage{setspace}
+\usepackage{helvetic}
+\usepackage{caption2}
+\usepackage{url}
+\usepackage{cite}          
+\usepackage{chicago}
+\usepackage{wasysym}
+
+\urlstyle{tt}
+
+
+\renewcommand\captionmargin{0cm} 
+\renewcommand{\captionlabelfont}{\bf}
+\renewcommand{\captionlabeldelim}{}
+%% \captionstyle{centerlast}
+
+
+\renewcommand\citeleft{(}
+\renewcommand\citeright{)}
+\renewcommand\citepunct{; }
+
+
+\newcommand{\rep}[3][1]
+{
+\psfrag{#2}[c][c][#1]{#3}
+}
+
+\newcommand{\bm}[1]
+{
+\mbox{\boldmath$#1$}
+}
+
+\renewcommand{\baselinestretch}{1.8}
+
+
+\begin{document}
+
+\title{PHYML technical documentation}
+\maketitle
+Substitution models in PHYML correspond to homogeneous, stationary and
+time-reversible Markov  processes. Therefore, the  likelihood does not
+depend on the position of the root  of the phylogeny. Let $r$ be this root,
+and $R$ denotes  the tree.  $u$ and  $v$ are the roots of subtrees $U$
+and $V$ respectively.  $u$ is a tip of $R$ that  is separated from $v$
+by a single branch of length $l$. $\pi_h$ is the equilibrium frequency
+of state  $h$.  $P_{hh^{\prime}}(l)$ is the probability  for the state
+$h$  to  be replaced  by  state  $h^{\prime}$  after $l$  substitution
+events.   The substitution  rate  at  each site  is  distributed as  a
+discretized  gamma distribution  with  $G$ categories.  $r_g$ is  the
+relative    rate    for   cateogory    $g$    and    $p_g$   is    its
+probability. $\mathcal{A}$  is the state  space to be  considered.  We
+define  the conditional  likelihood $L(s=h|U)$  as the  probability of
+data at site $s$ given that node $u$ has state $h$. $L(s=h|V)$ has the
+same meaning when  $V$ (and $v$) replaces $U$ (and  $u$). $L^{*}(s=h|V) =
+L(s=h|V) / Z_s(V)$ and $L^{*}(s=h|U) = L(s=h|U) / Z_s(U)$ are scaled
+conditional likelihoods. $Z_s(V)$ and $Z_s(U)$ are  scale factors that
+are used to avoid numerical underflows when computing very small values of
+conditional likelihoods. We first consider
+the case where the state observed at the leaf $u$ is not ambiguous. The
+scaled-likelihood at site $s$ is then~:
+\begin{equation}
+L^{*}(s) = 
+\sum_{g}^{G}\sum_{h \in \mathcal{A}}
+p_{g}
+\pi_h
+L^{*}(s=h|V)
+P_{hh^{\prime}}(l \times r_g)
+\end{equation}
+
+If the state at tip $u$ is ambiguous, each potential state has to be considered 
+(e.g., for DNA the states 'A' and 'G' are the potential states that are 
+considered when the observed state is 'R'). The scaled-likelihood is then~: 
+\begin{equation}
+L^{*}(s) =
+\sum_{g}^{G}\sum_{h \in \mathcal{A}}\sum_{h^{\prime} \in \mathcal{A}}
+p_{g}
+\pi_h
+L^{*}(s=h|V)
+P_{hh^{\prime}}(l \times r_g)
+L^{*}(s=h^{\prime}|U)
+\end{equation}
+
+The (unscaled) log likelihood is then~: 
+\begin{equation}
+ln(L(s)) = ln(L^{*}(s)) + ln(Z_s(U)) + ln (Z_s(V))
+\end{equation}
+
+
+Let $\nu$ be the expected frequency of invariable sites or invariants. 
+Invariant are peculiar sites that do not sustain any mutation. Let
+$L(s|inv=1)$ be the probability of site $s$ given that it is 
+an invariant. $L(s|inv=0)$ is the probability of site $s$ given that
+it is not an invariant. We have~:
+\begin{equation}\label{eq:loglikelihood}
+\nonumber ln(L(s)) = ln(L(s|inv=0)\times(1 - \nu) + L(s|inv=1)\times \nu)
+\end{equation}
+
+$L(s|inv=0)$ is the logarithm of the right-hand side of equation \ref{eq:loglikelihood}. If no polymorphism is observed at site $s$ and that the state at this site is $h$, the log likelihood is then~: 
+\begin{equation}\label{eq:invariant1}
+ln(L(s)) = ln(L(s|inv=0)\times(1 - \nu) + \pi_h \times \nu)
+\end{equation}
+
+If polymorphism is observed, the site can not be an invariant. The log likelihood is therefore~: 
+\begin{equation}\label{eq:invariant2}
+ln(L(s)) = ln(L(s|inv=0)\times(1 - \nu)
+\end{equation}
+
+
+\end{document}
+
+
+%%%Emacs : Local Variables:
+%%%Emacs : 8-bit-save-8-bit: t
+%%%Emacs : 8-bit-TeX-convention: frenchTeX
+%%%Emacs : mode : 8-bit
+%%%Emacs : End :

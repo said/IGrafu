@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/igrafu/!svn/ver/35/trunk/src/br/uesc/computacao/estagio/aplicacao/controlador
+END
+ControladorPHYML.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svnroot/igrafu/!svn/ver/35/trunk/src/br/uesc/computacao/estagio/aplicacao/controlador/ControladorPHYML.java
+END
+ControladorMetodos.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svnroot/igrafu/!svn/ver/21/trunk/src/br/uesc/computacao/estagio/aplicacao/controlador/ControladorMetodos.java
+END
+ControladorModoManualBootstrap.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svnroot/igrafu/!svn/ver/21/trunk/src/br/uesc/computacao/estagio/aplicacao/controlador/ControladorModoManualBootstrap.java
+END
+ControladorModoExecucao.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svnroot/igrafu/!svn/ver/30/trunk/src/br/uesc/computacao/estagio/aplicacao/controlador/ControladorModoExecucao.java
+END
+ControladorProgramas.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svnroot/igrafu/!svn/ver/21/trunk/src/br/uesc/computacao/estagio/aplicacao/controlador/ControladorProgramas.java
+END
+ControladorSeqboot.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svnroot/igrafu/!svn/ver/21/trunk/src/br/uesc/computacao/estagio/aplicacao/controlador/ControladorSeqboot.java
+END
+ControladorIGrafu.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svnroot/igrafu/!svn/ver/30/trunk/src/br/uesc/computacao/estagio/aplicacao/controlador/ControladorIGrafu.java
+END
+GeraParametrosPHYML.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svnroot/igrafu/!svn/ver/29/trunk/src/br/uesc/computacao/estagio/aplicacao/controlador/GeraParametrosPHYML.java
+END
+ControladorDIGRAFU.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svnroot/igrafu/!svn/ver/21/trunk/src/br/uesc/computacao/estagio/aplicacao/controlador/ControladorDIGRAFU.java
+END
+GeraParametrosSeqboot.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svnroot/igrafu/!svn/ver/21/trunk/src/br/uesc/computacao/estagio/aplicacao/controlador/GeraParametrosSeqboot.java
+END
+ControladorEditor.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svnroot/igrafu/!svn/ver/21/trunk/src/br/uesc/computacao/estagio/aplicacao/controlador/ControladorEditor.java
+END
+ControlaExecucao.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svnroot/igrafu/!svn/ver/30/trunk/src/br/uesc/computacao/estagio/aplicacao/controlador/ControlaExecucao.java
+END
+GeraParametrosDIGRAFU.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svnroot/igrafu/!svn/ver/21/trunk/src/br/uesc/computacao/estagio/aplicacao/controlador/GeraParametrosDIGRAFU.java
+END

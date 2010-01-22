@@ -1,0 +1,8 @@
+2.4.5 : The bootstrap proportions returned by PHYML version <= 2.4.4 under the custom model are not
+        correct. This bug has been fixed in version 2.4.5
+
+2.4.4 : The bootstrap proportions returned by PHYML versions <= 2.4.3 underestimate the correct values. 
+        This bug has been fixed in version 2.4.4.
+
+2.4.3 : Fix slight bugs in the optimisation of the substitution model parameters.
+
