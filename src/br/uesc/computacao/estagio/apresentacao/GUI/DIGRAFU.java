@@ -935,7 +935,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(checkBoxFrequenciasEmpiricas == null){
 			checkBoxFrequenciasEmpiricas = new JCheckBox();
-			checkBoxFrequenciasEmpiricas.setText("Usar frequências empíricas");
+			checkBoxFrequenciasEmpiricas.setText("Definir frequências");
 			//checkBoxFrequenciasEmpiricas.setSelected(true);
 			// checkBoxFrequenciasEmpiricas.setAlignmentX(CENTER_ALIGNMENT);
 		}
@@ -1562,7 +1562,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(checkBoxExecucao == null){
 			checkBoxExecucao = new JCheckBox();
-			checkBoxExecucao.setText("Execução");
+			checkBoxExecucao.setText("Tempo");
 		}
 		return checkBoxExecucao;
 	}
