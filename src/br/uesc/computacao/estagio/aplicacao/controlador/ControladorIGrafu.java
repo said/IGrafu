@@ -41,10 +41,10 @@ public class ControladorIGrafu {
         public static Conversor conversor = null;
 
 	public ControladorIGrafu() {
-		 new ControladorModoExecucao();
+		 // new ControladorModoExecucao();
             //    new ControladorConversor();
             //new ControladorPHYML();
-            // new ControladorDIGRAFU();
+            new ControladorDIGRAFU();
            // new ControladorProgramas();
             //GerarParametrosConversor.ConversorDataConvert();
 	}

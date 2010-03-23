@@ -191,6 +191,15 @@ public class DIGRAFU extends JFrame {
 	private JTextField campoNumericoCategoria8 = null;
 	private JLabel labelCategoria9 = null;
 	private JTextField campoNumericoCategoria9 = null;
+	private JRadioButton radioBotaoCategoriasManual = null;
+	private JRadioButton radioBotaoCategoriasDoArquivo = null;
+	private ButtonGroup grupoBotoesCategorias = null;
+	private JTextField campoTextoCategoriasDoArquivo = null;
+	private JPanel painelCategoriasManual = null;
+	private JPanel painelCategoriasDoArquivo = null;
+	private JPanel painelCardCategorias = null;
+	private JButton botaoLimparCategorias = null;
+	private JButton botaoEditarCategorias = null;
 	
 	// Preferências
 	
@@ -1093,7 +1102,6 @@ public class DIGRAFU extends JFrame {
 		
 	}
 	
-	
 	public JPanel getPainelCategorias(){
 		
 		TitledBorder bordaTitulo = null;
@@ -1111,13 +1119,25 @@ public class DIGRAFU extends JFrame {
 			painelCategorias.setBorder(bordaTitulo);
 			// painelCategorias.add(getLabelCategoriasDefinir());
 			
-			c.gridx = 0;
+/*			c.gridx = 0;
 			c.gridy = 0;
 			c.weightx = 0.5;
 			c.weighty = 0.5;
 			c.gridwidth = 5;
 			// c.fill = GridBagConstraints.HORIZONTAL;
 			// c.anchor = GridBagConstraints.PAGE_START;
+			painelCategorias.add(getCheckBoxCategorias(), c);*/
+			
+			c.gridx = 0;
+			c.gridy = 0;
+			c.gridwidth = 5;
+			c.anchor = GridBagConstraints.CENTER;
+			//c.fill = GridBagConstraints.BOTH;
+			c.weightx = 0.5;
+			c.weighty = 0.5;
+			c.insets = new Insets(0, 0, 0, 0);
+			c.ipadx = 0;
+			c.ipady = 0;
 			painelCategorias.add(getCheckBoxCategorias(), c);
 			
 			c.gridx = 0;
@@ -1260,7 +1280,7 @@ public class DIGRAFU extends JFrame {
 			c.anchor = GridBagConstraints.CENTER;
 			painelCategorias.add(getCampoNumericoCategoria9(), c);
 			
-			c.gridx = 0;
+/*			c.gridx = 0;
 			c.gridy = 3;
 			c.gridwidth = 3;
 			c.ipadx = 0;
@@ -1271,14 +1291,41 @@ public class DIGRAFU extends JFrame {
 			c.gridy = 3;
 			c.gridwidth = 2;
 			c.anchor = GridBagConstraints.LINE_START;
-			painelCategorias.add(getBotaoCategoriasAbrir(), c);
+			painelCategorias.add(getBotaoCategoriasAbrir(), c);*/
 
 			
-			c.gridx = 0;
+/*			c.gridx = 0;
 			c.gridy = 4;
 			c.gridwidth = 5;
 			c.anchor = GridBagConstraints.CENTER;
-			painelCategorias.add(getPainelRolagemAreaTextoCategorias(), c);
+			painelCategorias.add(getPainelRolagemAreaTextoCategorias(), c);*/
+			
+			
+/*			c.gridx = 0;
+			c.gridy = 1;
+			c.anchor = GridBagConstraints.CENTER;
+			c.gridwidth = 1;
+			painelPesos.add(getLabelCategoriasDoArquivo(), c);*/
+			
+			c.gridx = 0;
+			c.gridy = 3;
+			c.gridwidth = 1;
+			c.anchor = GridBagConstraints.EAST;
+			painelCategorias.add(getRadioBotaoCategoriasDoArquivo(), c);
+
+			c.gridx = 3;
+			c.gridy = 3;
+			c.gridwidth = 1;
+			c.anchor = GridBagConstraints.WEST;
+			painelCategorias.add(getRadioBotaoCategoriasManual(), c);
+			
+			c.gridx = 0;
+			c.gridy = 4;
+			c.gridwidth = 2;
+			c.anchor = GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.BOTH;
+			c.insets = new Insets(3, 3, 3, 3);
+			painelCategorias.add(getPainelCardCategorias(), c);
 			
 		}
 		return painelCategorias;
@@ -1513,6 +1560,141 @@ public class DIGRAFU extends JFrame {
 			botaoCategoriasAbrir.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
 		return botaoCategoriasAbrir;
+	}
+	
+	public JRadioButton getRadioBotaoCategoriasManual(){
+		
+		if(radioBotaoCategoriasManual == null){
+			radioBotaoCategoriasManual = new JRadioButton("Manual");
+		}
+		return radioBotaoCategoriasManual;
+		
+	}
+		
+	public JRadioButton getRadioBotaoCategoriasDoArquivo(){
+		
+		if(radioBotaoCategoriasDoArquivo == null){
+			radioBotaoCategoriasDoArquivo = new JRadioButton("Do arquivo");
+		}
+		return radioBotaoCategoriasDoArquivo;
+		
+	}
+		
+	public ButtonGroup getGrupoBotoesCategorias(){
+		
+		if(grupoBotoesCategorias == null){
+			grupoBotoesCategorias = new ButtonGroup();
+			grupoBotoesCategorias.add(getRadioBotaoCategoriasDoArquivo());
+			grupoBotoesCategorias.add(getRadioBotaoCategoriasManual());
+		}
+		return grupoBotoesCategorias;
+		
+	}
+		
+	public JTextField getCampoTextoCategoriasDoArquivo(){
+		
+		if(campoTextoCategoriasDoArquivo == null){
+			campoTextoCategoriasDoArquivo = new JTextField(18);
+			campoTextoCategoriasDoArquivo.setEditable(false);
+		}
+		return campoTextoCategoriasDoArquivo;
+		
+	}
+	
+	public JButton getBotaoLimparCategorias(){
+		
+		if(botaoLimparCategorias == null){
+			botaoLimparCategorias = new JButton("Limpar");
+			botaoLimparCategorias.setSize(new Dimension(30, 20));
+			botaoLimparCategorias.setFont(new Font("Dialog", Font.BOLD, 10));
+			botaoLimparCategorias.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		}
+		return botaoLimparCategorias;
+		
+	}
+	
+	public JButton getBotaoEditarCategorias(){
+		
+		if(botaoEditarCategorias == null){
+			botaoEditarCategorias = new JButton("Editar");
+			botaoEditarCategorias.setSize(new Dimension(30, 20));
+			botaoEditarCategorias.setFont(new Font("Dialog", Font.BOLD, 10));
+			botaoEditarCategorias.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		}
+		return botaoEditarCategorias;
+		
+	}
+	
+	public JPanel getPainelCategoriasManual(){
+
+		GridBagConstraints c = new GridBagConstraints();
+		
+		if(painelCategoriasManual == null){
+			painelCategoriasManual = new JPanel(new GridBagLayout());
+			painelCategoriasManual.setBackground(new Color(173, 200, 226));
+			
+			c.weightx = 0.5;
+			c.weighty = 0.5;
+			c.ipadx = 180;
+			c.ipady = 20;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.anchor = GridBagConstraints.LINE_START;
+			painelCategoriasManual.add(getPainelRolagemAreaTextoCategorias(), c);
+			
+			c.gridx = 1;
+			c.ipadx = 0;
+			c.ipady = 0;
+			c.fill = GridBagConstraints.NONE;
+			c.anchor = GridBagConstraints.LINE_END;
+			painelCategoriasManual.add(getBotaoLimparCategorias(), c);
+		}
+		return painelCategoriasManual;
+		
+	}
+	
+	public JPanel getPainelCategoriasDoArquivo(){
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		if(painelCategoriasDoArquivo == null){
+			painelCategoriasDoArquivo = new JPanel();
+			painelCategoriasDoArquivo.setLayout(new GridBagLayout());
+			painelCategoriasDoArquivo.setBackground(new Color(173, 200, 226));
+			
+			c.weightx = 0.5;
+			painelCategoriasDoArquivo.add(getLabelCategoriasDoArquivo(), c);
+			
+			c.gridx = 1;
+			c.gridwidth = 2;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			painelCategoriasDoArquivo.add(getCampoTextoCategoriasDoArquivo(), c);
+			
+			c.gridx = 1;
+			c.gridy = 1;
+			c.gridwidth = 1;
+			//c.weightx = 0.0;
+			c.fill = GridBagConstraints.NONE;
+			c.anchor = GridBagConstraints.LINE_END;
+			painelCategoriasDoArquivo.add(getBotaoCategoriasAbrir(), c);
+
+			c.gridx = 2;
+			c.weightx = 0.0;
+			painelCategoriasDoArquivo.add(getBotaoEditarCategorias(), c);
+		}
+		return painelCategoriasDoArquivo;
+		
+	}
+	
+	public JPanel getPainelCardCategorias(){
+		
+		if(painelCardCategorias == null){
+			painelCardCategorias = new JPanel(new CardLayout());
+			painelCardCategorias.setBackground(new Color(173, 200, 226));
+			painelCardCategorias.add(getPainelCategoriasDoArquivo(), "Do arquivo");
+			painelCardCategorias.add(getPainelCategoriasManual(), "Manual");
+		}
+		return painelCardCategorias;
+		
 	}
 	
 	public JPanel getPainelPreferencia(){
