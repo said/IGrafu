@@ -167,8 +167,8 @@ public class ControladorDIGRAFU
 		ControladorIGrafu.digrafu.getSpinnerCategoriasNum().addChangeListener(this);
 		field.getTextField().addKeyListener(this);
 		ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().addActionListener(this);
-		ControladorIGrafu.digrafu.getBotaoEditarPesos().addActionListener(this);
-		ControladorIGrafu.digrafu.getBotaoLimparPesos().addActionListener(this);
+		ControladorIGrafu.digrafu.getBotaoEditarCategorias().addActionListener(this);
+		ControladorIGrafu.digrafu.getBotaoLimparCategorias().addActionListener(this);
 		ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().addActionListener(this);
 		ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setActionCommand("Manual");
 		ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().addActionListener(this);

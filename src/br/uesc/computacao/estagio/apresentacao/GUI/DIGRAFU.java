@@ -328,9 +328,7 @@ public class DIGRAFU extends JFrame {
 			layout.putConstraint(SpringLayout.SOUTH, getPainelPreferencia(), 5, SpringLayout.SOUTH, painelPrincipal);
 			layout.putConstraint(SpringLayout.EAST, getPainelBotoes(), 5, SpringLayout.EAST, painelPrincipal);
 			layout.putConstraint(SpringLayout.SOUTH, getPainelBotoes(), 5, SpringLayout.SOUTH, painelPrincipal);*/
-			
-			getGrupoBotoesPesos();
-			
+						
 		}
 		return painelPrincipal;
 		
@@ -541,6 +539,8 @@ public class DIGRAFU extends JFrame {
 			c.gridwidth = 2;
 			painelPesos.add(getPainelRolagemAreaTextoPesos(), c);*/
 			// painelPesos.add(getAreaTextoPesos());
+
+			getGrupoBotoesPesos();
 
 		}
 		return painelPesos;
@@ -1329,6 +1329,8 @@ public class DIGRAFU extends JFrame {
 			c.insets = new Insets(3, 3, 3, 3);
 			painelCategorias.add(getPainelCardCategorias(), c);
 			
+			getGrupoBotoesCategorias();
+			
 		}
 		return painelCategorias;
 		
@@ -1509,7 +1511,7 @@ public class DIGRAFU extends JFrame {
 	public JLabel getLabelCategoriasDoArquivo(){
 		
 		if(labelCategoriasDoArquivo == null){
-			labelCategoriasDoArquivo = new JLabel("Do arquivo: ");
+			labelCategoriasDoArquivo = new JLabel("Arquivo: ");
 		}
 		return labelCategoriasDoArquivo;
 	}
