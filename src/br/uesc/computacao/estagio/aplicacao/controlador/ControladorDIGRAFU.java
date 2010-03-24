@@ -660,6 +660,9 @@ public class ControladorDIGRAFU
 
 			new ControladorEditor();
 			ControladorEditor.traduzir();
+			ControladorIGrafu.editor.getJTextArea().setText(
+					ManipulaArquivo.leArquivo(ControladorIGrafu.digrafu.getCampoTextoPesosDoArquivo().getText()));
+			ControladorIGrafu.editor.getJTabbedPane().setTitleAt(0, ControladorIGrafu.digrafu.getCampoTextoPesosDoArquivo().getText());
 			
 		}
 		
@@ -743,6 +746,9 @@ public class ControladorDIGRAFU
 
 			new ControladorEditor();
 			ControladorEditor.traduzir();
+			ControladorIGrafu.editor.getJTextArea().setText(
+					ManipulaArquivo.leArquivo(ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().getText()));
+			ControladorIGrafu.editor.getJTabbedPane().setTitleAt(0, ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().getText());
 			
 		}
 		
@@ -787,9 +793,6 @@ public class ControladorDIGRAFU
 			
 			new ControladorEditor();
 			ControladorEditor.traduzir();
-			ControladorIGrafu.editor.getJTextArea().setText(
-					ManipulaArquivo.leArquivo(ControladorIGrafu.digrafu.getCampoTextoPesosDoArquivo().getText()));
-			ControladorIGrafu.editor.getJTabbedPane().setTitleAt(0, "Pesos");
 			
 		}
 
