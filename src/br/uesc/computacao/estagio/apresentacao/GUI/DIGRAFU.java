@@ -1119,26 +1119,27 @@ public class DIGRAFU extends JFrame {
 			painelCategorias.setBorder(bordaTitulo);
 			// painelCategorias.add(getLabelCategoriasDefinir());
 			
-/*			c.gridx = 0;
+			c.gridx = 0;
 			c.gridy = 0;
 			c.weightx = 0.5;
 			c.weighty = 0.5;
 			c.gridwidth = 5;
 			// c.fill = GridBagConstraints.HORIZONTAL;
 			// c.anchor = GridBagConstraints.PAGE_START;
-			painelCategorias.add(getCheckBoxCategorias(), c);*/
+			painelCategorias.add(getCheckBoxCategorias(), c);
 			
-			c.gridx = 0;
+/*			c.gridx = 0;
 			c.gridy = 0;
 			c.gridwidth = 5;
-			c.anchor = GridBagConstraints.CENTER;
+			//c.gridheight = 5;
+			//c.anchor = GridBagConstraints.CENTER;
 			//c.fill = GridBagConstraints.BOTH;
 			c.weightx = 0.5;
 			c.weighty = 0.5;
 			c.insets = new Insets(0, 0, 0, 0);
-			c.ipadx = 0;
-			c.ipady = 0;
-			painelCategorias.add(getCheckBoxCategorias(), c);
+			//c.ipadx = 0;
+			//c.ipady = 0;
+			painelCategorias.add(getCheckBoxCategorias(), c);*/
 			
 			c.gridx = 0;
 			c.gridy = 1;
@@ -1307,21 +1308,22 @@ public class DIGRAFU extends JFrame {
 			c.gridwidth = 1;
 			painelPesos.add(getLabelCategoriasDoArquivo(), c);*/
 			
+			c.ipadx = 0;
 			c.gridx = 0;
 			c.gridy = 3;
-			c.gridwidth = 1;
+			c.gridwidth = 3;
 			c.anchor = GridBagConstraints.EAST;
 			painelCategorias.add(getRadioBotaoCategoriasDoArquivo(), c);
 
 			c.gridx = 3;
 			c.gridy = 3;
-			c.gridwidth = 1;
+			c.gridwidth = 2;
 			c.anchor = GridBagConstraints.WEST;
 			painelCategorias.add(getRadioBotaoCategoriasManual(), c);
 			
 			c.gridx = 0;
 			c.gridy = 4;
-			c.gridwidth = 2;
+			c.gridwidth = 5;
 			c.anchor = GridBagConstraints.CENTER;
 			c.fill = GridBagConstraints.BOTH;
 			c.insets = new Insets(3, 3, 3, 3);
