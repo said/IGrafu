@@ -805,8 +805,8 @@ public class ControladorDIGRAFU
                     
 			if (GeraParametrosDIGRAFU.trataAbaSequecia()) {
 				if ((GeraParametrosDIGRAFU.trataAbaModeloDNA())) {
-                    //Processo.processarDIGRAFU();
-					ControladorIGrafu.digrafu.setEnabled(false);
+                    Processo.processarDIGRAFU();
+					/*ControladorIGrafu.digrafu.setEnabled(false);
 
 					Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 					ControladorIGrafu.digrafu.getJDialogModoExecucao().setLocation((dimension.width - ControladorIGrafu.digrafu.getX()) / 2, (dimension.height - ControladorIGrafu.digrafu.getY()) / 2);
@@ -815,7 +815,7 @@ public class ControladorDIGRAFU
 					//ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(false);
 					ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(true);
 					//ControladorIGrafu.digrafu.getJDialogModoExecucao().repaint();
-				}
+*/				}
 			}
 		}
 

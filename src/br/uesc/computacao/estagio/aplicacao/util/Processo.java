@@ -300,8 +300,9 @@ public class Processo {
         	 * Execução do DiGrafu
         	 */
         	System.out.println("\nLog - DiGrafu executado sequencialmente:\n" + linhaExecucao);
-            //digrafu = Runtime.getRuntime().exec(linhaExecucao);
-            //digrafu.waitFor();
+        	digrafu = Runtime.getRuntime().exec(linhaExecucao);
+        	//digrafu = Runtime.getRuntime().exec("/home/gilmar/workspace/igrafu/deploy//programas/digrafu/Run.pl INPUT /home/gilmar/workspace/igrafu/deploy/programas/digrafu/Sequencias/reais_dna/m62.seq OUTPUT /home/gilmar/workspace/igrafu/deploy/arquivos_saida/digrafu/out_teste PREFERENCE a TYPE dna MODEL kimura RATIO 2");
+            digrafu.waitFor();
             /*
              * Execução do DiGrafu
              */
@@ -314,7 +315,7 @@ public class Processo {
             }
             ControladorDIGRAFU.perfil = false;
             
-            //digrafu.destroy();
+            digrafu.destroy();
             
         }
         catch(Exception expection) {
