@@ -800,22 +800,22 @@ public class ControladorDIGRAFU
                     // Convertendo para phylip sequencial
                     ControladorDIGRAFU.guardaNomeSequencia = GerarParametrosConversor.ChamaConversorIGrafu();
                     ControladorIGrafu.conversor.getJTextFieldArquivoEntrada().setText(ControladorDIGRAFU.guardaNomeSequencia);
-                    ControladorIGrafu.digrafu.getLabelSequencia().setText("Sequência: " + ControladorDIGRAFU.guardaNomeSequencia);
+                    //ControladorIGrafu.digrafu.getLabelSequencia().setText("Sequência: " + ControladorDIGRAFU.guardaNomeSequencia);
                     ControladorDIGRAFU.guardaNomeSequencia = "INPUT " + ControladorDIGRAFU.guardaNomeSequencia;
                     
 			if (GeraParametrosDIGRAFU.trataAbaSequecia()) {
 				if ((GeraParametrosDIGRAFU.trataAbaModeloDNA())) {
-                    Processo.processarDIGRAFU();
-					/*ControladorIGrafu.digrafu.setEnabled(false);
+                    //Processo.processarDIGRAFU();
+					ControladorIGrafu.digrafu.setEnabled(false);
 
 					Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 					ControladorIGrafu.digrafu.getJDialogModoExecucao().setLocation((dimension.width - ControladorIGrafu.digrafu.getX()) / 2, (dimension.height - ControladorIGrafu.digrafu.getY()) / 2);
 
-					//ControladorIGrafu.digrafu.getJDialogModoExecucao().setEnabled(true);
-					//ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(false);
+					ControladorIGrafu.digrafu.getJDialogModoExecucao().setEnabled(true);
+					ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(false);
 					ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(true);
-					//ControladorIGrafu.digrafu.getJDialogModoExecucao().repaint();
-*/				}
+					ControladorIGrafu.digrafu.getJDialogModoExecucao().repaint();
+				}
 			}
 		}
 
