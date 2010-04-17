@@ -86,9 +86,8 @@ public class DIGRAFU extends JFrame {
 	
 	
 	// Painéis para os parâmetros do DiGrafu
-	
 	private JPanel painelSequencia = null;
-	// private JPanel painelTipo = null;
+	private JPanel painelTipo = null;
 	private JPanel painelModelo = null;
 	private JPanel painelTransicaoTransversao = null;
 	private JPanel painelPesos = null;
@@ -102,22 +101,25 @@ public class DIGRAFU extends JFrame {
 	// Componentes dos painéis
 	
 	// Sequência
-	
 	private JLabel labelSequencia = null;
 	private JTextField campoTextoSequencia = null;
 	
-	// Modelo
+	// Tipo
+	private JLabel labelTipo = null;
+	private JComboBox comboTipo = null;
 	
+	// Modelo
 	private JLabel labelModelo = null;
 	private JComboBox comboModelo = null;
+	private JComboBox comboModeloDNA = null;
+	private JComboBox comboModeloProteina = null;
+	private JPanel painelCardModelo = null;
 	
 	// Taxa transição/transversão
-	
 	private JLabel labelTransicaoTransversao = null;
 	private JNumberFloatField campoNumericoTransicaoTransversao = null;
 	
 	// Pesos
-	
 	private JLabel labelPesos = null;
 	private JLabel labelPesosUsar = null;
 	private JLabel labelPesosDoArquivo = null;
@@ -136,7 +138,6 @@ public class DIGRAFU extends JFrame {
 	private JButton botaoEditarPesos = null;
 	
 	// Distribuição Gamma
-	
 	private JLabel labelGamma = null;
 	private JLabel labelCoeficienteVariacao = null;
 	private JLabel labelSitiosInvariantes = null;
@@ -145,7 +146,6 @@ public class DIGRAFU extends JFrame {
 	private JSpinner spinnerSitiosInvariantes = null;
 	
 	// Frequências
-	
 	private JCheckBox checkBoxFrequenciasEmpiricas = null;
 	private JLabel labelFrequencias = null;
 	private JLabel labelFrequenciasA = null;
@@ -164,7 +164,6 @@ public class DIGRAFU extends JFrame {
 	private JLabel labelFrequenciasTotalNum = null;
 	
 	// Categorias
-	
 	private JLabel labelCategorias = null;
 	private JLabel labelCategoriasDefinir = null;
 	private JLabel labelCategoriasDoArquivo = null;
@@ -202,14 +201,12 @@ public class DIGRAFU extends JFrame {
 	private JButton botaoEditarCategorias = null;
 	
 	// Preferências
-	
 	private JLabel labelPreferencia = null;
 	private JCheckBox checkBoxExatidao = null;
 	private JCheckBox checkBoxExecucao = null;
 	
 	
 	// Botoes
-	
 	private JButton botaoInicio = null;
 	private JButton botaoEditor = null;
 	private JButton botaoVoltar = null;
@@ -218,7 +215,6 @@ public class DIGRAFU extends JFrame {
 
 	
 	// Campo para a janelinha de execução
-	
 	private JDialog jDialogModoExecucao = null;
 	private JPanel jContentPane1 = null;
 	private JTabbedPane jTabbedPane = null;
@@ -245,7 +241,6 @@ public class DIGRAFU extends JFrame {
 	
 	private void initialize(){
 		this.setSize(790, 470);
-        //this.setBackground(new Color(173, 200, 226));
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/br/uesc/computacao/estagio/apresentacao/figuras/IGrafuAF.png")));
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation( ( dimension.width - getSize().width )/2, ( dimension.height - getSize().height )/2 );
@@ -268,66 +263,28 @@ public class DIGRAFU extends JFrame {
 	}
 	
 	public JPanel getPainelPrincipal(){
-		
-		SpringLayout layout = new SpringLayout();
-		GridBagConstraints c = new GridBagConstraints();
-		
+				
 		if(painelPrincipal == null){
 
 			painelPrincipal = new JPanel();
-/*			final ImageIcon imagemRNA = new ImageIcon(getClass().getResource("/br/uesc/computacao/estagio/apresentacao/figuras/rna.png"));
-			painelPrincipal = new JPanel(){
-				public static final long serialVersionUID = 1L;
-
-				protected void paintComponent( Graphics g ){
-                    super.paintComponent(g);
-                    imagemRNA.paintIcon(this,g,0,0);
-                }
-            };*/
             
 			painelPrincipal.setBackground(new Color(173, 200, 226));
 			painelPrincipal.setLayout(null);
-
-/*			c.fill = GridBagConstraints.HORIZONTAL;
-			c.anchor = GridBagConstraints.PAGE_START;
-			c.weightx = 0.5;
-			c.gridx = 0;
-			c.gridy = 0;*/
 			
 			painelPrincipal.add(getPainelSequencia());
+			painelPrincipal.add(getPainelTipo());
 			painelPrincipal.add(getPainelModelo());
-			//painelPrincipal.add(getLabelModelo());
 			painelPrincipal.add(getPainelTransicaoTransversao());
 			painelPrincipal.add(getPainelPesos());
 			painelPrincipal.add(getPainelDistribuicaoGamma());
 			painelPrincipal.add(getPainelCategorias());
 			painelPrincipal.add(getPainelFrequencias());
 			painelPrincipal.add(getPainelPreferencia());
-			// painelPrincipal.add(getPainelBotoes());
 			painelPrincipal.add(getBotaoInicio());
 			painelPrincipal.add(getBotaoEditor());
 			painelPrincipal.add(getBotaoVoltar());
 			painelPrincipal.add(getBotaoExecutar());
 			painelPrincipal.add(getBotaoVisualizar());
-			
-/*			layout.putConstraint(SpringLayout.WEST, getLabelSequencia(), 5, SpringLayout.WEST, painelPrincipal);
-			layout.putConstraint(SpringLayout.NORTH, getLabelSequencia(), 5, SpringLayout.NORTH, painelPrincipal);
-			layout.putConstraint(SpringLayout.WEST, getPainelModelo(), 5, SpringLayout.WEST, painelPrincipal);
-			layout.putConstraint(SpringLayout.NORTH, getPainelModelo(), 5, SpringLayout.SOUTH, getLabelSequencia());
-			layout.putConstraint(SpringLayout.WEST, getPainelTransicaoTransversao(), 5, SpringLayout.EAST, getPainelModelo());
-			layout.putConstraint(SpringLayout.NORTH, getPainelTransicaoTransversao(), 5, SpringLayout.SOUTH, getLabelSequencia());
-			layout.putConstraint(SpringLayout.WEST, getPainelPesos(), 5, SpringLayout.WEST, painelPrincipal);
-			layout.putConstraint(SpringLayout.NORTH, getPainelPesos(), 5, SpringLayout.SOUTH, getPainelModelo());
-			layout.putConstraint(SpringLayout.WEST, getPainelDistribuicaoGamma(), 5, SpringLayout.EAST, getPainelPesos());
-			layout.putConstraint(SpringLayout.NORTH, getPainelDistribuicaoGamma(), 5, SpringLayout.SOUTH, getPainelTransicaoTransversao());
-			layout.putConstraint(SpringLayout.WEST, getPainelCategorias(), 5, SpringLayout.WEST, painelPrincipal);
-			layout.putConstraint(SpringLayout.NORTH, getPainelCategorias(), 5, SpringLayout.SOUTH, getPainelPesos());
-			layout.putConstraint(SpringLayout.WEST, getPainelFrequencias(), 5, SpringLayout.EAST, getPainelCategorias());
-			layout.putConstraint(SpringLayout.NORTH, getPainelFrequencias(), 5, SpringLayout.SOUTH, getPainelDistribuicaoGamma());
-			layout.putConstraint(SpringLayout.WEST, getPainelPreferencia(), 5, SpringLayout.WEST, painelPrincipal);
-			layout.putConstraint(SpringLayout.SOUTH, getPainelPreferencia(), 5, SpringLayout.SOUTH, painelPrincipal);
-			layout.putConstraint(SpringLayout.EAST, getPainelBotoes(), 5, SpringLayout.EAST, painelPrincipal);
-			layout.putConstraint(SpringLayout.SOUTH, getPainelBotoes(), 5, SpringLayout.SOUTH, painelPrincipal);*/
 						
 		}
 		return painelPrincipal;
@@ -362,9 +319,7 @@ public class DIGRAFU extends JFrame {
 	}
 	
 	public JPanel getPainelSequencia(){
-		
-		TitledBorder bordaTitulo = null;
-		
+				
 		if(painelSequencia == null){
 			painelSequencia = new JPanel();
 			painelSequencia.setLayout(null);
@@ -372,7 +327,6 @@ public class DIGRAFU extends JFrame {
 			painelSequencia.setSize(new Dimension(788, 20));
 			painelSequencia.setLocation(new Point(0, 0));
 			painelSequencia.add(getLabelSequencia());
-			//painelSequencia.setBorder(BorderFactory.createLineBorder(Color.white));
 		}
 		return painelSequencia;
 		
@@ -386,10 +340,53 @@ public class DIGRAFU extends JFrame {
 			labelSequencia.setSize(new Dimension(778, 20));
 			labelSequencia.setLocation(new Point(10, 0));
 			labelSequencia.setText("Sequência: " + ControladorConversor.arquivoSaida);
-			//labelSequencia.setBorder(BorderFactory.createLineBorder(Color.white));
-			//labelSequencia.setHorizontalTextPosition(0);
 		}
 		return labelSequencia;
+		
+	}
+	
+	public JPanel getPainelTipo(){
+		
+		TitledBorder bordaTitulo = null;
+		
+		if(painelTipo == null){
+			painelTipo = new JPanel();
+			painelTipo.setBackground(new Color(173, 200, 226));
+			painelTipo.setSize(new Dimension((size1.width/2)-5, size1.height));
+			painelTipo.setLocation(new Point(coluna1, nivel1));
+			bordaTitulo = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.white), "Tipo");
+			bordaTitulo.setTitleJustification(TitledBorder.CENTER);
+			bordaTitulo.setTitleFont(new Font("Arial", Font.BOLD, 12));
+			painelTipo.setBorder(bordaTitulo);
+			// painelTipo.add(getLabelTipo());
+			painelTipo.add(getComboTipo());
+		}
+		return painelTipo;
+		
+	}
+
+	public JLabel getLabelTipo(){
+		
+		if(labelTipo == null){
+			labelTipo = new JLabel();
+			labelTipo.setFont(new Font("Arial", Font.PLAIN, 12));
+			labelTipo.setSize(new Dimension(78, 20));
+			labelTipo.setLocation(new Point(10, 0));
+			labelTipo.setText("Tipo");
+		}
+		return labelTipo;
+		
+	}
+	
+	public JComboBox getComboTipo(){
+		
+		String[] modelos = {"dna", "proteína"};
+		
+		if(comboTipo == null){
+			comboTipo = new JComboBox(modelos);
+			comboTipo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		}
+		return comboTipo;
 		
 	}
 	
@@ -400,16 +397,15 @@ public class DIGRAFU extends JFrame {
 		if(painelModelo == null){
 			painelModelo = new JPanel();
 			painelModelo.setBackground(new Color(173, 200, 226));
-			painelModelo.setSize(size1);
-			painelModelo.setLocation(new Point(coluna1, nivel1));
-			// painelModelo.setFont(new Font("Arial", Font.BOLD, 12));
+			painelModelo.setSize(new Dimension((size1.width/2)-5, size1.height));
+			painelModelo.setLocation(new Point(coluna1+painelModelo.getWidth()+10, nivel1));
 			bordaTitulo = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.white), "Modelo");
 			bordaTitulo.setTitleJustification(TitledBorder.CENTER);
 			bordaTitulo.setTitleFont(new Font("Arial", Font.BOLD, 12));
 			painelModelo.setBorder(bordaTitulo);
 			// painelModelo.add(getLabelModelo(), BorderLayout.CENTER);
-			painelModelo.add(getComboModelo());
-			// painelModelo.setBorder(BorderFactory.createLineBorder(Color.white));
+			// painelModelo.add(getComboModelo());
+			painelModelo.add(getPainelCardModelo());
 		}
 		return painelModelo;
 		
@@ -429,19 +425,39 @@ public class DIGRAFU extends JFrame {
 		
 	}
 	
-	public JComboBox getComboModelo(){
+	public JComboBox getComboModeloDNA(){
 		
 		String[] modelos = {"kimura", "f84", "jc69", "logdet"};
 		
-		if(comboModelo == null){
-			comboModelo = new JComboBox(modelos);
-			//comboModelo.setBounds(new Rectangle(15, 20, 70, 20));
-			// labelModelo.setSize(new Dimension(78, 16));
-			// labelModelo.setLocation(new Point(89, 31));
-			// comboModelo.setSelectedIndex(0);
-			comboModelo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		if(comboModeloDNA == null){
+			comboModeloDNA = new JComboBox(modelos);
+			comboModeloDNA.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
-		return comboModelo;
+		return comboModeloDNA;
+		
+	}
+	
+	public JComboBox getComboModeloProteina(){
+		
+		String[] modelos = {"kimura", "jtt", "pmb", "pam"};
+		
+		if(comboModeloProteina == null){
+			comboModeloProteina = new JComboBox(modelos);
+			comboModeloProteina.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		}
+		return comboModeloProteina;
+		
+	}
+	
+	public JPanel getPainelCardModelo(){
+		
+		if(painelCardModelo == null){
+			painelCardModelo = new JPanel(new CardLayout());
+			painelCardModelo.setBackground(new Color(173, 200, 226));
+			painelCardModelo.add(getComboModeloDNA(), "dna");
+			painelCardModelo.add(getComboModeloProteina(), "proteína");
+		}
+		return painelCardModelo;
 		
 	}
 	

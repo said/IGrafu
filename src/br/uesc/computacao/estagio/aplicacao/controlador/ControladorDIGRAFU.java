@@ -136,7 +136,9 @@ public class ControladorDIGRAFU
 	 
 	public void inicializaGerencia() {
 
-		ControladorIGrafu.digrafu.getComboModelo().addActionListener(this);
+		ControladorIGrafu.digrafu.getComboTipo().addActionListener(this);
+		ControladorIGrafu.digrafu.getComboModeloDNA().addActionListener(this);
+		ControladorIGrafu.digrafu.getComboModeloProteina().addActionListener(this);
 		ControladorIGrafu.digrafu.getCampoNumericoTransicaoTransversao().addActionListener(this);
 		ControladorIGrafu.digrafu.getCheckBoxPesos().addActionListener(this);
 		ControladorIGrafu.digrafu.getBotaoPesosAbrir().addActionListener(this);
@@ -201,8 +203,11 @@ public class ControladorDIGRAFU
 	
 	public void inicializaCampos() {
 		
-		ControladorIGrafu.digrafu.getComboModelo().setSelectedIndex(0);
-
+		ControladorIGrafu.digrafu.getComboTipo().setSelectedIndex(0);
+		// ControladorIGrafu.digrafu.getComboModelo().setSelectedIndex(0);
+		ControladorIGrafu.digrafu.getComboModeloDNA().setSelectedIndex(0);
+		// ControladorIGrafu.digrafu.getComboModeloDNA().setSelectedIndex(0);
+		
 		ControladorIGrafu.digrafu.getCampoNumericoTransicaoTransversao().setValue(2);
 		
 		ControladorIGrafu.digrafu.getCampoNumericoCV().setText("");
@@ -526,10 +531,23 @@ public class ControladorDIGRAFU
 
 		// DNA
 		
-		if(e.getSource() == ControladorIGrafu.digrafu.getComboModelo()){
+		if(e.getSource() == ControladorIGrafu.digrafu.getComboModeloDNA()){
 			
-			atualizaPainelPrincipal(GeraParametrosDIGRAFU.getModelo());
+			atualizaPainelPrincipal(GeraParametrosDIGRAFU.getModeloDNA());
 			
+		}
+		
+		if(e.getSource() == ControladorIGrafu.digrafu.getComboModeloProteina()){
+			
+			atualizaPainelPrincipal(GeraParametrosDIGRAFU.getModeloProteina());
+			
+		}
+		
+		if( e.getSource() == ControladorIGrafu.digrafu.getComboTipo() ){
+			
+			CardLayout cl = (CardLayout)ControladorIGrafu.digrafu.getPainelCardModelo().getLayout();
+			cl.show(ControladorIGrafu.digrafu.getPainelCardModelo(), (String)ControladorIGrafu.digrafu.getComboTipo().getSelectedItem());
+			System.out.println(e.getActionCommand());
 		}
 /*		
 		if(e.getSource() == ControladorIGrafu.digrafu.getCampoNumericoCV()){
@@ -812,9 +830,9 @@ public class ControladorDIGRAFU
 					ControladorIGrafu.digrafu.getJDialogModoExecucao().setLocation((dimension.width - ControladorIGrafu.digrafu.getX()) / 2, (dimension.height - ControladorIGrafu.digrafu.getY()) / 2);
 
 					ControladorIGrafu.digrafu.getJDialogModoExecucao().setEnabled(true);
-					ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(false);
+					//ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(false);
 					ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(true);
-					ControladorIGrafu.digrafu.getJDialogModoExecucao().repaint();
+					//ControladorIGrafu.digrafu.getJDialogModoExecucao().repaint();
 				}
 			}
 		}
@@ -824,7 +842,7 @@ public class ControladorDIGRAFU
 			ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(false);
 			ControladorIGrafu.digrafu.setEnabled(true);
 			ControladorIGrafu.digrafu.setVisible(true);
-
+			//ControlaExecucao.executaDIGRAFU();
 			ControladorIGrafu.digrafu.getJProgressBar().setVisible(true);
 			ControladorIGrafu.digrafu.getJProgressBar().setStringPainted(true);
 
@@ -840,7 +858,7 @@ public class ControladorDIGRAFU
 			Thread threadDigrafu = new Thread(new Runnable() {
 				public void run() {
 					//ControlaExecucao.executaDIGRAFU();
-                                    Processo.processarDIGRAFU();
+                    Processo.processarDIGRAFU();
 					ControladorIGrafu.digrafu.getJProgressBar().setVisible(false);
 				}
 			});

@@ -41,10 +41,10 @@ public class ControladorIGrafu {
         public static Conversor conversor = null;
 
 	public ControladorIGrafu() {
-		  new ControladorModoExecucao();
+		  //new ControladorModoExecucao();
             //    new ControladorConversor();
             //new ControladorPHYML();
-            // new ControladorDIGRAFU();
+             new ControladorDIGRAFU();
            // new ControladorProgramas();
             //GerarParametrosConversor.ConversorDataConvert();
 	}
@@ -97,6 +97,13 @@ public class ControladorIGrafu {
 			e.printStackTrace();
 		}
 		new ControladorIGrafu();
+		
+/*		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+            	new ControladorIGrafu();
+            }
+        });*/
+		
 	}
 
 }

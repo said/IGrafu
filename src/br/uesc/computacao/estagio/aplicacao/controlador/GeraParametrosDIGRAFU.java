@@ -92,9 +92,9 @@ public class GeraParametrosDIGRAFU {
     	        	
     	ControladorDIGRAFU.guardaArquivo += " TYPE dna";
     	
-    	ControladorDIGRAFU.guardaArquivo += " MODEL " + ControladorIGrafu.digrafu.getComboModelo().getItemAt(getModelo());
+    	ControladorDIGRAFU.guardaArquivo += " MODEL " + ControladorIGrafu.digrafu.getComboModeloDNA().getItemAt(getModeloDNA());
     	
-    	switch(getModelo()){
+    	switch(getModeloDNA()){
     	
     		case F84:
     			// Frequências
@@ -253,9 +253,15 @@ public class GeraParametrosDIGRAFU {
     	
     }
     
-    public static int getModelo(){
+    public static int getModeloDNA(){
     	
-    	return ControladorIGrafu.digrafu.getComboModelo().getSelectedIndex();
+    	return ControladorIGrafu.digrafu.getComboModeloDNA().getSelectedIndex();
+    	
+    }
+    
+    public static int getModeloProteina(){
+    	
+    	return ControladorIGrafu.digrafu.getComboModeloProteina().getSelectedIndex();
     	
     }
 

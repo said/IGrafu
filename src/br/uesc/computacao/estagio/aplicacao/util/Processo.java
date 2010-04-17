@@ -293,7 +293,6 @@ public class Processo {
     						   + ControladorDIGRAFU.guardaNomeSequencia + ControladorDIGRAFU.guardaArquivo;
 
         // JOptionPane.showMessageDialog(null, linhaExecucao, EXEC_DIGRAFU_1, JOptionPane.INFORMATION_MESSAGE);
-    	
         try {
         	
         	/*
@@ -302,11 +301,12 @@ public class Processo {
         	System.out.println("\nLog - DiGrafu executado sequencialmente:\n" + linhaExecucao);
         	digrafu = Runtime.getRuntime().exec(linhaExecucao);
         	//digrafu = Runtime.getRuntime().exec("/home/gilmar/workspace/igrafu/deploy//programas/digrafu/Run.pl INPUT /home/gilmar/workspace/igrafu/deploy/programas/digrafu/Sequencias/reais_dna/m62.seq OUTPUT /home/gilmar/workspace/igrafu/deploy/arquivos_saida/digrafu/out_teste PREFERENCE a TYPE dna MODEL kimura RATIO 2");
-            digrafu.waitFor();
+            int saida = digrafu.waitFor();
             /*
              * Execução do DiGrafu
              */
-            
+            System.out.println(saida);
+            digrafu.destroy();
             JOptionPane.showMessageDialog(null, EXEC_DIGRAFU, EXEC_DIGRAFU_1, JOptionPane.INFORMATION_MESSAGE);
             if(ControladorDIGRAFU.perfil == true) {
 				ManipulaArquivo.gravaArquivo(pegaCaminho + (corrigeCaminho) + "/perfil/" + "nomes_perfil", ControladorDIGRAFU.nomePerfil);
@@ -315,7 +315,6 @@ public class Processo {
             }
             ControladorDIGRAFU.perfil = false;
             
-            digrafu.destroy();
             
         }
         catch(Exception expection) {
