@@ -94,7 +94,7 @@ public class ControladorDIGRAFU
 		//System.gc();
 		//ControladorIGrafu.digrafu.getJTabbedPaneModelosAA().setToolTipText("O tipo de dado selecionado é DNA.");
 		ControladorIGrafu.digrafu.repaint();
-		
+
 
 	}
 
@@ -121,14 +121,6 @@ public class ControladorDIGRAFU
 				}
 			}
 		}*/
-
-		ControladorIGrafu.digrafu.getJButtonExecutarSequencial().addActionListener(this);
-		ControladorIGrafu.digrafu.getJDialogModoExecucao().addWindowListener(new java.awt.event.WindowAdapter() {
-			public void windowClosing(WindowEvent evt) {
-				ControladorIGrafu.digrafu.setEnabled(true);
-				ControladorIGrafu.digrafu.setVisible(true);
-			}
-		});
 
 
                 
@@ -184,7 +176,15 @@ public class ControladorDIGRAFU
         ControladorIGrafu.digrafu.getBotaoInicio().addActionListener(this);
 		ControladorIGrafu.digrafu.getBotaoVisualizar().addActionListener(this);
 		
-		ControladorIGrafu.digrafu.getJButtonExecutarSequencial().addActionListener(this);
+		ControladorIGrafu.digrafu.getBotaoModoExecucaoExecutar().addActionListener(this);
+		ControladorIGrafu.digrafu.getComboModoExecucaoSequencial().addActionListener(this);
+		ControladorIGrafu.digrafu.getComboModoExecucaoParalela().addActionListener(this);
+		ControladorIGrafu.digrafu.getDialogoModoExecucao().addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(WindowEvent evt) {
+				ControladorIGrafu.digrafu.getDialogoModoExecucao().removeNotify();
+				ControladorIGrafu.digrafu.setEnabled(true);
+			}
+		});
 
 		ControladorIGrafu.digrafu.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		ControladorIGrafu.digrafu.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -815,41 +815,35 @@ public class ControladorDIGRAFU
 		}
 
 		if (e.getSource() == ControladorIGrafu.digrafu.getBotaoExecutar()) {
-                    // Convertendo para phylip sequencial
-                    ControladorDIGRAFU.guardaNomeSequencia = GerarParametrosConversor.ChamaConversorIGrafu();
-                    ControladorIGrafu.conversor.getJTextFieldArquivoEntrada().setText(ControladorDIGRAFU.guardaNomeSequencia);
-                    //ControladorIGrafu.digrafu.getLabelSequencia().setText("Sequência: " + ControladorDIGRAFU.guardaNomeSequencia);
-                    ControladorDIGRAFU.guardaNomeSequencia = "INPUT " + ControladorDIGRAFU.guardaNomeSequencia;
+			
+	        // Convertendo para phylip sequencial
+	        ControladorDIGRAFU.guardaNomeSequencia = GerarParametrosConversor.ChamaConversorIGrafu();
+	        ControladorIGrafu.conversor.getJTextFieldArquivoEntrada().setText(ControladorDIGRAFU.guardaNomeSequencia);
+	        //ControladorIGrafu.digrafu.getLabelSequencia().setText("Sequência: " + ControladorDIGRAFU.guardaNomeSequencia);
+	        ControladorDIGRAFU.guardaNomeSequencia = "INPUT " + ControladorDIGRAFU.guardaNomeSequencia;
                     
-			if (GeraParametrosDIGRAFU.trataAbaSequecia()) {
-				if ((GeraParametrosDIGRAFU.trataAbaModeloDNA())) {
-                    //Processo.processarDIGRAFU();
+			if(GeraParametrosDIGRAFU.trataAbaSequecia()){
+				if((GeraParametrosDIGRAFU.trataAbaModeloDNA())){
 					ControladorIGrafu.digrafu.setEnabled(false);
-
-					Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-					ControladorIGrafu.digrafu.getJDialogModoExecucao().setLocation((dimension.width - ControladorIGrafu.digrafu.getX()) / 2, (dimension.height - ControladorIGrafu.digrafu.getY()) / 2);
-
-					ControladorIGrafu.digrafu.getJDialogModoExecucao().setEnabled(true);
-					//ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(false);
-					ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(true);
-					//ControladorIGrafu.digrafu.getJDialogModoExecucao().repaint();
+					ControladorIGrafu.digrafu.getDialogoModoExecucao().setVisible(true);
+					ControladorIGrafu.digrafu.getPainelModoExecucao().setVisible(true);
+					ControladorIGrafu.digrafu.getPainelModoExecucao().setEnabled(true);
 				}
 			}
 		}
-
-		if (e.getSource() == ControladorIGrafu.digrafu.getJButtonExecutarSequencial()) {
-			ControladorIGrafu.digrafu.getJDialogModoExecucao().removeNotify();
-			ControladorIGrafu.digrafu.getJDialogModoExecucao().setVisible(false);
+		
+		if(e.getSource() == ControladorIGrafu.digrafu.getBotaoModoExecucaoExecutar()){
+			
+			ControladorIGrafu.digrafu.getDialogoModoExecucao().removeNotify();
+			ControladorIGrafu.digrafu.getDialogoModoExecucao().setVisible(false);
 			ControladorIGrafu.digrafu.setEnabled(true);
-			ControladorIGrafu.digrafu.setVisible(true);
-			//ControlaExecucao.executaDIGRAFU();
-			ControladorIGrafu.digrafu.getJProgressBar().setVisible(true);
-			ControladorIGrafu.digrafu.getJProgressBar().setStringPainted(true);
+			ControladorIGrafu.digrafu.getBarraProgressoExecucao().setVisible(true);
+			ControladorIGrafu.digrafu.getBarraProgressoExecucao().setStringPainted(true);
 
 			Thread threadProgress = new Thread(new Runnable() {
 				public void run() {
-					ControladorIGrafu.digrafu.getJProgressBar().setString("Executando DiGrafu");
-					ControladorIGrafu.digrafu.getJProgressBar().setIndeterminate(true);
+					ControladorIGrafu.digrafu.getBarraProgressoExecucao().setString("Executando DiGrafu");
+					ControladorIGrafu.digrafu.getBarraProgressoExecucao().setIndeterminate(true);
 				}
 			});
 			threadProgress.setDaemon(true);
@@ -857,14 +851,14 @@ public class ControladorDIGRAFU
 
 			Thread threadDigrafu = new Thread(new Runnable() {
 				public void run() {
-					//ControlaExecucao.executaDIGRAFU();
+					// ControlaExecucao.executaDIGRAFU();
                     Processo.processarDIGRAFU();
-					ControladorIGrafu.digrafu.getJProgressBar().setVisible(false);
+					ControladorIGrafu.digrafu.getBarraProgressoExecucao().setVisible(false);
 				}
 			});
 			threadDigrafu.start();
+			
 		}
-
 
 /*		if (e.getSource() == ControladorIGrafu.digrafu.getJButtonArquivoSequencia()) {
 			if(Navegar.navegar == null) {

@@ -15,6 +15,7 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -83,6 +84,7 @@ public class DIGRAFU extends JFrame {
 	private JMenu menuArquivo = null;
 	private JMenu menuConfiguracao = null;
 	private JMenu menuAjuda = null;
+	private JProgressBar barraProgressoExecucao = null;
 	
 	
 	// Painéis para os parâmetros do DiGrafu
@@ -214,24 +216,15 @@ public class DIGRAFU extends JFrame {
 	private JButton botaoVisualizar = null;
 
 	
-	// Campo para a janelinha de execução
-	private JDialog jDialogModoExecucao = null;
-	private JPanel jContentPane1 = null;
-	private JTabbedPane jTabbedPane = null;
-	private JPanel jPanelExecucaoSequencial = null;
-	private JSeparator jSeparatorBootstrap7 = null;
-	private JSeparator jSeparatorBootstrap8 = null;
-	private JSeparator jSeparatorBootstrap9 = null;
-	private JComboBox jComboBoxExecutarSequencial = null;
-	private JLabel jLabelTipoExecucaoSequencial = null;
-	private JSeparator jSeparatorBootstrap20 = null;
-	private JSeparator jSeparatorBootstrap19 = null;
-	private JSeparator jSeparatorBootstrap21 = null;
-	private JSeparator jSeparatorBootstrap22 = null;
-	private JSeparator jSeparatorBootstrap23 = null;
-	private JSeparator jSeparatorBootstrap24 = null;
-	private JButton jButtonExecutarSequencial = null;
-	private JProgressBar jProgressBar = null;
+	// Janelinha de modo de execução
+	private JDialog dialogoModoExecucao = null;
+	private JTabbedPane painelAbasModoExecucao = null;
+	private JPanel painelModoExecucao = null;
+	private JPanel painelModoExecucaoSequencial = null;
+	private JPanel painelModoExecucaoParalela = null;
+	private JComboBox comboModoExecucaoSequencial = null;
+	private JComboBox comboModoExecucaoParalela = null;
+	private JButton botaoModoExecucaoExecutar = null;
 	
 	
 	public DIGRAFU(){
@@ -285,6 +278,7 @@ public class DIGRAFU extends JFrame {
 			painelPrincipal.add(getBotaoVoltar());
 			painelPrincipal.add(getBotaoExecutar());
 			painelPrincipal.add(getBotaoVisualizar());
+			painelPrincipal.add(getBarraProgressoExecucao());
 						
 		}
 		return painelPrincipal;
@@ -1859,251 +1853,114 @@ public class DIGRAFU extends JFrame {
 	/**
 	 * Janelinha de Execução
 	 */
+
+	public JDialog getDialogoModoExecucao() {
+		if (dialogoModoExecucao == null) {
+			dialogoModoExecucao = new JDialog(this);
+			dialogoModoExecucao.setSize(new Dimension(252, 210));
+			dialogoModoExecucao.setTitle("Modo de Execução");
+			dialogoModoExecucao.setContentPane(getPainelModoExecucao());
+			dialogoModoExecucao.setResizable(false);
+
+			Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+			dialogoModoExecucao.setLocation(
+					(dimension.width - ControladorIGrafu.digrafu.getX()) / 2,
+					(dimension.height - ControladorIGrafu.digrafu.getY()) / 2
+			);
+
+			dialogoModoExecucao.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		}
+		return dialogoModoExecucao;
+	}
+
+	public JPanel getPainelModoExecucao() {
+		if (painelModoExecucao == null) {
+			painelModoExecucao = new JPanel();
+			painelModoExecucao.setLayout(null);
+			painelModoExecucao.setBackground(new Color(230, 234, 240));
+			painelModoExecucao.add(getPainelAbasModoExecucao(), null);
+			painelModoExecucao.add(getBotaoModoExecucaoExecutar(), null);
+		}
+		return painelModoExecucao;
+	}
+
+	public JTabbedPane getPainelAbasModoExecucao() {
+		if (painelAbasModoExecucao == null) {
+			painelAbasModoExecucao = new JTabbedPane();
+			painelAbasModoExecucao.setBounds(new Rectangle(0, 0, 242, 143));
+			painelAbasModoExecucao.addTab("Sequencial", null, getPainelModoExecucaoSequencial(), null);
+			painelAbasModoExecucao.addTab("Paralela", null, getPainelModoExecucaoParalela(), null);
+		}
+		return painelAbasModoExecucao;
+	}
 	
-	public JDialog getJDialogModoExecucao() {
-		if (jDialogModoExecucao == null) {
-			jDialogModoExecucao = new JDialog(this);
-			jDialogModoExecucao.setSize(new Dimension(252, 210));
-			jDialogModoExecucao.setTitle("Local de Execução");
-			jDialogModoExecucao.setContentPane(getJContentPane1());
+	public JPanel getPainelModoExecucaoSequencial() {
+		
+		if (painelModoExecucaoSequencial == null) {
+			painelModoExecucaoSequencial = new JPanel();
+			painelModoExecucaoSequencial.setLayout(null);
+			painelModoExecucaoSequencial.setBackground(new Color(173, 200, 226));
+			painelModoExecucaoSequencial.add(getComboModoExecucaoSequencial(), null);
 		}
-		return jDialogModoExecucao;
+		return painelModoExecucaoSequencial;
 	}
 
-	/**
-	 * This method initializes jContentPane1
-	 *
-	 * @return javax.swing.JPanel
-	 */
-	public JPanel getJContentPane1() {
-		if (jContentPane1 == null) {
-			jContentPane1 = new JPanel();
-			jContentPane1.setLayout(new BorderLayout());
-			jContentPane1.add(getJTabbedPane(), BorderLayout.CENTER);
+	public JComboBox getComboModoExecucaoSequencial(){
+		
+		String[] localExecucao = {"Servidor", "Nó 1", "Nó 2", "Nó 3", "Nó 4"};
+		
+		if(comboModoExecucaoSequencial == null){
+			comboModoExecucaoSequencial = new JComboBox(localExecucao);
+			comboModoExecucaoSequencial.setLocation(new Point(70, 41));
+			comboModoExecucaoSequencial.setSize(new Dimension(105, 20));
+			comboModoExecucaoSequencial.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
-		return jContentPane1;
+		return comboModoExecucaoSequencial;
+		
 	}
-
-	/**
-	 * This method initializes jTabbedPane
-	 *
-	 * @return javax.swing.JTabbedPane
-	 */
-	public JTabbedPane getJTabbedPane() {
-		if (jTabbedPane == null) {
-			jTabbedPane = new JTabbedPane();
-			jTabbedPane.addTab("Seqüencial", null, getJPanelExecucaoSequencial(), null);
+	
+	public JPanel getPainelModoExecucaoParalela() {
+		if (painelModoExecucaoParalela == null) {
+			painelModoExecucaoParalela = new JPanel();
+			painelModoExecucaoParalela.setLayout(null);
+			painelModoExecucaoParalela.setBackground(new Color(173, 200, 226));
+			painelModoExecucaoParalela.add(getComboModoExecucaoParalela(), null);
 		}
-		return jTabbedPane;
+		return painelModoExecucaoParalela;
 	}
-
-	/**
-	 * This method initializes jPanelExecucaoSequencial
-	 *
-	 * @return javax.swing.JPanel
-	 */
-	public JPanel getJPanelExecucaoSequencial() {
-		if (jPanelExecucaoSequencial == null) {
-			jLabelTipoExecucaoSequencial = new JLabel();
-			jLabelTipoExecucaoSequencial.setLocation(new Point(81, 10));
-			jLabelTipoExecucaoSequencial.setText("Executar em");
-			jLabelTipoExecucaoSequencial.setSize(new Dimension(87, 16));
-			jPanelExecucaoSequencial = new JPanel();
-			jPanelExecucaoSequencial.setLayout(null);
-			jPanelExecucaoSequencial.setBackground(new Color(173, 200, 226));
-			jPanelExecucaoSequencial.add(getJSeparatorBootstrap7(), null);
-			jPanelExecucaoSequencial.add(getJSeparatorBootstrap8(), null);
-			jPanelExecucaoSequencial.add(getJSeparatorBootstrap9(), null);
-			jPanelExecucaoSequencial.add(getJComboBoxExecutarSequencial(), null);
-			jPanelExecucaoSequencial.add(jLabelTipoExecucaoSequencial, null);
-			jPanelExecucaoSequencial.add(getJSeparatorBootstrap20(), null);
-			jPanelExecucaoSequencial.add(getJSeparatorBootstrap19(), null);
-			jPanelExecucaoSequencial.add(getJSeparatorBootstrap21(), null);
-			jPanelExecucaoSequencial.add(getJSeparatorBootstrap22(), null);
-			jPanelExecucaoSequencial.add(getJSeparatorBootstrap23(), null);
-			jPanelExecucaoSequencial.add(getJSeparatorBootstrap24(), null);
-			jPanelExecucaoSequencial.add(getJButtonExecutarSequencial(), null);
+	
+	public JComboBox getComboModoExecucaoParalela(){
+		
+		String[] numProcessadores = {"2", "3", "4"};
+		
+		if(comboModoExecucaoParalela == null){
+			comboModoExecucaoParalela = new JComboBox(numProcessadores);
+			comboModoExecucaoParalela.setLocation(new Point(70, 41));
+			comboModoExecucaoParalela.setSize(new Dimension(105, 20));
+			comboModoExecucaoParalela.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
-		return jPanelExecucaoSequencial;
+		return comboModoExecucaoParalela;
+		
 	}
-
-	/**
-	 * This method initializes jSeparatorBootstrap7
-	 *
-	 * @return javax.swing.JSeparator
-	 */
-	public JSeparator getJSeparatorBootstrap7() {
-		if (jSeparatorBootstrap7 == null) {
-			jSeparatorBootstrap7 = new JSeparator();
-			jSeparatorBootstrap7.setLocation(new Point(11, 21));
-			jSeparatorBootstrap7.setSize(new Dimension(63, 10));
+	
+	public JButton getBotaoModoExecucaoExecutar() {
+		if (botaoModoExecucaoExecutar == null) {
+			botaoModoExecucaoExecutar = new JButton();
+			botaoModoExecucaoExecutar.setSize(new Dimension(99, 22));
+			botaoModoExecucaoExecutar.setLocation(new Point(71, 152));
+			botaoModoExecucaoExecutar.setText("Executar");
 		}
-		return jSeparatorBootstrap7;
+		return botaoModoExecucaoExecutar;
 	}
-
-	/**
-	 * This method initializes jSeparatorBootstrap8
-	 *
-	 * @return javax.swing.JSeparator
-	 */
-	public JSeparator getJSeparatorBootstrap8() {
-		if (jSeparatorBootstrap8 == null) {
-			jSeparatorBootstrap8 = new JSeparator();
-			jSeparatorBootstrap8.setLocation(new Point(10, 22));
-			jSeparatorBootstrap8.setOrientation(SwingConstants.VERTICAL);
-			jSeparatorBootstrap8.setSize(new Dimension(10, 49));
+	
+	public JProgressBar getBarraProgressoExecucao() {
+		if (barraProgressoExecucao == null) {
+			barraProgressoExecucao = new JProgressBar();
+			barraProgressoExecucao.setSize(new Dimension(194, 15));
+			barraProgressoExecucao.setLocation(new Point(34, nivel3+size3.height));
+			barraProgressoExecucao.setVisible(false);
 		}
-		return jSeparatorBootstrap8;
-	}
-
-	/**
-	 * This method initializes jSeparatorBootstrap9
-	 *
-	 * @return javax.swing.JSeparator
-	 */
-	public JSeparator getJSeparatorBootstrap9() {
-		if (jSeparatorBootstrap9 == null) {
-			jSeparatorBootstrap9 = new JSeparator();
-			jSeparatorBootstrap9.setLocation(new Point(10, 71));
-			jSeparatorBootstrap9.setSize(new Dimension(220, 10));
-		}
-		return jSeparatorBootstrap9;
-	}
-
-	/**
-	 * This method initializes jComboBoxExecutarSequencial
-	 *
-	 * @return javax.swing.JComboBox
-	 */
-	public JComboBox getJComboBoxExecutarSequencial() {
-		if (jComboBoxExecutarSequencial == null) {
-			jComboBoxExecutarSequencial = new JComboBox();
-			jComboBoxExecutarSequencial.setLocation(new Point(70, 41));
-			jComboBoxExecutarSequencial.setSize(new Dimension(105, 20));
-			jComboBoxExecutarSequencial.addItem("servidor");
-			jComboBoxExecutarSequencial.addItem("no1");
-			jComboBoxExecutarSequencial.addItem("no2");
-			jComboBoxExecutarSequencial.addItem("no3");
-			jComboBoxExecutarSequencial.addItem("no4");
-		}
-		return jComboBoxExecutarSequencial;
-	}
-
-	/**
-	 * This method initializes jSeparatorBootstrap20
-	 *
-	 * @return javax.swing.JSeparator
-	 */
-	public JSeparator getJSeparatorBootstrap20() {
-		if (jSeparatorBootstrap20 == null) {
-			jSeparatorBootstrap20 = new JSeparator();
-			jSeparatorBootstrap20.setLocation(new Point(170, 21));
-			jSeparatorBootstrap20.setSize(new Dimension(60, 10));
-		}
-		return jSeparatorBootstrap20;
-	}
-
-	/**
-	 * This method initializes jSeparatorBootstrap19
-	 *
-	 * @return javax.swing.JSeparator
-	 */
-	public JSeparator getJSeparatorBootstrap19() {
-		if (jSeparatorBootstrap19 == null) {
-			jSeparatorBootstrap19 = new JSeparator();
-			jSeparatorBootstrap19.setLocation(new Point(74, 8));
-			jSeparatorBootstrap19.setOrientation(SwingConstants.VERTICAL);
-			jSeparatorBootstrap19.setSize(new Dimension(10, 22));
-		}
-		return jSeparatorBootstrap19;
-	}
-
-	/**
-	 * This method initializes jSeparatorBootstrap21
-	 *
-	 * @return javax.swing.JSeparator
-	 */
-	public JSeparator getJSeparatorBootstrap21() {
-		if (jSeparatorBootstrap21 == null) {
-			jSeparatorBootstrap21 = new JSeparator();
-			jSeparatorBootstrap21.setLocation(new Point(74, 7));
-			jSeparatorBootstrap21.setSize(new Dimension(95, 10));
-		}
-		return jSeparatorBootstrap21;
-	}
-
-	/**
-	 * This method initializes jSeparatorBootstrap22
-	 *
-	 * @return javax.swing.JSeparator
-	 */
-	public JSeparator getJSeparatorBootstrap22() {
-		if (jSeparatorBootstrap22 == null) {
-			jSeparatorBootstrap22 = new JSeparator();
-			jSeparatorBootstrap22.setLocation(new Point(169, 8));
-			jSeparatorBootstrap22.setOrientation(SwingConstants.VERTICAL);
-			jSeparatorBootstrap22.setSize(new Dimension(10, 22));
-		}
-		return jSeparatorBootstrap22;
-	}
-
-	/**
-	 * This method initializes jSeparatorBootstrap23
-	 *
-	 * @return javax.swing.JSeparator
-	 */
-	public JSeparator getJSeparatorBootstrap23() {
-		if (jSeparatorBootstrap23 == null) {
-			jSeparatorBootstrap23 = new JSeparator();
-			jSeparatorBootstrap23.setLocation(new Point(74, 30));
-			jSeparatorBootstrap23.setSize(new Dimension(95, 10));
-		}
-		return jSeparatorBootstrap23;
-	}
-
-	/**
-	 * This method initializes jSeparatorBootstrap24
-	 *
-	 * @return javax.swing.JSeparator
-	 */
-	public JSeparator getJSeparatorBootstrap24() {
-		if (jSeparatorBootstrap24 == null) {
-			jSeparatorBootstrap24 = new JSeparator();
-			jSeparatorBootstrap24.setLocation(new Point(230, 22));
-			jSeparatorBootstrap24.setOrientation(SwingConstants.VERTICAL);
-			jSeparatorBootstrap24.setSize(new Dimension(10, 50));
-		}
-		return jSeparatorBootstrap24;
-	}
-
-	/**
-	 * This method initializes jButtonExecutarSequencial
-	 *
-	 * @return javax.swing.JButton
-	 */
-	public JButton getJButtonExecutarSequencial() {
-		if (jButtonExecutarSequencial == null) {
-			jButtonExecutarSequencial = new JButton();
-			jButtonExecutarSequencial.setBounds(new Rectangle(78, 125, 99, 22));
-			jButtonExecutarSequencial.setOpaque(true);
-			jButtonExecutarSequencial.setText("Executar");
-		}
-		return jButtonExecutarSequencial;
-	}
-
-	/**
-	 * This method initializes jProgressBar
-	 *
-	 * @return javax.swing.JProgressBar
-	 */
-	public JProgressBar getJProgressBar() {
-		if (jProgressBar == null) {
-			jProgressBar = new JProgressBar();
-			jProgressBar.setSize(new Dimension(194, 15));
-			jProgressBar.setLocation(new Point(34, 399));
-			jProgressBar.setVisible(false);
-		}
-		return jProgressBar;
+		return barraProgressoExecucao;
 	}
 	
 }

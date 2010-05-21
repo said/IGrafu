@@ -41,12 +41,12 @@ public class ControladorIGrafu {
         public static Conversor conversor = null;
 
 	public ControladorIGrafu() {
-		  //new ControladorModoExecucao();
-            //    new ControladorConversor();
-            //new ControladorPHYML();
-             new ControladorDIGRAFU();
-           // new ControladorProgramas();
-            //GerarParametrosConversor.ConversorDataConvert();
+		 new ControladorModoExecucao();
+		// new ControladorConversor();
+		// new ControladorPHYML();
+		// new ControladorDIGRAFU();
+		// new ControladorProgramas();
+		// GerarParametrosConversor.ConversorDataConvert();
 	}
 
 	/*
@@ -75,7 +75,7 @@ public class ControladorIGrafu {
 	 * Chamada do metodo animacao e lookAndFeel
 	 */
 	public static void main(String[] args) {
-		//animacao();
+		// animacao();
 		try {
 
 			UIManager.setLookAndFeel( "de.muntjak.tinylookandfeel.TinyLookAndFeel" );
