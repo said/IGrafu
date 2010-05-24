@@ -336,8 +336,8 @@ public class Processo {
     		String digrafuSeqboot = "";
     		String consense = pegaCaminho + "/programas/consense/consense " +	ControladorSeqboot.trataParametrosConsense;
 
-                if(ControladorIGrafu.digrafu.getJComboBoxExecutarSequencial().getSelectedItem() !=
-                	ControladorIGrafu.digrafu.getJComboBoxExecutarSequencial().getItemAt(0)) {
+                if(ControladorIGrafu.digrafu.getComboModoExecucaoSequencial().getSelectedItem() !=
+                	ControladorIGrafu.digrafu.getComboModoExecucaoSequencial().getItemAt(0)) {
 
                 	inicio = "ssh " + ControladorIGrafu.phyml.getJComboBoxTipoExecucaoSequencial().getSelectedItem() + " ; " +
        			 			 "cd " + pegaCaminho + "/programas/jack/ ; " + (pegaCaminho + corrigeCaminho + "jre/bin/java ") + "DigrafuSequencial ";
