@@ -86,10 +86,10 @@ public class ControladorDIGRAFU
 		ControladorIGrafu.digrafu = new DIGRAFU();
 		
 
-		editor = ControladorIGrafu.digrafu.getSpinnerCategoriasNum().getEditor();
+		/*editor = ControladorIGrafu.digrafu.getSpinnerCategoriasNum().getEditor();
 		field = (JSpinner.NumberEditor)editor;
 		
-		init();
+		init();*/
 		ControladorIGrafu.digrafu.setVisible(true);
 		//System.gc();
 		//ControladorIGrafu.digrafu.getJTabbedPaneModelosAA().setToolTipText("O tipo de dado selecionado é DNA.");
@@ -97,7 +97,7 @@ public class ControladorDIGRAFU
 
 
 	}
-
+/*
 	
 	 // Metodo de inicializacao de campos e variaveis
 	 
@@ -106,7 +106,7 @@ public class ControladorDIGRAFU
 		inicializaGerencia();
 		inicializaCampos();
 
-/*		if(ControladorIGrafu.modoManualBootstrap.getJRadioButtonModoManualBootstrapNao().isSelected()) {
+		if(ControladorIGrafu.modoManualBootstrap.getJRadioButtonModoManualBootstrapNao().isSelected()) {
 			if(ControladorIGrafu.conversor != null){
 				if(ControladorIGrafu.conversor.getJTextFieldArquivoEntrada().getText() != "") {
 					ControladorIGrafu.digrafu.getJTextFieldArquivoSequencia().setText(ControladorIGrafu.conversor.getJTextFieldArquivoEntrada().getText());
@@ -120,7 +120,7 @@ public class ControladorDIGRAFU
 					ControladorIGrafu.modoExecucao.getJTextFieldArquivoSequencia().setText(ControladorIGrafu.seqboot.getJTextFieldArquivoSequencia().getText());
 				}
 			}
-		}*/
+		}
 
 
                 
@@ -524,13 +524,13 @@ public class ControladorDIGRAFU
 		}
 		
 	}
-
+*/
 	 // Trata Eventos
 	 
 	public void actionPerformed(ActionEvent e) {
 
 		// DNA
-		
+		/*
 		if(e.getSource() == ControladorIGrafu.digrafu.getComboModeloDNA()){
 			
 			atualizaPainelPrincipal(GeraParametrosDIGRAFU.getModeloDNA());
@@ -549,7 +549,7 @@ public class ControladorDIGRAFU
 			cl.show(ControladorIGrafu.digrafu.getPainelCardModelo(), (String)ControladorIGrafu.digrafu.getComboTipo().getSelectedItem());
 			System.out.println(e.getActionCommand());
 		}
-/*		
+		
 		if(e.getSource() == ControladorIGrafu.digrafu.getCampoNumericoCV()){
 			if(ControladorIGrafu.digrafu.getCampoNumericoCV().getlength() > 0)
 				ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(true);
@@ -566,7 +566,7 @@ public class ControladorDIGRAFU
 			}
 			
 		}
-		*/
+		
 		if(e.getSource() == ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes()){
 			
 			if(ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().isSelected()){
@@ -650,21 +650,21 @@ public class ControladorDIGRAFU
                 Navegar.navegar.abreArquivos();
                 if(Navegar.getReturnVal() == JFileChooser.APPROVE_OPTION) {
                 	ControladorIGrafu.digrafu.getCampoTextoPesosDoArquivo().setText(Navegar.file.getAbsolutePath());
-/*                	arquivo = new BufferedReader(new FileReader(Navegar.file.getAbsolutePath()));
+                	arquivo = new BufferedReader(new FileReader(Navegar.file.getAbsolutePath()));
                 	String linha;
                 	while((linha = arquivo.readLine()) != null)
-                		ControladorIGrafu.digrafu.getAreaTextoPesos().setText(linha);*/
+                		ControladorIGrafu.digrafu.getAreaTextoPesos().setText(linha);
                 }
             }
             catch (NullPointerException nullPointerException) {
                 JOptionPane.showMessageDialog(null, "ERRO - Arquivos", ERRO, JOptionPane.ERROR_MESSAGE);
             }
-/*            catch (FileNotFoundException f) {
+            catch (FileNotFoundException f) {
                 JOptionPane.showMessageDialog(null, "ERRO - Arquivo não encontrado.", ERRO, JOptionPane.ERROR_MESSAGE);
 			}
             catch (IOException g) {
                 JOptionPane.showMessageDialog(null, "ERRO - IO", ERRO, JOptionPane.ERROR_MESSAGE);
-			}*/
+			}
             
         }
 		
@@ -736,21 +736,21 @@ public class ControladorDIGRAFU
                 Navegar.navegar.abreArquivos();
                 if(Navegar.getReturnVal() == JFileChooser.APPROVE_OPTION) {
                 	ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setText(Navegar.file.getAbsolutePath());
-/*                	arquivo = new BufferedReader(new FileReader(Navegar.file.getAbsolutePath()));
+                	arquivo = new BufferedReader(new FileReader(Navegar.file.getAbsolutePath()));
                 	String linha;
                 	while((linha = arquivo.readLine()) != null)
-                		ControladorIGrafu.digrafu.getAreaTextoCategorias().setText(linha);*/
+                		ControladorIGrafu.digrafu.getAreaTextoCategorias().setText(linha);
                 }
             }
             catch (NullPointerException nullPointerException) {
                 JOptionPane.showMessageDialog(null, "ERRO - Arquivos", ERRO, JOptionPane.ERROR_MESSAGE);
             }
-/*            catch (FileNotFoundException f) {
+            catch (FileNotFoundException f) {
                 JOptionPane.showMessageDialog(null, "ERRO - Arquivo não encontrado.", ERRO, JOptionPane.ERROR_MESSAGE);
 			}
             catch (IOException g) {
                 JOptionPane.showMessageDialog(null, "ERRO - IO", ERRO, JOptionPane.ERROR_MESSAGE);
-			}*/
+			}
             
         }
 		
@@ -806,7 +806,7 @@ public class ControladorDIGRAFU
 			}
 			
 		}
-
+*/
 		if (e.getSource() == ControladorIGrafu.digrafu.getBotaoEditor()) {
 			
 			new ControladorEditor();
@@ -954,7 +954,7 @@ public class ControladorDIGRAFU
 	}
 	
 	public void keyReleased(KeyEvent e){
-		
+		/*
 		if(e.getSource() == ControladorIGrafu.digrafu.getCampoNumericoCV()){
 			if(ControladorIGrafu.digrafu.getCampoNumericoCV().getlength() > 0){
 				ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(true);
@@ -977,11 +977,11 @@ public class ControladorDIGRAFU
 
 		if(e.getSource() == field.getTextField())
 			habilitaCategorias(Integer.parseInt(field.getTextField().getText()));
-		
+		*/
 	}
 	
 	public void stateChanged(ChangeEvent e){
-
+/*
 		if( e.getSource() == ControladorIGrafu.digrafu.getSliderFrequenciasA() ||
 			e.getSource() == ControladorIGrafu.digrafu.getSliderFrequenciasC() ||
 			e.getSource() == ControladorIGrafu.digrafu.getSliderFrequenciasG() ||
@@ -1045,9 +1045,9 @@ public class ControladorDIGRAFU
 		
 		if(e.getSource() == ControladorIGrafu.digrafu.getSpinnerCategoriasNum())
 			habilitaCategorias((Integer)ControladorIGrafu.digrafu.getSpinnerCategoriasNum().getValue());
-		
+		*/
 	}
-	
+	/*
 	private void habilitaCategorias(Integer num){
 		
 
@@ -1245,7 +1245,7 @@ public class ControladorDIGRAFU
 		
 		ControladorIGrafu.digrafu.getLabelFrequenciasTotalNum().setText(String.format("%.2f", frequenciaTotal));
 		
-/*		if(frequenciaTotal <= 1.0 )
+		if(frequenciaTotal <= 1.0 )
 			ControladorIGrafu.digrafu.getLabelFrequenciasTotalNum().setText(String.format("%.2f", frequenciaTotal));
 		else{
 			ControladorIGrafu.digrafu.getSliderFrequenciasA().setValue(100 - (
@@ -1254,7 +1254,7 @@ public class ControladorDIGRAFU
 					ControladorIGrafu.digrafu.getSliderFrequenciasC().getValue()));
 			JOptionPane.showMessageDialog(null, "A soma das frequências deve ser igual a 1", ERRO, JOptionPane.ERROR_MESSAGE);
 			return;
-		}*/
+		}
 		
 	}
 	
@@ -1281,7 +1281,7 @@ public class ControladorDIGRAFU
 		
 	}
 
-	
+	*/
 	 // Metodo de traducao Portugues/Ingles
 /*	 
 	public static void traduzir() {

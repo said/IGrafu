@@ -1,41 +1,29 @@
 package br.uesc.computacao.estagio.apresentacao.GUI;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.LayoutManager;
 import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
@@ -43,56 +31,27 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SpringLayout;
-import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
-import br.uesc.computacao.estagio.aplicacao.controlador.ControladorConversor;
-import br.uesc.computacao.estagio.aplicacao.controlador.ControladorIGrafu;
 import br.uesc.computacao.estagio.aplicacao.util.JNumberFloatField;
 
-//import br.uesc.computacao.estagio.aplicacao.util.JNumberField;
+public class PainelParametrosDigrafu extends JPanel {
 
-
-/**
- * Tela do DiGrafu
- * @author Gilmar
- * 
- */
-
-public class DIGRAFU extends JFrame {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	int nivel1 = 40;
-	int nivel2 = 98;
-	int nivel3 = 260;
-	int coluna1 = 20;
-	int coluna2 = 340;
+	int nivel1 = 5;
+	int nivel2 = 68;
+	int nivel3 = 230;
+	int coluna1 = 10;
+	int coluna2 = 320;
 	Dimension size1 = new Dimension(300, 58);
 	Dimension size2 = new Dimension(300, 140);
-	Dimension size3 = new Dimension(300, 150);
+	Dimension size3 = new Dimension(300, 145);
 	
 	public static int x;
-	public static int y;
-	
-	private JPanel painelPrincipal = null;
-	private JTabbedPane painelAbasDigrafu = null;
-	private JMenuBar barraMenuPrincipal = null;
-	private JMenu menuArquivo = null;
-	private JMenu menuConfiguracao = null;
-	private JMenu menuAjuda = null;
-	private JProgressBar barraProgressoExecucao = null;
-	
-	private PainelParametrosDigrafu abaDNA = null;
-	private PainelParametrosDigrafu abaProteina = null;
+	public static int y;		
 	
 	// Painéis para os parâmetros do DiGrafu
 	private JPanel painelSequencia = null;
-	/*	private JPanel painelTipo = null;
+	private JPanel painelTipo = null;
 	private JPanel painelModelo = null;
 	private JPanel painelTransicaoTransversao = null;
 	private JPanel painelPesos = null;
@@ -104,11 +63,11 @@ public class DIGRAFU extends JFrame {
 	
 	
 	// Componentes dos painéis
-	*/
+	
 	// Sequência
 	private JLabel labelSequencia = null;
 	private JTextField campoTextoSequencia = null;
-	/*
+	
 	// Tipo
 	private JLabel labelTipo = null;
 	private JComboBox comboTipo = null;
@@ -209,228 +168,21 @@ public class DIGRAFU extends JFrame {
 	private JLabel labelPreferencia = null;
 	private JCheckBox checkBoxExatidao = null;
 	private JCheckBox checkBoxExecucao = null;
-	*/
 	
-	// Botoes
-	private JButton botaoInicio = null;
-	private JButton botaoEditor = null;
-	private JButton botaoVoltar = null;
-	private JButton botaoExecutar = null;
-	private JButton botaoVisualizar = null;
-
-	
-	// Janelinha de modo de execução
-	private JDialog dialogoModoExecucao = null;
-	private JTabbedPane painelAbasModoExecucao = null;
-	private JPanel painelModoExecucao = null;
-	private JPanel painelModoExecucaoSequencial = null;
-	private JPanel painelModoExecucaoParalela = null;
-	private JComboBox comboModoExecucaoSequencial = null;
-	private JComboBox comboModoExecucaoParalela = null;
-	private JButton botaoModoExecucaoExecutar = null;
-	
-	
-	public DIGRAFU(){
+	public PainelParametrosDigrafu() {
+		
 		super();
-		initialize();
-	}
-	
-	private void initialize(){
-		this.setSize(790, 470);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/br/uesc/computacao/estagio/apresentacao/figuras/IGrafuAF.png")));
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation( ( dimension.width - getSize().width )/2, ( dimension.height - getSize().height )/2 );
-        this.setJMenuBar(getBarraMenuPrincipal());
-        this.setContentPane(getPainelPrincipal());
-        this.setTitle("IGRAFU: DiGrafu - DNA");
-        this.setResizable(false);
-	}
 		
-	public JMenuBar getBarraMenuPrincipal(){
+		setBackground(new Color(173, 200, 226));
+		setLayout(null);
 		
-		if(barraMenuPrincipal == null){
-			barraMenuPrincipal = new JMenuBar();
-			barraMenuPrincipal.add(getMenuArquivo());
-			barraMenuPrincipal.add(getMenuConfiguracao());
-			barraMenuPrincipal.add(getMenuAjuda());
-		}
-		return barraMenuPrincipal;
-		
-	}
-	
-	public JPanel getPainelPrincipal(){
-				
-		if(painelPrincipal == null){
-
-			painelPrincipal = new JPanel();
-            
-			painelPrincipal.setBackground(new Color(230, 234, 240)); 
-			painelPrincipal.setLayout(null);
-			
-			painelPrincipal.add(getPainelAbasDigrafu());
-			painelPrincipal.add(getPainelSequencia());
-/*			painelPrincipal.add(getPainelTipo());
-			painelPrincipal.add(getPainelModelo());
-			painelPrincipal.add(getPainelTransicaoTransversao());
-			painelPrincipal.add(getPainelPesos());
-			painelPrincipal.add(getPainelDistribuicaoGamma());
-			painelPrincipal.add(getPainelCategorias());
-			painelPrincipal.add(getPainelFrequencias());
-			painelPrincipal.add(getPainelPreferencia());*/
-			painelPrincipal.add(getBotaoInicio());
-			painelPrincipal.add(getBotaoEditor());
-			painelPrincipal.add(getBotaoVoltar());
-			painelPrincipal.add(getBotaoExecutar());
-			painelPrincipal.add(getBotaoVisualizar());
-			painelPrincipal.add(getBarraProgressoExecucao());
-						
-		}
-		return painelPrincipal;
-		
-	}
-	
-	public JMenu getMenuArquivo(){
-		
-		if(menuArquivo == null){
-			menuArquivo = new JMenu("Arquivo");
-		}
-		return menuArquivo;
-		
-	}
-	
-	public JMenu getMenuConfiguracao(){
-		
-		if(menuConfiguracao == null){
-			menuConfiguracao = new JMenu("Configuracao");
-		}
-		return menuConfiguracao;
-		
-	}
-	
-	public JMenu getMenuAjuda(){
-		
-		if(menuAjuda == null){
-			menuAjuda = new JMenu("Ajuda");
-		}
-		return menuAjuda;
-		
-	}
-	
-	public JPanel getPainelSequencia(){
-				
-		if(painelSequencia == null){
-			painelSequencia = new JPanel();
-			painelSequencia.setLayout(null);
-			painelSequencia.setBackground(new Color(173, 200, 226));// 230, 234, 240
-			painelSequencia.setSize(new Dimension(518, 22)); // no topo: (788, 20)
-			painelSequencia.setLocation(new Point(120, 12)); // no topo: (0, 0)
-			painelSequencia.add(getLabelSequencia(), BorderLayout.LINE_START);
-			painelSequencia.add(getCampoTextoSequencia(), BorderLayout.LINE_START);
-			painelSequencia.setBorder(BorderFactory.createLineBorder(new Color(133, 170, 206)));
-		}
-		return painelSequencia;
-		
-	}
-	
-	public JLabel getLabelSequencia(){
-		
-		if(labelSequencia == null){
-			labelSequencia = new JLabel();
-			labelSequencia.setFont(new Font("Arial", Font.BOLD, 12));
-			labelSequencia.setSize(new Dimension(70, 18));
-			labelSequencia.setLocation(new Point(10, 2));
-			labelSequencia.setText("Sequência: ");
-		}
-		return labelSequencia;
-		
-	}
-	
-	public JTextField getCampoTextoSequencia(){
-		
-		if(campoTextoSequencia == null){
-			campoTextoSequencia = new JTextField(18);
-			campoTextoSequencia.setSize(new Dimension(436, 18));
-			campoTextoSequencia.setLocation(new Point(80, 2));
-			campoTextoSequencia.setEditable(false);
-		}
-		return campoTextoSequencia;
-		
-	}
-	
-	public JTabbedPane getPainelAbasDigrafu(){
-		
-		if(painelAbasDigrafu == null){
-			painelAbasDigrafu = new JTabbedPane();
-			painelAbasDigrafu.setLocation(new Point(10, 10));
-			painelAbasDigrafu.setSize(630, 410);
-			painelAbasDigrafu.setBackground(new Color(192, 209, 226));
-			painelAbasDigrafu.addTab("DNA", null, getAbaDNA(), null);
-			painelAbasDigrafu.addTab("Proteina", null, getAbaProteina(), null);
-		}
-		return painelAbasDigrafu;
-	}
-
-	public PainelParametrosDigrafu getAbaDNA(){
-		
-		if(abaDNA == null){
-			abaDNA = new PainelParametrosDigrafu();
-			// abaDNA.setBounds(new Rectangle(0, 0, 242, 143));
-		}
-		return abaDNA;
-	}
-	
-	public PainelParametrosDigrafu getAbaProteina(){
-		
-		if(abaProteina == null){
-			abaProteina = new PainelParametrosDigrafu();
-			// abaProteina.setBounds(new Rectangle(0, 0, 242, 143));
-		}
-		return abaProteina;
-	}
-	
-	/*
-	public JPanel getPainelTipo(){
-		
-		TitledBorder bordaTitulo = null;
-		
-		if(painelTipo == null){
-			painelTipo = new JPanel();
-			painelTipo.setBackground(new Color(173, 200, 226));
-			painelTipo.setSize(new Dimension((size1.width/2)-5, size1.height));
-			painelTipo.setLocation(new Point(coluna1, nivel1));
-			bordaTitulo = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.white), "Tipo");
-			bordaTitulo.setTitleJustification(TitledBorder.CENTER);
-			bordaTitulo.setTitleFont(new Font("Arial", Font.BOLD, 12));
-			painelTipo.setBorder(bordaTitulo);
-			// painelTipo.add(getLabelTipo());
-			painelTipo.add(getComboTipo());
-		}
-		return painelTipo;
-		
-	}
-
-	public JLabel getLabelTipo(){
-		
-		if(labelTipo == null){
-			labelTipo = new JLabel();
-			labelTipo.setFont(new Font("Arial", Font.PLAIN, 12));
-			labelTipo.setSize(new Dimension(78, 20));
-			labelTipo.setLocation(new Point(10, 0));
-			labelTipo.setText("Tipo");
-		}
-		return labelTipo;
-		
-	}
-	
-	public JComboBox getComboTipo(){
-		
-		String[] modelos = {"dna", "proteína"};
-		
-		if(comboTipo == null){
-			comboTipo = new JComboBox(modelos);
-			comboTipo.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		}
-		return comboTipo;
+		add(getPainelModelo());
+		add(getPainelTransicaoTransversao());
+		add(getPainelPesos());
+		add(getPainelDistribuicaoGamma());
+		add(getPainelCategorias());
+		add(getPainelFrequencias());
+		add(getPainelPreferencia());
 		
 	}
 	
@@ -441,8 +193,8 @@ public class DIGRAFU extends JFrame {
 		if(painelModelo == null){
 			painelModelo = new JPanel();
 			painelModelo.setBackground(new Color(173, 200, 226));
-			painelModelo.setSize(new Dimension((size1.width/2)-5, size1.height));
-			painelModelo.setLocation(new Point(coluna1+painelModelo.getWidth()+10, nivel1));
+			painelModelo.setSize(new Dimension(size1.width, size1.height));
+			painelModelo.setLocation(new Point(coluna1, nivel1));
 			bordaTitulo = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.white), "Modelo");
 			bordaTitulo.setTitleJustification(TitledBorder.CENTER);
 			bordaTitulo.setTitleFont(new Font("Arial", Font.BOLD, 12));
@@ -562,11 +314,11 @@ public class DIGRAFU extends JFrame {
 			c.ipady = 0;
 			painelPesos.add(getCheckBoxPesos(), c);
 			
-			c.gridx = 0;
+/*			c.gridx = 0;
 			c.gridy = 1;
 			c.anchor = GridBagConstraints.CENTER;
 			c.gridwidth = 1;
-			painelPesos.add(getLabelPesosDoArquivo(), c);
+			painelPesos.add(getLabelPesosDoArquivo(), c);*/
 			
 			c.gridx = 0;
 			c.gridy = 1;
@@ -588,7 +340,7 @@ public class DIGRAFU extends JFrame {
 			c.insets = new Insets(3, 3, 3, 3);
 			painelPesos.add(getPainelCardPesos(), c);
 			
-			
+/*			
 			c.gridx = 1;
 			c.gridy = 0;
 			c.gridwidth = 1;
@@ -597,7 +349,7 @@ public class DIGRAFU extends JFrame {
 			c.gridx = 0;
 			c.gridy = 2;
 			c.gridwidth = 2;
-			painelPesos.add(getPainelRolagemAreaTextoPesos(), c);
+			painelPesos.add(getPainelRolagemAreaTextoPesos(), c);*/
 			// painelPesos.add(getAreaTextoPesos());
 
 			getGrupoBotoesPesos();
@@ -1188,7 +940,7 @@ public class DIGRAFU extends JFrame {
 			// c.anchor = GridBagConstraints.PAGE_START;
 			painelCategorias.add(getCheckBoxCategorias(), c);
 			
-			c.gridx = 0;
+/*			c.gridx = 0;
 			c.gridy = 0;
 			c.gridwidth = 5;
 			//c.gridheight = 5;
@@ -1199,7 +951,7 @@ public class DIGRAFU extends JFrame {
 			c.insets = new Insets(0, 0, 0, 0);
 			//c.ipadx = 0;
 			//c.ipady = 0;
-			painelCategorias.add(getCheckBoxCategorias(), c);
+			painelCategorias.add(getCheckBoxCategorias(), c);*/
 			
 			c.gridx = 0;
 			c.gridy = 1;
@@ -1341,7 +1093,7 @@ public class DIGRAFU extends JFrame {
 			c.anchor = GridBagConstraints.CENTER;
 			painelCategorias.add(getCampoNumericoCategoria9(), c);
 			
-			c.gridx = 0;
+/*			c.gridx = 0;
 			c.gridy = 3;
 			c.gridwidth = 3;
 			c.ipadx = 0;
@@ -1352,21 +1104,21 @@ public class DIGRAFU extends JFrame {
 			c.gridy = 3;
 			c.gridwidth = 2;
 			c.anchor = GridBagConstraints.LINE_START;
-			painelCategorias.add(getBotaoCategoriasAbrir(), c);
+			painelCategorias.add(getBotaoCategoriasAbrir(), c);*/
 
 			
-			c.gridx = 0;
+/*			c.gridx = 0;
 			c.gridy = 4;
 			c.gridwidth = 5;
 			c.anchor = GridBagConstraints.CENTER;
-			painelCategorias.add(getPainelRolagemAreaTextoCategorias(), c);
+			painelCategorias.add(getPainelRolagemAreaTextoCategorias(), c);*/
 			
 			
-			c.gridx = 0;
+/*			c.gridx = 0;
 			c.gridy = 1;
 			c.anchor = GridBagConstraints.CENTER;
 			c.gridwidth = 1;
-			painelPesos.add(getLabelCategoriasDoArquivo(), c);
+			painelPesos.add(getLabelCategoriasDoArquivo(), c);*/
 			
 			c.ipadx = 0;
 			c.gridx = 0;
@@ -1812,205 +1564,6 @@ public class DIGRAFU extends JFrame {
 		}
 		return checkBoxExecucao;
 	}
-	*/
 	
-	// Botões laterais
-	
-/*	public JPanel getPainelBotoes(){
-		
-		if(painelBotoes == null){
-			painelBotoes = new JPanel();
-			painelBotoes.setLayout(new BoxLayout(painelBotoes, BoxLayout.Y_AXIS));
-			painelBotoes.setBackground(new Color(173, 200, 226));
-			//painelBotoes.setSize(new Dimension(700, 60));
-			//painelBotoes.setLocation(new Point(0, 31));
-			painelBotoes.add(getBotaoInicio());
-			painelBotoes.add(getBotaoEditor());
-			painelBotoes.add(getBotaoVoltar());
-			painelBotoes.add(getBotaoExecutar());
-			painelBotoes.add(getBotaoVisualizar());
-		}
-		return painelBotoes;
-		
-	}*/
-	
-	public JButton getBotaoInicio(){
-		if(botaoInicio == null){
-			botaoInicio = new JButton();
-			botaoInicio.setBounds(new Rectangle(663+x, 150+y, 117, 25));
-			botaoInicio.setText("Início");
-			botaoInicio.setFont(new Font("Dialog", Font.BOLD, 10));
-			botaoInicio.setIcon(new ImageIcon(getClass().getResource("/br/uesc/computacao/estagio/apresentacao/figuras/home.png")));
-			botaoInicio.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		}
-		return botaoInicio;
-	}
-	
-	public JButton getBotaoEditor(){
-		if(botaoEditor == null){
-			botaoEditor = new JButton();
-			botaoEditor.setText("Editor");
-			botaoEditor.setSize(new Dimension(117, 25));
-			botaoEditor.setIcon(new ImageIcon(getClass().getResource("/br/uesc/computacao/estagio/apresentacao/figuras/filoEditor.png")));
-			botaoEditor.setFont(new Font("Dialog", Font.BOLD, 10));
-			botaoEditor.setLocation(new Point(663, 276));
-			botaoEditor.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		}
-		
-		return botaoEditor;
-	}
-	
-	public JButton getBotaoVoltar(){
-		if(botaoVoltar == null){
-			botaoVoltar = new JButton();
-			botaoVoltar.setText("Voltar");
-			botaoVoltar.setSize(new Dimension(117, 25));
-			botaoVoltar.setLocation(new Point(663, 120));
-			botaoVoltar.setFont(new Font("Arial", Font.BOLD, 10));
-			botaoVoltar.setIcon(new ImageIcon(getClass().getResource("/br/uesc/computacao/estagio/apresentacao/figuras/voltar.png")));
-			botaoVoltar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		}
-		return botaoVoltar;
-	}
-	
-	public JButton getBotaoExecutar(){
-		if(botaoExecutar == null){
-			botaoExecutar = new JButton();
-			botaoExecutar.setIcon(new ImageIcon(getClass().getResource("/br/uesc/computacao/estagio/apresentacao/figuras/Ok.png")));
-			botaoExecutar.setFont(new Font("Arial", Font.BOLD, 10));
-			botaoExecutar.setSize(new Dimension(117, 25));
-			botaoExecutar.setLocation(new Point(663, 70));
-			botaoExecutar.setText("Executar");
-			botaoExecutar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		}
-		return botaoExecutar;
-	}
-	
-	public JButton getBotaoVisualizar(){
-		if(botaoVisualizar == null){
-			botaoVisualizar = new JButton();
-			botaoVisualizar.setIcon(new ImageIcon(getClass().getResource("/br/uesc/computacao/estagio/apresentacao/figuras/HyperTree.gif")));
-			botaoVisualizar.setLocation(new Point(663, 326));
-			botaoVisualizar.setSize(new Dimension(117, 25));
-			botaoVisualizar.setText("Visualizar");
-			botaoVisualizar.setFont(new Font("Arial", Font.BOLD, 10));
-			botaoVisualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		}
-		return botaoVisualizar;
-	}
-	
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * Janelinha de Execução
-	 */
 
-	public JDialog getDialogoModoExecucao() {
-		if (dialogoModoExecucao == null) {
-			dialogoModoExecucao = new JDialog(this);
-			dialogoModoExecucao.setSize(new Dimension(252, 210));
-			dialogoModoExecucao.setTitle("Modo de Execução");
-			dialogoModoExecucao.setContentPane(getPainelModoExecucao());
-			dialogoModoExecucao.setResizable(false);
-
-			Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-			dialogoModoExecucao.setLocation(
-					(dimension.width - ControladorIGrafu.digrafu.getX()) / 2,
-					(dimension.height - ControladorIGrafu.digrafu.getY()) / 2
-			);
-
-			dialogoModoExecucao.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		}
-		return dialogoModoExecucao;
-	}
-
-	public JPanel getPainelModoExecucao() {
-		if (painelModoExecucao == null) {
-			painelModoExecucao = new JPanel();
-			painelModoExecucao.setLayout(null);
-			painelModoExecucao.setBackground(new Color(230, 234, 240));
-			painelModoExecucao.add(getPainelAbasModoExecucao(), null);
-			painelModoExecucao.add(getBotaoModoExecucaoExecutar(), null);
-		}
-		return painelModoExecucao;
-	}
-
-	public JTabbedPane getPainelAbasModoExecucao() {
-		if (painelAbasModoExecucao == null) {
-			painelAbasModoExecucao = new JTabbedPane();
-			painelAbasModoExecucao.setBounds(new Rectangle(0, 0, 242, 143));
-			painelAbasModoExecucao.addTab("Sequencial", null, getPainelModoExecucaoSequencial(), null);
-			painelAbasModoExecucao.addTab("Paralela", null, getPainelModoExecucaoParalela(), null);
-		}
-		return painelAbasModoExecucao;
-	}
-	
-	public JPanel getPainelModoExecucaoSequencial() {
-		
-		if (painelModoExecucaoSequencial == null) {
-			painelModoExecucaoSequencial = new JPanel();
-			painelModoExecucaoSequencial.setLayout(null);
-			painelModoExecucaoSequencial.setBackground(new Color(173, 200, 226));
-			painelModoExecucaoSequencial.add(getComboModoExecucaoSequencial(), null);
-		}
-		return painelModoExecucaoSequencial;
-	}
-
-	public JComboBox getComboModoExecucaoSequencial(){
-		
-		String[] localExecucao = {"Servidor", "Nó 1", "Nó 2", "Nó 3", "Nó 4"};
-		
-		if(comboModoExecucaoSequencial == null){
-			comboModoExecucaoSequencial = new JComboBox(localExecucao);
-			comboModoExecucaoSequencial.setLocation(new Point(70, 41));
-			comboModoExecucaoSequencial.setSize(new Dimension(105, 20));
-			comboModoExecucaoSequencial.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		}
-		return comboModoExecucaoSequencial;
-		
-	}
-	
-	public JPanel getPainelModoExecucaoParalela() {
-		if (painelModoExecucaoParalela == null) {
-			painelModoExecucaoParalela = new JPanel();
-			painelModoExecucaoParalela.setLayout(null);
-			painelModoExecucaoParalela.setBackground(new Color(173, 200, 226));
-			painelModoExecucaoParalela.add(getComboModoExecucaoSequencial(), null);
-		}
-		return painelModoExecucaoParalela;
-	}
-	
-	public JComboBox getComboModoExecucaoParalela(){
-		
-		String[] numProcessadores = {"2", "3", "4"};
-		
-		if(comboModoExecucaoParalela == null){
-			comboModoExecucaoParalela = new JComboBox(numProcessadores);
-			comboModoExecucaoParalela.setLocation(new Point(70, 41));
-			comboModoExecucaoParalela.setSize(new Dimension(105, 20));
-			comboModoExecucaoParalela.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		}
-		return comboModoExecucaoParalela;
-		
-	}
-	
-	public JButton getBotaoModoExecucaoExecutar() {
-		if (botaoModoExecucaoExecutar == null) {
-			botaoModoExecucaoExecutar = new JButton();
-			botaoModoExecucaoExecutar.setSize(new Dimension(99, 22));
-			botaoModoExecucaoExecutar.setLocation(new Point(71, 152));
-			botaoModoExecucaoExecutar.setText("Executar");
-		}
-		return botaoModoExecucaoExecutar;
-	}
-	
-	public JProgressBar getBarraProgressoExecucao() {
-		if (barraProgressoExecucao == null) {
-			barraProgressoExecucao = new JProgressBar();
-			barraProgressoExecucao.setSize(new Dimension(130, 15));
-			barraProgressoExecucao.setLocation(new Point(650, 400));
-			barraProgressoExecucao.setVisible(false);
-		}
-		return barraProgressoExecucao;
-	}
-	
 }
