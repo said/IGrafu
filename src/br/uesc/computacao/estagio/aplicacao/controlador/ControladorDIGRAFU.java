@@ -11,6 +11,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -42,7 +44,7 @@ import br.uesc.computacao.estagio.apresentacao.GUI.DIGRAFU;
  */
 
 public class ControladorDIGRAFU
-		implements ActionListener, ChangeListener, KeyListener {
+		implements ActionListener, ChangeListener, KeyListener, ItemListener {
 
 	/*
 	 * Variaveis Globais
@@ -93,7 +95,7 @@ public class ControladorDIGRAFU
 		ControladorIGrafu.digrafu.setVisible(true);
 		//System.gc();
 		//ControladorIGrafu.digrafu.getJTabbedPaneModelosAA().setToolTipText("O tipo de dado selecionado é DNA.");
-		ControladorIGrafu.digrafu.repaint();
+		// ControladorIGrafu.digrafu.repaint();
 
 
 	}
@@ -128,7 +130,8 @@ public class ControladorDIGRAFU
 	 
 	public void inicializaGerencia() {
 
-		ControladorIGrafu.digrafu.getComboTipo().addActionListener(this);
+		// ControladorIGrafu.digrafu.getComboTipo().addActionListener(this);
+		ControladorIGrafu.digrafu.getComboTipo().addItemListener(this);
 		ControladorIGrafu.digrafu.getComboModeloDNA().addActionListener(this);
 		ControladorIGrafu.digrafu.getComboModeloProteina().addActionListener(this);
 		ControladorIGrafu.digrafu.getCampoNumericoTransicaoTransversao().addActionListener(this);
@@ -206,7 +209,6 @@ public class ControladorDIGRAFU
 		ControladorIGrafu.digrafu.getComboTipo().setSelectedIndex(0);
 		// ControladorIGrafu.digrafu.getComboModelo().setSelectedIndex(0);
 		ControladorIGrafu.digrafu.getComboModeloDNA().setSelectedIndex(0);
-		// ControladorIGrafu.digrafu.getComboModeloDNA().setSelectedIndex(0);
 		
 		ControladorIGrafu.digrafu.getCampoNumericoTransicaoTransversao().setValue(2);
 		
@@ -240,238 +242,24 @@ public class ControladorDIGRAFU
 	}
 	
 	private void atualizaPainelPrincipal(int modelo){
-		
-		switch(modelo){
-				
-			case GeraParametrosDIGRAFU.LOGDET:
-
-				ControladorIGrafu.digrafu.getCampoNumericoTransicaoTransversao().setEnabled(false);
-				
-				ControladorIGrafu.digrafu.getLabelCoeficienteVariacao().setEnabled(false);
-				ControladorIGrafu.digrafu.getCampoNumericoCV().setEnabled(false);
-				ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(false);
-				ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(false);
-				
-				// ControladorIGrafu.digrafu.getPainelFrequencias().setEnabled(false);
-				ControladorIGrafu.digrafu.getCheckBoxFrequenciasEmpiricas().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasA().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasC().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasG().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasT().setEnabled(false);
-				ControladorIGrafu.digrafu.getSliderFrequenciasA().setEnabled(false);
-				ControladorIGrafu.digrafu.getSliderFrequenciasC().setEnabled(false);
-				ControladorIGrafu.digrafu.getSliderFrequenciasG().setEnabled(false);
-				ControladorIGrafu.digrafu.getSliderFrequenciasT().setEnabled(false);
-				ControladorIGrafu.digrafu.getSpinnerFrequenciasA().setEnabled(false);
-				ControladorIGrafu.digrafu.getSpinnerFrequenciasC().setEnabled(false);
-				ControladorIGrafu.digrafu.getSpinnerFrequenciasG().setEnabled(false);
-				ControladorIGrafu.digrafu.getSpinnerFrequenciasT().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasTotal().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasTotalNum().setEnabled(false);
-				
-				ControladorIGrafu.digrafu.getLabelCategoriasDefinir().setEnabled(false);
-				ControladorIGrafu.digrafu.getCheckBoxCategorias().setEnabled(false);
-				ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(false);
-				ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(false);
-				ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setEnabled(false);
-				ControladorIGrafu.digrafu.getBotaoEditarCategorias().setEnabled(false);
-				ControladorIGrafu.digrafu.getBotaoLimparCategorias().setEnabled(false);
-				ControladorIGrafu.digrafu.getAreaTextoCategorias().setEnabled(false);
-				ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setEnabled(false);
-				ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setEnabled(false);
-				ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(false);
-				ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(false);
-				desabilitaCategorias();
-				
-				break;
-				
-			case GeraParametrosDIGRAFU.JC69:
-
-				ControladorIGrafu.digrafu.getCampoNumericoTransicaoTransversao().setEnabled(false);
-				
-				ControladorIGrafu.digrafu.getLabelCoeficienteVariacao().setEnabled(true);
-				ControladorIGrafu.digrafu.getCampoNumericoCV().setEnabled(true);
-				
-				if(ControladorIGrafu.digrafu.getCampoNumericoCV().getlength() > 0)
-					ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(true);
-				else 
+		// System.out.println("Tipo: "+GeraParametrosDIGRAFU.getTipo());
+		// System.out.println("Modelo: "+modelo);
+		if(GeraParametrosDIGRAFU.getTipo() == "dna"){
+			
+			switch(modelo){
+					
+				case GeraParametrosDIGRAFU.LOGDET:
+	
+					ControladorIGrafu.digrafu.getCampoNumericoTransicaoTransversao().setEnabled(false);
+					
+					ControladorIGrafu.digrafu.getLabelCoeficienteVariacao().setEnabled(false);
+					ControladorIGrafu.digrafu.getCampoNumericoCV().setEnabled(false);
 					ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(false);
-				
-				if(ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().isSelected()){
-					ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(true);
-					ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(true);
-				}
-				else{
 					ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(false);
 					ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(false);
-				}
-				
-				// ControladorIGrafu.digrafu.getPainelFrequencias().setEnabled(false);
-				ControladorIGrafu.digrafu.getCheckBoxFrequenciasEmpiricas().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasA().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasC().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasG().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasT().setEnabled(false);
-				ControladorIGrafu.digrafu.getSliderFrequenciasA().setEnabled(false);
-				ControladorIGrafu.digrafu.getSliderFrequenciasC().setEnabled(false);
-				ControladorIGrafu.digrafu.getSliderFrequenciasG().setEnabled(false);
-				ControladorIGrafu.digrafu.getSliderFrequenciasT().setEnabled(false);
-				ControladorIGrafu.digrafu.getSpinnerFrequenciasA().setEnabled(false);
-				ControladorIGrafu.digrafu.getSpinnerFrequenciasC().setEnabled(false);
-				ControladorIGrafu.digrafu.getSpinnerFrequenciasG().setEnabled(false);
-				ControladorIGrafu.digrafu.getSpinnerFrequenciasT().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasTotal().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasTotalNum().setEnabled(false);
-
-				ControladorIGrafu.digrafu.getLabelCategoriasDefinir().setEnabled(true);
-				ControladorIGrafu.digrafu.getCheckBoxCategorias().setEnabled(true);
-				
-				if(ControladorIGrafu.digrafu.getCheckBoxCategorias().isSelected()){
-					ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(true);
-					ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(true);
-					ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(true);
-					ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setEnabled(true);
-					ControladorIGrafu.digrafu.getBotaoEditarCategorias().setEnabled(true);
-					ControladorIGrafu.digrafu.getBotaoLimparCategorias().setEnabled(true);
-					ControladorIGrafu.digrafu.getAreaTextoCategorias().setEnabled(true);
-					ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setEnabled(true);
-					ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setEnabled(true);
-					ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(true);
-					ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(true);
-					habilitaCategorias((Integer)ControladorIGrafu.digrafu.getSpinnerCategoriasNum().getValue());
-				}
-				else{
-					ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(false);
-					ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(false);
-					ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(false);
-					ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setEnabled(false);
-					ControladorIGrafu.digrafu.getBotaoEditarCategorias().setEnabled(false);
-					ControladorIGrafu.digrafu.getBotaoLimparCategorias().setEnabled(false);
-					ControladorIGrafu.digrafu.getAreaTextoCategorias().setEnabled(false);
-					ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setEnabled(false);
-					ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setEnabled(false);
-					ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(false);
-					ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(false);
-					desabilitaCategorias();
-				}
-				
-				break;
-				
-			case GeraParametrosDIGRAFU.KIMURA:
-
-				ControladorIGrafu.digrafu.getCampoNumericoTransicaoTransversao().setEnabled(true);
-				
-				ControladorIGrafu.digrafu.getLabelCoeficienteVariacao().setEnabled(true);
-				ControladorIGrafu.digrafu.getCampoNumericoCV().setEnabled(true);
-				
-				if(ControladorIGrafu.digrafu.getCampoNumericoCV().getlength() > 0)
-					ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(true);
-				else 
-					ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(false);
-				
-				if(ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().isSelected()){
-					ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(true);
-					ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(true);
-				}
-				else{
-					ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(false);
-					ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(false);
-				}
-				
-				// ControladorIGrafu.digrafu.getPainelFrequencias().setEnabled(false);
-				ControladorIGrafu.digrafu.getCheckBoxFrequenciasEmpiricas().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasA().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasC().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasG().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasT().setEnabled(false);
-				ControladorIGrafu.digrafu.getSliderFrequenciasA().setEnabled(false);
-				ControladorIGrafu.digrafu.getSliderFrequenciasC().setEnabled(false);
-				ControladorIGrafu.digrafu.getSliderFrequenciasG().setEnabled(false);
-				ControladorIGrafu.digrafu.getSliderFrequenciasT().setEnabled(false);
-				ControladorIGrafu.digrafu.getSpinnerFrequenciasA().setEnabled(false);
-				ControladorIGrafu.digrafu.getSpinnerFrequenciasC().setEnabled(false);
-				ControladorIGrafu.digrafu.getSpinnerFrequenciasG().setEnabled(false);
-				ControladorIGrafu.digrafu.getSpinnerFrequenciasT().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasTotal().setEnabled(false);
-				ControladorIGrafu.digrafu.getLabelFrequenciasTotalNum().setEnabled(false);
-
-				ControladorIGrafu.digrafu.getLabelCategoriasDefinir().setEnabled(true);
-				ControladorIGrafu.digrafu.getCheckBoxCategorias().setEnabled(true);
-				
-				if(ControladorIGrafu.digrafu.getCheckBoxCategorias().isSelected()){
-					ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(true);
-					ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(true);
-					ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(true);
-					ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setEnabled(true);
-					ControladorIGrafu.digrafu.getBotaoEditarCategorias().setEnabled(true);
-					ControladorIGrafu.digrafu.getBotaoLimparCategorias().setEnabled(true);
-					ControladorIGrafu.digrafu.getAreaTextoCategorias().setEnabled(true);
-					ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setEnabled(true);
-					ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setEnabled(true);
-					ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(true);
-					ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(true);
-					habilitaCategorias((Integer)ControladorIGrafu.digrafu.getSpinnerCategoriasNum().getValue());
-				}
-				else{
-					ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(false);
-					ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(false);
-					ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(false);
-					ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setEnabled(false);
-					ControladorIGrafu.digrafu.getBotaoEditarCategorias().setEnabled(false);
-					ControladorIGrafu.digrafu.getBotaoLimparCategorias().setEnabled(false);
-					ControladorIGrafu.digrafu.getAreaTextoCategorias().setEnabled(false);
-					ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setEnabled(false);
-					ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setEnabled(false);
-					ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(false);
-					ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(false);
-					desabilitaCategorias();
-				}
-				
-				break;
-				
-			case GeraParametrosDIGRAFU.F84:
-
-				ControladorIGrafu.digrafu.getCampoNumericoTransicaoTransversao().setEnabled(true);
-				
-				ControladorIGrafu.digrafu.getLabelCoeficienteVariacao().setEnabled(true);
-				ControladorIGrafu.digrafu.getCampoNumericoCV().setEnabled(true);
-				
-				if(ControladorIGrafu.digrafu.getCampoNumericoCV().getlength() > 0)
-					ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(true);
-				else 
-					ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(false);
-				
-				if(ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().isSelected()){
-					ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(true);
-					ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(true);
-				}
-				else{
-					ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(false);
-					ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(false);
-				}
-				
-				// ControladorIGrafu.digrafu.getPainelFrequencias().setEnabled(false);
-				ControladorIGrafu.digrafu.getCheckBoxFrequenciasEmpiricas().setEnabled(true);
-
-				if(ControladorIGrafu.digrafu.getCheckBoxFrequenciasEmpiricas().isSelected()){
-					ControladorIGrafu.digrafu.getLabelFrequenciasA().setEnabled(true);
-					ControladorIGrafu.digrafu.getLabelFrequenciasC().setEnabled(true);
-					ControladorIGrafu.digrafu.getLabelFrequenciasG().setEnabled(true);
-					ControladorIGrafu.digrafu.getLabelFrequenciasT().setEnabled(true);
-					ControladorIGrafu.digrafu.getSliderFrequenciasA().setEnabled(true);
-					ControladorIGrafu.digrafu.getSliderFrequenciasC().setEnabled(true);
-					ControladorIGrafu.digrafu.getSliderFrequenciasG().setEnabled(true);
-					ControladorIGrafu.digrafu.getSliderFrequenciasT().setEnabled(true);
-					ControladorIGrafu.digrafu.getSpinnerFrequenciasA().setEnabled(true);
-					ControladorIGrafu.digrafu.getSpinnerFrequenciasC().setEnabled(true);
-					ControladorIGrafu.digrafu.getSpinnerFrequenciasG().setEnabled(true);
-					ControladorIGrafu.digrafu.getSpinnerFrequenciasT().setEnabled(true);
-					ControladorIGrafu.digrafu.getLabelFrequenciasTotal().setEnabled(true);
-					ControladorIGrafu.digrafu.getLabelFrequenciasTotalNum().setEnabled(true);
-				}
-				else{
+					
+					// ControladorIGrafu.digrafu.getPainelFrequencias().setEnabled(false);
+					ControladorIGrafu.digrafu.getCheckBoxFrequenciasEmpiricas().setEnabled(false);
 					ControladorIGrafu.digrafu.getLabelFrequenciasA().setEnabled(false);
 					ControladorIGrafu.digrafu.getLabelFrequenciasC().setEnabled(false);
 					ControladorIGrafu.digrafu.getLabelFrequenciasG().setEnabled(false);
@@ -486,26 +274,9 @@ public class ControladorDIGRAFU
 					ControladorIGrafu.digrafu.getSpinnerFrequenciasT().setEnabled(false);
 					ControladorIGrafu.digrafu.getLabelFrequenciasTotal().setEnabled(false);
 					ControladorIGrafu.digrafu.getLabelFrequenciasTotalNum().setEnabled(false);
-				}
-
-				ControladorIGrafu.digrafu.getLabelCategoriasDefinir().setEnabled(true);
-				ControladorIGrafu.digrafu.getCheckBoxCategorias().setEnabled(true);
-				
-				if(ControladorIGrafu.digrafu.getCheckBoxCategorias().isSelected()){
-					ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(true);
-					ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(true);
-					ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(true);
-					ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setEnabled(true);
-					ControladorIGrafu.digrafu.getBotaoEditarCategorias().setEnabled(true);
-					ControladorIGrafu.digrafu.getBotaoLimparCategorias().setEnabled(true);
-					ControladorIGrafu.digrafu.getAreaTextoCategorias().setEnabled(true);
-					ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setEnabled(true);
-					ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setEnabled(true);
-					ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(true);
-					ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(true);
-					habilitaCategorias((Integer)ControladorIGrafu.digrafu.getSpinnerCategoriasNum().getValue());
-				}
-				else{
+					
+					ControladorIGrafu.digrafu.getLabelCategoriasDefinir().setEnabled(false);
+					ControladorIGrafu.digrafu.getCheckBoxCategorias().setEnabled(false);
 					ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(false);
 					ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(false);
 					ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(false);
@@ -518,9 +289,328 @@ public class ControladorDIGRAFU
 					ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(false);
 					ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(false);
 					desabilitaCategorias();
-				}
+					
+					break;
+					
+				case GeraParametrosDIGRAFU.JC69:
+	
+					ControladorIGrafu.digrafu.getCampoNumericoTransicaoTransversao().setEnabled(false);
+					
+					ControladorIGrafu.digrafu.getLabelCoeficienteVariacao().setEnabled(true);
+					ControladorIGrafu.digrafu.getCampoNumericoCV().setEnabled(true);
+					
+					if(ControladorIGrafu.digrafu.getCampoNumericoCV().getlength() > 0)
+						ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(true);
+					else 
+						ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(false);
+					
+					if(ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().isSelected()){
+						ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(true);
+						ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(true);
+					}
+					else{
+						ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(false);
+						ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(false);
+					}
+					
+					// ControladorIGrafu.digrafu.getPainelFrequencias().setEnabled(false);
+					ControladorIGrafu.digrafu.getCheckBoxFrequenciasEmpiricas().setEnabled(false);
+					ControladorIGrafu.digrafu.getLabelFrequenciasA().setEnabled(false);
+					ControladorIGrafu.digrafu.getLabelFrequenciasC().setEnabled(false);
+					ControladorIGrafu.digrafu.getLabelFrequenciasG().setEnabled(false);
+					ControladorIGrafu.digrafu.getLabelFrequenciasT().setEnabled(false);
+					ControladorIGrafu.digrafu.getSliderFrequenciasA().setEnabled(false);
+					ControladorIGrafu.digrafu.getSliderFrequenciasC().setEnabled(false);
+					ControladorIGrafu.digrafu.getSliderFrequenciasG().setEnabled(false);
+					ControladorIGrafu.digrafu.getSliderFrequenciasT().setEnabled(false);
+					ControladorIGrafu.digrafu.getSpinnerFrequenciasA().setEnabled(false);
+					ControladorIGrafu.digrafu.getSpinnerFrequenciasC().setEnabled(false);
+					ControladorIGrafu.digrafu.getSpinnerFrequenciasG().setEnabled(false);
+					ControladorIGrafu.digrafu.getSpinnerFrequenciasT().setEnabled(false);
+					ControladorIGrafu.digrafu.getLabelFrequenciasTotal().setEnabled(false);
+					ControladorIGrafu.digrafu.getLabelFrequenciasTotalNum().setEnabled(false);
+	
+					ControladorIGrafu.digrafu.getLabelCategoriasDefinir().setEnabled(true);
+					ControladorIGrafu.digrafu.getCheckBoxCategorias().setEnabled(true);
+					
+					if(ControladorIGrafu.digrafu.getCheckBoxCategorias().isSelected()){
+						ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(true);
+						ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(true);
+						ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(true);
+						ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setEnabled(true);
+						ControladorIGrafu.digrafu.getBotaoEditarCategorias().setEnabled(true);
+						ControladorIGrafu.digrafu.getBotaoLimparCategorias().setEnabled(true);
+						ControladorIGrafu.digrafu.getAreaTextoCategorias().setEnabled(true);
+						ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setEnabled(true);
+						ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setEnabled(true);
+						ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(true);
+						ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(true);
+						habilitaCategorias((Integer)ControladorIGrafu.digrafu.getSpinnerCategoriasNum().getValue());
+					}
+					else{
+						ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(false);
+						ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(false);
+						ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(false);
+						ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setEnabled(false);
+						ControladorIGrafu.digrafu.getBotaoEditarCategorias().setEnabled(false);
+						ControladorIGrafu.digrafu.getBotaoLimparCategorias().setEnabled(false);
+						ControladorIGrafu.digrafu.getAreaTextoCategorias().setEnabled(false);
+						ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setEnabled(false);
+						ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setEnabled(false);
+						ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(false);
+						ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(false);
+						desabilitaCategorias();
+					}
+					
+					break;
+					
+				case GeraParametrosDIGRAFU.KIMURA:
+	
+					ControladorIGrafu.digrafu.getCampoNumericoTransicaoTransversao().setEnabled(true);
+					
+					ControladorIGrafu.digrafu.getLabelCoeficienteVariacao().setEnabled(true);
+					ControladorIGrafu.digrafu.getCampoNumericoCV().setEnabled(true);
+					
+					if(ControladorIGrafu.digrafu.getCampoNumericoCV().getlength() > 0)
+						ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(true);
+					else 
+						ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(false);
+					
+					if(ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().isSelected()){
+						ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(true);
+						ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(true);
+					}
+					else{
+						ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(false);
+						ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(false);
+					}
+					
+					// ControladorIGrafu.digrafu.getPainelFrequencias().setEnabled(false);
+					ControladorIGrafu.digrafu.getCheckBoxFrequenciasEmpiricas().setEnabled(false);
+					ControladorIGrafu.digrafu.getLabelFrequenciasA().setEnabled(false);
+					ControladorIGrafu.digrafu.getLabelFrequenciasC().setEnabled(false);
+					ControladorIGrafu.digrafu.getLabelFrequenciasG().setEnabled(false);
+					ControladorIGrafu.digrafu.getLabelFrequenciasT().setEnabled(false);
+					ControladorIGrafu.digrafu.getSliderFrequenciasA().setEnabled(false);
+					ControladorIGrafu.digrafu.getSliderFrequenciasC().setEnabled(false);
+					ControladorIGrafu.digrafu.getSliderFrequenciasG().setEnabled(false);
+					ControladorIGrafu.digrafu.getSliderFrequenciasT().setEnabled(false);
+					ControladorIGrafu.digrafu.getSpinnerFrequenciasA().setEnabled(false);
+					ControladorIGrafu.digrafu.getSpinnerFrequenciasC().setEnabled(false);
+					ControladorIGrafu.digrafu.getSpinnerFrequenciasG().setEnabled(false);
+					ControladorIGrafu.digrafu.getSpinnerFrequenciasT().setEnabled(false);
+					ControladorIGrafu.digrafu.getLabelFrequenciasTotal().setEnabled(false);
+					ControladorIGrafu.digrafu.getLabelFrequenciasTotalNum().setEnabled(false);
+	
+					ControladorIGrafu.digrafu.getLabelCategoriasDefinir().setEnabled(true);
+					ControladorIGrafu.digrafu.getCheckBoxCategorias().setEnabled(true);
+					
+					if(ControladorIGrafu.digrafu.getCheckBoxCategorias().isSelected()){
+						ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(true);
+						ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(true);
+						ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(true);
+						ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setEnabled(true);
+						ControladorIGrafu.digrafu.getBotaoEditarCategorias().setEnabled(true);
+						ControladorIGrafu.digrafu.getBotaoLimparCategorias().setEnabled(true);
+						ControladorIGrafu.digrafu.getAreaTextoCategorias().setEnabled(true);
+						ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setEnabled(true);
+						ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setEnabled(true);
+						ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(true);
+						ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(true);
+						habilitaCategorias((Integer)ControladorIGrafu.digrafu.getSpinnerCategoriasNum().getValue());
+					}
+					else{
+						ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(false);
+						ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(false);
+						ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(false);
+						ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setEnabled(false);
+						ControladorIGrafu.digrafu.getBotaoEditarCategorias().setEnabled(false);
+						ControladorIGrafu.digrafu.getBotaoLimparCategorias().setEnabled(false);
+						ControladorIGrafu.digrafu.getAreaTextoCategorias().setEnabled(false);
+						ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setEnabled(false);
+						ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setEnabled(false);
+						ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(false);
+						ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(false);
+						desabilitaCategorias();
+					}
+					
+					break;
+					
+				case GeraParametrosDIGRAFU.F84:
+	
+					ControladorIGrafu.digrafu.getCampoNumericoTransicaoTransversao().setEnabled(true);
+					
+					ControladorIGrafu.digrafu.getLabelCoeficienteVariacao().setEnabled(true);
+					ControladorIGrafu.digrafu.getCampoNumericoCV().setEnabled(true);
+					
+					if(ControladorIGrafu.digrafu.getCampoNumericoCV().getlength() > 0)
+						ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(true);
+					else 
+						ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(false);
+					
+					if(ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().isSelected()){
+						ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(true);
+						ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(true);
+					}
+					else{
+						ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(false);
+						ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(false);
+					}
+					
+					// ControladorIGrafu.digrafu.getPainelFrequencias().setEnabled(false);
+					ControladorIGrafu.digrafu.getCheckBoxFrequenciasEmpiricas().setEnabled(true);
+	
+					if(ControladorIGrafu.digrafu.getCheckBoxFrequenciasEmpiricas().isSelected()){
+						ControladorIGrafu.digrafu.getLabelFrequenciasA().setEnabled(true);
+						ControladorIGrafu.digrafu.getLabelFrequenciasC().setEnabled(true);
+						ControladorIGrafu.digrafu.getLabelFrequenciasG().setEnabled(true);
+						ControladorIGrafu.digrafu.getLabelFrequenciasT().setEnabled(true);
+						ControladorIGrafu.digrafu.getSliderFrequenciasA().setEnabled(true);
+						ControladorIGrafu.digrafu.getSliderFrequenciasC().setEnabled(true);
+						ControladorIGrafu.digrafu.getSliderFrequenciasG().setEnabled(true);
+						ControladorIGrafu.digrafu.getSliderFrequenciasT().setEnabled(true);
+						ControladorIGrafu.digrafu.getSpinnerFrequenciasA().setEnabled(true);
+						ControladorIGrafu.digrafu.getSpinnerFrequenciasC().setEnabled(true);
+						ControladorIGrafu.digrafu.getSpinnerFrequenciasG().setEnabled(true);
+						ControladorIGrafu.digrafu.getSpinnerFrequenciasT().setEnabled(true);
+						ControladorIGrafu.digrafu.getLabelFrequenciasTotal().setEnabled(true);
+						ControladorIGrafu.digrafu.getLabelFrequenciasTotalNum().setEnabled(true);
+					}
+					else{
+						ControladorIGrafu.digrafu.getLabelFrequenciasA().setEnabled(false);
+						ControladorIGrafu.digrafu.getLabelFrequenciasC().setEnabled(false);
+						ControladorIGrafu.digrafu.getLabelFrequenciasG().setEnabled(false);
+						ControladorIGrafu.digrafu.getLabelFrequenciasT().setEnabled(false);
+						ControladorIGrafu.digrafu.getSliderFrequenciasA().setEnabled(false);
+						ControladorIGrafu.digrafu.getSliderFrequenciasC().setEnabled(false);
+						ControladorIGrafu.digrafu.getSliderFrequenciasG().setEnabled(false);
+						ControladorIGrafu.digrafu.getSliderFrequenciasT().setEnabled(false);
+						ControladorIGrafu.digrafu.getSpinnerFrequenciasA().setEnabled(false);
+						ControladorIGrafu.digrafu.getSpinnerFrequenciasC().setEnabled(false);
+						ControladorIGrafu.digrafu.getSpinnerFrequenciasG().setEnabled(false);
+						ControladorIGrafu.digrafu.getSpinnerFrequenciasT().setEnabled(false);
+						ControladorIGrafu.digrafu.getLabelFrequenciasTotal().setEnabled(false);
+						ControladorIGrafu.digrafu.getLabelFrequenciasTotalNum().setEnabled(false);
+					}
+	
+					ControladorIGrafu.digrafu.getLabelCategoriasDefinir().setEnabled(true);
+					ControladorIGrafu.digrafu.getCheckBoxCategorias().setEnabled(true);
+					
+					if(ControladorIGrafu.digrafu.getCheckBoxCategorias().isSelected()){
+						ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(true);
+						ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(true);
+						ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(true);
+						ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setEnabled(true);
+						ControladorIGrafu.digrafu.getBotaoEditarCategorias().setEnabled(true);
+						ControladorIGrafu.digrafu.getBotaoLimparCategorias().setEnabled(true);
+						ControladorIGrafu.digrafu.getAreaTextoCategorias().setEnabled(true);
+						ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setEnabled(true);
+						ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setEnabled(true);
+						ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(true);
+						ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(true);
+						habilitaCategorias((Integer)ControladorIGrafu.digrafu.getSpinnerCategoriasNum().getValue());
+					}
+					else{
+						ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(false);
+						ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(false);
+						ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(false);
+						ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setEnabled(false);
+						ControladorIGrafu.digrafu.getBotaoEditarCategorias().setEnabled(false);
+						ControladorIGrafu.digrafu.getBotaoLimparCategorias().setEnabled(false);
+						ControladorIGrafu.digrafu.getAreaTextoCategorias().setEnabled(false);
+						ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setEnabled(false);
+						ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setEnabled(false);
+						ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(false);
+						ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(false);
+						desabilitaCategorias();
+					}
+					
+					break;
+			}
+			
+		}else{ // Tipo Proteína
+
+			// Painel Transição/Transversão
+			ControladorIGrafu.digrafu.getCampoNumericoTransicaoTransversao().setEnabled(false);
+			
+			// Painel de Frequências
+			// ControladorIGrafu.digrafu.getPainelFrequencias().setEnabled(false);
+			ControladorIGrafu.digrafu.getCheckBoxFrequenciasEmpiricas().setEnabled(false);
+			ControladorIGrafu.digrafu.getLabelFrequenciasA().setEnabled(false);
+			ControladorIGrafu.digrafu.getLabelFrequenciasC().setEnabled(false);
+			ControladorIGrafu.digrafu.getLabelFrequenciasG().setEnabled(false);
+			ControladorIGrafu.digrafu.getLabelFrequenciasT().setEnabled(false);
+			ControladorIGrafu.digrafu.getSliderFrequenciasA().setEnabled(false);
+			ControladorIGrafu.digrafu.getSliderFrequenciasC().setEnabled(false);
+			ControladorIGrafu.digrafu.getSliderFrequenciasG().setEnabled(false);
+			ControladorIGrafu.digrafu.getSliderFrequenciasT().setEnabled(false);
+			ControladorIGrafu.digrafu.getSpinnerFrequenciasA().setEnabled(false);
+			ControladorIGrafu.digrafu.getSpinnerFrequenciasC().setEnabled(false);
+			ControladorIGrafu.digrafu.getSpinnerFrequenciasG().setEnabled(false);
+			ControladorIGrafu.digrafu.getSpinnerFrequenciasT().setEnabled(false);
+			ControladorIGrafu.digrafu.getLabelFrequenciasTotal().setEnabled(false);
+			ControladorIGrafu.digrafu.getLabelFrequenciasTotalNum().setEnabled(false);
+			
+			// Painel de Categorias
+			ControladorIGrafu.digrafu.getLabelCategoriasDefinir().setEnabled(true);
+			ControladorIGrafu.digrafu.getCheckBoxCategorias().setEnabled(true);
+			
+			if(ControladorIGrafu.digrafu.getCheckBoxCategorias().isSelected()){
+				ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(true);
+				ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(true);
+				ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(true);
+				ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setEnabled(true);
+				ControladorIGrafu.digrafu.getBotaoEditarCategorias().setEnabled(true);
+				ControladorIGrafu.digrafu.getBotaoLimparCategorias().setEnabled(true);
+				ControladorIGrafu.digrafu.getAreaTextoCategorias().setEnabled(true);
+				ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setEnabled(true);
+				ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setEnabled(true);
+				ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(true);
+				ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(true);
+				habilitaCategorias((Integer)ControladorIGrafu.digrafu.getSpinnerCategoriasNum().getValue());
+			}
+			else{
+				ControladorIGrafu.digrafu.getSpinnerCategoriasNum().setEnabled(false);
+				ControladorIGrafu.digrafu.getLabelCategoriasDoArquivo().setEnabled(false);
+				ControladorIGrafu.digrafu.getCampoTextoCategoriasDoArquivo().setEnabled(false);
+				ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setEnabled(false);
+				ControladorIGrafu.digrafu.getBotaoEditarCategorias().setEnabled(false);
+				ControladorIGrafu.digrafu.getBotaoLimparCategorias().setEnabled(false);
+				ControladorIGrafu.digrafu.getAreaTextoCategorias().setEnabled(false);
+				ControladorIGrafu.digrafu.getRadioBotaoCategoriasManual().setEnabled(false);
+				ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setEnabled(false);
+				ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getVerticalScrollBar().setEnabled(false);
+				ControladorIGrafu.digrafu.getPainelRolagemAreaTextoCategorias().getHorizontalScrollBar().setEnabled(false);
+				desabilitaCategorias();
+			}
+			
+			// Painel da Distribuição Gamma para o modelo Kimura
+			if(modelo == GeraParametrosDIGRAFU.KIMURA){
+				ControladorIGrafu.digrafu.getLabelCoeficienteVariacao().setEnabled(false);
+				ControladorIGrafu.digrafu.getCampoNumericoCV().setEnabled(false);
+				ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(false);
+				ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(false);
+				ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(false);
+			}
+			else{
+				ControladorIGrafu.digrafu.getLabelCoeficienteVariacao().setEnabled(true);
+				ControladorIGrafu.digrafu.getCampoNumericoCV().setEnabled(true);
 				
-				break;
+				if(ControladorIGrafu.digrafu.getCampoNumericoCV().getlength() > 0)
+					ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(true);
+				else 
+					ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().setEnabled(false);
+				
+				if(ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().isSelected()){
+					ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(true);
+					ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(true);
+				}
+				else{
+					ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setEnabled(false);
+					ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().setEnabled(false);
+				}				
+			}
+			
 		}
 		
 	}
@@ -533,22 +623,16 @@ public class ControladorDIGRAFU
 		
 		if(e.getSource() == ControladorIGrafu.digrafu.getComboModeloDNA()){
 			
-			atualizaPainelPrincipal(GeraParametrosDIGRAFU.getModeloDNA());
+			atualizaPainelPrincipal(ControladorIGrafu.digrafu.getComboModeloDNA().getSelectedIndex());
 			
 		}
 		
 		if(e.getSource() == ControladorIGrafu.digrafu.getComboModeloProteina()){
 			
-			atualizaPainelPrincipal(GeraParametrosDIGRAFU.getModeloProteina());
+			atualizaPainelPrincipal(ControladorIGrafu.digrafu.getComboModeloProteina().getSelectedIndex());
 			
 		}
-		
-		if( e.getSource() == ControladorIGrafu.digrafu.getComboTipo() ){
-			
-			CardLayout cl = (CardLayout)ControladorIGrafu.digrafu.getPainelCardModelo().getLayout();
-			cl.show(ControladorIGrafu.digrafu.getPainelCardModelo(), (String)ControladorIGrafu.digrafu.getComboTipo().getSelectedItem());
-			System.out.println(e.getActionCommand());
-		}
+
 /*		
 		if(e.getSource() == ControladorIGrafu.digrafu.getCampoNumericoCV()){
 			if(ControladorIGrafu.digrafu.getCampoNumericoCV().getlength() > 0)
@@ -943,6 +1027,20 @@ public class ControladorDIGRAFU
 				System.exit(0);
 			}
 		}*/
+	}
+
+
+	public void itemStateChanged(ItemEvent e) {
+		
+		CardLayout cl = (CardLayout)ControladorIGrafu.digrafu.getPainelCardModelo().getLayout();
+		cl.show(ControladorIGrafu.digrafu.getPainelCardModelo(), (String)e.getItem());
+		System.out.println("sC - "+e.getItem());
+
+		if(e.getItem() == "DNA")
+			atualizaPainelPrincipal(ControladorIGrafu.digrafu.getComboModeloDNA().getSelectedIndex());
+		else
+			atualizaPainelPrincipal(ControladorIGrafu.digrafu.getComboModeloProteina().getSelectedIndex());
+		
 	}
 	
 	public void keyPressed(KeyEvent e){

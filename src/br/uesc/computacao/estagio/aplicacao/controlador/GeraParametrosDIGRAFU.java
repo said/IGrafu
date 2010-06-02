@@ -22,10 +22,18 @@ public class GeraParametrosDIGRAFU {
 	
 	// Constantes de identificação do modelo
 	public static final int
-							KIMURA = 0, 
+							KIMURA = 0, // Modelo comum à DNA e proteína
+							// Modelos de DNA
 							F84	   = 1,
 							JC69   = 2,
-							LOGDET = 3;
+							LOGDET = 3,
+							// Modelos de proteína
+							JTT	   = 1,
+							PMB    = 2,
+							PAM    = 3;
+
+	private static String tipo = "dna";
+	private static int modelo = KIMURA;
 
 	public static String ERRO = "Erro";
 
@@ -74,6 +82,9 @@ public class GeraParametrosDIGRAFU {
                 	ControladorDIGRAFU.guardaArquivo += "a";
                 
             }
+        	
+        	ControladorDIGRAFU.guardaArquivo += " TYPE " + getTipo();
+        	ControladorDIGRAFU.guardaArquivo += " MODEL " + getModelo();
             
     	}
 
@@ -89,12 +100,8 @@ public class GeraParametrosDIGRAFU {
      * @return byte
      */
     public static boolean trataAbaModeloDNA() {
-    	        	
-    	ControladorDIGRAFU.guardaArquivo += " TYPE dna";
     	
-    	ControladorDIGRAFU.guardaArquivo += " MODEL " + ControladorIGrafu.digrafu.getComboModeloDNA().getItemAt(getModeloDNA());
-    	
-    	switch(getModeloDNA()){
+    	switch(modelo){
     	
     		case F84:
     			// Frequências
@@ -153,6 +160,109 @@ public class GeraParametrosDIGRAFU {
     	
     	return true;
         
+    }
+    
+    public static boolean trataAbaModeloProteina() {
+    	
+    	if(modelo != KIMURA){
+			// Distribuição Gamma
+			if(ControladorIGrafu.digrafu.getCampoNumericoCV().getText().length() != 0){
+				ControladorDIGRAFU.guardaArquivo += " CV "
+					+ ControladorIGrafu.digrafu.getCampoNumericoCV().getText();
+				if(ControladorIGrafu.digrafu.getCheckBoxSitiosInvariantes().isSelected())
+    				ControladorDIGRAFU.guardaArquivo += " ISITE "
+    					+ ControladorIGrafu.digrafu.getSpinnerSitiosInvariantes().getValue();
+			}
+			// Categorias
+			if(ControladorIGrafu.digrafu.getCheckBoxCategorias().isSelected())
+				ControladorDIGRAFU.guardaArquivo +=
+					getValoresCategorias((Integer)ControladorIGrafu.digrafu.getSpinnerCategoriasNum().getValue());
+		
+			// Pesos para Sítios
+			if(ControladorIGrafu.digrafu.getCheckBoxPesos().isSelected()){
+				if(ControladorIGrafu.digrafu.getRadioBotaoPesosDoArquivo().isSelected())
+					ControladorDIGRAFU.guardaArquivo += " WEIGHT " + getPesos();
+				else if(ControladorIGrafu.digrafu.getRadioBotaoPesosManual().isSelected())
+    				ControladorDIGRAFU.guardaArquivo += " WEIGHT "
+    					+ ControladorIGrafu.digrafu.getAreaTextoPesos().getText();        					
+			}
+    	
+    	}
+    	
+    	return true;
+        
+    }
+    
+    public static String getTipo(){
+    	
+    	if(ControladorIGrafu.digrafu.getComboTipo().getSelectedItem() == "DNA")
+    		return "dna";
+    	else
+    		return "prot";
+    	
+    }
+    
+    public static String getModelo(){
+    	
+    	if(getTipo() == "dna"){
+    		modelo = ControladorIGrafu.digrafu.getComboModeloDNA().getSelectedIndex();
+	    	switch(modelo){
+		    	case F84:
+		    		return "f84";
+		    	case JC69:
+		    		return "jc69";
+		    	case LOGDET:
+		    		return "logdet";
+	    	}
+		}
+    	else{
+    		modelo = ControladorIGrafu.digrafu.getComboModeloProteina().getSelectedIndex();
+	    	switch(modelo){
+		    	case JTT:
+		    		return "jtt";
+		    	case PMB:
+		    		return "pmb";
+		    	case PAM:
+		    		return "pam";
+	    	}
+    	}
+    	
+		return "kimura";
+    	
+    }
+    
+    public static String getModeloDNA(){
+    	
+    	modelo = ControladorIGrafu.digrafu.getComboModeloDNA().getSelectedIndex(); 
+    	
+    	switch(modelo){
+	    	case F84:
+	    		return "f84";
+	    	case JC69:
+	    		return "jc69";
+	    	case LOGDET:
+	    		return "logdet";
+	    	default:
+	    		return "kimura";
+    	}
+    	
+    }
+    
+    public static String getModeloProteina(){
+    	
+    	modelo = ControladorIGrafu.digrafu.getComboModeloProteina().getSelectedIndex();
+    	
+    	switch(modelo){
+	    	case JTT:
+	    		return "jtt";
+	    	case PMB:
+	    		return "pmb";
+	    	case PAM:
+	    		return "pam";
+	    	default:
+	    		return "kimura";
+    	}
+    	
     }
 	
 	private static String getPesos(){
@@ -250,18 +360,6 @@ public class GeraParametrosDIGRAFU {
 	    	
     	}
     	return valoresCategorias;
-    	
-    }
-    
-    public static int getModeloDNA(){
-    	
-    	return ControladorIGrafu.digrafu.getComboModeloDNA().getSelectedIndex();
-    	
-    }
-    
-    public static int getModeloProteina(){
-    	
-    	return ControladorIGrafu.digrafu.getComboModeloProteina().getSelectedIndex();
     	
     }
 

@@ -239,7 +239,7 @@ public class DIGRAFU extends JFrame {
         this.setLocation( ( dimension.width - getSize().width )/2, ( dimension.height - getSize().height )/2 );
         this.setJMenuBar(getBarraMenuPrincipal());
         this.setContentPane(getPainelPrincipal());
-        this.setTitle("IGRAFU: DiGrafu - DNA");
+        this.setTitle("IGRAFU: DiGrafu");
         this.setResizable(false);
 	}
 		
@@ -374,7 +374,7 @@ public class DIGRAFU extends JFrame {
 	
 	public JComboBox getComboTipo(){
 		
-		String[] modelos = {"dna", "proteína"};
+		String[] modelos = {"DNA", "Proteína"};
 		
 		if(comboTipo == null){
 			comboTipo = new JComboBox(modelos);
@@ -421,7 +421,7 @@ public class DIGRAFU extends JFrame {
 	
 	public JComboBox getComboModeloDNA(){
 		
-		String[] modelos = {"kimura", "f84", "jc69", "logdet"};
+		String[] modelos = {"Kimura", "F84", "Jukes-Cantor", "LogDet"};
 		
 		if(comboModeloDNA == null){
 			comboModeloDNA = new JComboBox(modelos);
@@ -433,7 +433,7 @@ public class DIGRAFU extends JFrame {
 	
 	public JComboBox getComboModeloProteina(){
 		
-		String[] modelos = {"kimura", "jtt", "pmb", "pam"};
+		String[] modelos = {"Kimura", "JTT", "PMB", "PAM"};
 		
 		if(comboModeloProteina == null){
 			comboModeloProteina = new JComboBox(modelos);
@@ -448,8 +448,8 @@ public class DIGRAFU extends JFrame {
 		if(painelCardModelo == null){
 			painelCardModelo = new JPanel(new CardLayout());
 			painelCardModelo.setBackground(new Color(173, 200, 226));
-			painelCardModelo.add(getComboModeloDNA(), "dna");
-			painelCardModelo.add(getComboModeloProteina(), "proteína");
+			painelCardModelo.add(getComboModeloDNA(), "DNA");
+			painelCardModelo.add(getComboModeloProteina(), "Proteína");
 		}
 		return painelCardModelo;
 		
