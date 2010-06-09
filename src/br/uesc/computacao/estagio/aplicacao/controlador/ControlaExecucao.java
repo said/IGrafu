@@ -79,8 +79,8 @@ public class ControlaExecucao {
 		
 		ControladorDIGRAFU.guardaArquivo = "";
 		
-        if(GeraParametrosDIGRAFU.trataAbaSequecia())
-            if(GeraParametrosDIGRAFU.trataAbaModeloDNA()){
+        if(GeraParametrosDIGRAFU.trataParametrosSequencia())
+            if(GeraParametrosDIGRAFU.trataParametrosDNA()){
             	
             	if(ControladorModoManualBootstrap.bootstrap == true) {
             		GeraParametrosSeqboot.trataAbasSequenciaSeqboot();

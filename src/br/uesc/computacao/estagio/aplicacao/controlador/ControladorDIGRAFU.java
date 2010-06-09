@@ -242,8 +242,7 @@ public class ControladorDIGRAFU
 	}
 	
 	private void atualizaPainelPrincipal(int modelo){
-		// System.out.println("Tipo: "+GeraParametrosDIGRAFU.getTipo());
-		// System.out.println("Modelo: "+modelo);
+
 		if(GeraParametrosDIGRAFU.getTipo() == "dna"){
 			
 			switch(modelo){
@@ -906,8 +905,8 @@ public class ControladorDIGRAFU
 	        //ControladorIGrafu.digrafu.getLabelSequencia().setText("Sequência: " + ControladorDIGRAFU.guardaNomeSequencia);
 	        ControladorDIGRAFU.guardaNomeSequencia = "INPUT " + ControladorDIGRAFU.guardaNomeSequencia;
                     
-			if(GeraParametrosDIGRAFU.trataAbaSequecia()){
-				if((GeraParametrosDIGRAFU.trataAbaModeloDNA())){
+			if(GeraParametrosDIGRAFU.trataParametrosSequencia()){
+				if((GeraParametrosDIGRAFU.trataParametrosDNA())){
 					ControladorIGrafu.digrafu.setEnabled(false);
 					ControladorIGrafu.digrafu.getDialogoModoExecucao().setVisible(true);
 					ControladorIGrafu.digrafu.getPainelModoExecucao().setVisible(true);
@@ -1034,7 +1033,6 @@ public class ControladorDIGRAFU
 		
 		CardLayout cl = (CardLayout)ControladorIGrafu.digrafu.getPainelCardModelo().getLayout();
 		cl.show(ControladorIGrafu.digrafu.getPainelCardModelo(), (String)e.getItem());
-		System.out.println("sC - "+e.getItem());
 
 		if(e.getItem() == "DNA")
 			atualizaPainelPrincipal(ControladorIGrafu.digrafu.getComboModeloDNA().getSelectedIndex());

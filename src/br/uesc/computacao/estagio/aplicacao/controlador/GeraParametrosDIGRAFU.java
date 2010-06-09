@@ -46,7 +46,7 @@ public class GeraParametrosDIGRAFU {
      * @return byte
      */
     //Tratando dados para gerar arquivo
-    public static boolean trataAbaSequecia() {
+    public static boolean trataParametrosSequencia() {
     	//Limpa a variável
     	ControladorDIGRAFU.guardaArquivo = "";
 
@@ -99,7 +99,7 @@ public class GeraParametrosDIGRAFU {
      *
      * @return byte
      */
-    public static boolean trataAbaModeloDNA() {
+    public static boolean trataParametrosDNA() {
     	
     	switch(modelo){
     	
@@ -162,7 +162,7 @@ public class GeraParametrosDIGRAFU {
         
     }
     
-    public static boolean trataAbaModeloProteina() {
+    public static boolean trataParametrosProteina() {
     	
     	if(modelo != KIMURA){
 			// Distribuição Gamma
