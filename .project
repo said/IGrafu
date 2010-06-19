@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>igrafu</name>
+	<name>igrafu_18-06</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -18,7 +18,7 @@
 		<link>
 			<name>classes</name>
 			<type>2</type>
-			<location>/home/diones/Desktop/eclipse/C::/home/diones/workspace/IGRAFU/build/ver_2.0.0/classes</location>
+			<location>/home/biga/igrafu_18-06/build/ver_2.0.0/classes</location>
 		</link>
 	</linkedResources>
 </projectDescription>
