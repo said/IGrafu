@@ -353,6 +353,7 @@ public class DIGRAFU extends JFrame {
 			painelTipo.setBorder(bordaTitulo);
 			// painelTipo.add(getLabelTipo());
 			painelTipo.add(getComboTipo());
+			painelTipo.setToolTipText("Selecione o Tipo de dado de entrada");
 		}
 		return painelTipo;
 		
@@ -378,6 +379,7 @@ public class DIGRAFU extends JFrame {
 		if(comboTipo == null){
 			comboTipo = new JComboBox(modelos);
 			comboTipo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			comboTipo.setToolTipText("Selecione o Tipo de dado de entrada");
 		}
 		return comboTipo;
 		
@@ -399,6 +401,7 @@ public class DIGRAFU extends JFrame {
 			// painelModelo.add(getLabelModelo(), BorderLayout.CENTER);
 			// painelModelo.add(getComboModelo());
 			painelModelo.add(getPainelCardModelo());
+			painelModelo.setToolTipText("Selecione o modelo de substituição");
 		}
 		return painelModelo;
 		
@@ -425,6 +428,7 @@ public class DIGRAFU extends JFrame {
 		if(comboModeloDNA == null){
 			comboModeloDNA = new JComboBox(modelos);
 			comboModeloDNA.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			comboModeloDNA.setToolTipText("Selecione o modelo de substituição");
 		}
 		return comboModeloDNA;
 		
@@ -437,6 +441,7 @@ public class DIGRAFU extends JFrame {
 		if(comboModeloProteina == null){
 			comboModeloProteina = new JComboBox(modelos);
 			comboModeloProteina.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			comboModeloProteina.setToolTipText("Selecione o modelo de substituição");
 		}
 		return comboModeloProteina;
 		
@@ -463,11 +468,16 @@ public class DIGRAFU extends JFrame {
 			painelTransicaoTransversao.setBackground(new Color(173, 200, 226));
 			painelTransicaoTransversao.setSize(size1);
 			painelTransicaoTransversao.setLocation(new Point(coluna2, nivel1));
-			bordaTitulo = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.white), "Transicao/Transversao");
+			bordaTitulo = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.white), "Transição/Transversão");
 			bordaTitulo.setTitleJustification(TitledBorder.CENTER);
 			bordaTitulo.setTitleFont(new Font("Arial", Font.BOLD, 12));
 			painelTransicaoTransversao.setBorder(bordaTitulo);
 			painelTransicaoTransversao.add(getCampoNumericoTransicaoTransversao());
+			painelTransicaoTransversao.setToolTipText(
+					"<html>" +
+					"Taxa de transição/transversão esperada<br>" +
+					"*Número real maior que 0.0" +
+					"</html>");
 		}
 		return painelTransicaoTransversao;
 		
@@ -478,6 +488,11 @@ public class DIGRAFU extends JFrame {
 		if(campoNumericoTransicaoTransversao == null){
 			campoNumericoTransicaoTransversao = new JNumberFloatField();
 			// campoNumericoTransicaoTransversao.setValue(2);
+			campoNumericoTransicaoTransversao.setToolTipText(
+					"<html>" +
+					"Taxa de transição/transversão esperada<br>" +
+					"*Número real maior que 0.0" +
+					"</html>");
 		}
 		return campoNumericoTransicaoTransversao;
 		
@@ -498,6 +513,11 @@ public class DIGRAFU extends JFrame {
 			bordaTitulo.setTitleJustification(TitledBorder.CENTER);
 			bordaTitulo.setTitleFont(new Font("Arial", Font.BOLD, 12));
 			painelPesos.setBorder(bordaTitulo);
+			painelPesos.setToolTipText(
+					"<html>" +
+					"<b>Pesos para os sítios</b><br>" +
+					"Usar apenas parte dos sítios da sequência" +
+					"</html>");
 
 			c.gridx = 0;
 			c.gridy = 0;
@@ -595,6 +615,7 @@ public class DIGRAFU extends JFrame {
 			botaoPesosAbrir.setSize(new Dimension(30, 20));
 			botaoPesosAbrir.setFont(new Font("Dialog", Font.BOLD, 10));
 			botaoPesosAbrir.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			botaoPesosAbrir.setToolTipText("Abrir arquivo com pesos");
 		}
 		return botaoPesosAbrir;
 		
@@ -619,6 +640,13 @@ public class DIGRAFU extends JFrame {
 			// areaTextoPesos.setEditable(true);
 			// areaTextoPesos.setLocation(new Point(5, 20));
 			// areaTextoPesos.setBounds(new Rectangle(5, 130, 90, 100));
+			areaTextoPesos.setToolTipText(
+					"<html>" +
+					"Insira os índices dos sítios que devem ser considerados " +
+					"separados por vírgula sem espaço<br>" +
+					"*O índice do primeiro sítio é 0, do segundo é 1, assim " +
+					"por diante" +
+					"</html>");
 		}
 		return areaTextoPesos;
 	}
@@ -627,6 +655,8 @@ public class DIGRAFU extends JFrame {
 		
 		if(radioBotaoPesosManual == null){
 			radioBotaoPesosManual = new JRadioButton("Manual");
+			radioBotaoPesosManual.setToolTipText("Inserir peso de cada sítio " +
+					"manualmente");
 		}
 		return radioBotaoPesosManual;
 		
@@ -636,6 +666,8 @@ public class DIGRAFU extends JFrame {
 		
 		if(radioBotaoPesosDoArquivo == null){
 			radioBotaoPesosDoArquivo = new JRadioButton("Do arquivo");
+			radioBotaoPesosDoArquivo.setToolTipText("Usar pesos a partir de " +
+					"um arquivo");
 		}
 		return radioBotaoPesosDoArquivo;
 		
@@ -669,6 +701,7 @@ public class DIGRAFU extends JFrame {
 			botaoLimparPesos.setSize(new Dimension(30, 20));
 			botaoLimparPesos.setFont(new Font("Dialog", Font.BOLD, 10));
 			botaoLimparPesos.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			botaoLimparPesos.setToolTipText("Limpar caixa de texto");
 		}
 		return botaoLimparPesos;
 		
@@ -681,6 +714,7 @@ public class DIGRAFU extends JFrame {
 			botaoEditarPesos.setSize(new Dimension(30, 20));
 			botaoEditarPesos.setFont(new Font("Dialog", Font.BOLD, 10));
 			botaoEditarPesos.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			botaoEditarPesos.setToolTipText("Editar arquivo de pesos");
 		}
 		return botaoEditarPesos;
 		
@@ -786,6 +820,11 @@ public class DIGRAFU extends JFrame {
 		if(labelCoeficienteVariacao == null){
 			labelCoeficienteVariacao = new JLabel("Coeficiente de variação: ");
 			//labelCoeficienteVariacao.setBounds(new Rectangle(0, 110, 100, 200));
+			labelCoeficienteVariacao.setToolTipText(
+					"<html>" +
+					"Inserir um coeficiente de variação para a taxa de " +
+					"substituição entre sítios<br>*Deve ser positivo" +
+					"</html>");
 		}
 		return labelCoeficienteVariacao;
 		
@@ -797,6 +836,12 @@ public class DIGRAFU extends JFrame {
 			campoNumericoCV = new JNumberFloatField();
 			// campoNumericoCV.setSize(new Dimension(20, 10));
 			//campoTextoCV.setBounds(new Rectangle(0, 110, 100, 200));
+			campoNumericoCV.setToolTipText(
+					"<html>" +
+					"Inserir um coeficiente de variação para a taxa de " +
+					"substituição entre sítios<br>" +
+					"*Deve ser positivo" +
+					"</html>");
 		}
 		return campoNumericoCV;
 		
@@ -819,6 +864,11 @@ public class DIGRAFU extends JFrame {
 			labelSitiosInvariantes = new JLabel("Sítios Invariantes: ");
 			//labelSitiosInvariantes.setBounds(new Rectangle(0, 110, 100, 200));
 			//labelSitiosInvariantes.setEnabled(false);
+			labelSitiosInvariantes.setToolTipText(
+					"<html>" +
+					"Fração de sítios invariantes<br>" +
+					"*Deve estar entre 0 e 1" +
+					"</html>");
 		}
 		return labelSitiosInvariantes;
 		
@@ -832,6 +882,11 @@ public class DIGRAFU extends JFrame {
 			spinnerSitiosInvariantes = new JSpinner(sitiosInvariantesSpinnerModel);
 			//spinnerSitiosInvariantes.setBounds(new Rectangle(0, 110, 100, 200));
 			//spinnerSitiosInvariantes.setEnabled(false);
+			spinnerSitiosInvariantes.setToolTipText(
+					"<html>" +
+					"Fração de sítios invariantes<br>" +
+					"*Deve estar entre 0 e 1" +
+					"</html>");
 		}
 		return spinnerSitiosInvariantes;
 		
@@ -852,6 +907,11 @@ public class DIGRAFU extends JFrame {
 			bordaTitulo.setTitleJustification(TitledBorder.CENTER);
 			bordaTitulo.setTitleFont(new Font("Arial", Font.BOLD, 12));
 			painelFrequencias.setBorder(bordaTitulo);
+			painelFrequencias.setToolTipText(
+					"<html>" +
+					"Frequências para as bases<br>" +
+					"*A soma das frequências deve ser igual a 1" +
+					"</html>");
 			
 			c.gridx = 0;
 			c.gridy = 0;
@@ -965,6 +1025,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(labelFrequenciasA == null){
 			labelFrequenciasA = new JLabel("A");
+			labelFrequenciasA.setToolTipText("Adenina");
 		}
 		return labelFrequenciasA;
 		
@@ -974,6 +1035,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(labelFrequenciasC == null){
 			labelFrequenciasC = new JLabel("C");
+			labelFrequenciasC.setToolTipText("Citosina");
 		}
 		return labelFrequenciasC;
 		
@@ -983,6 +1045,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(labelFrequenciasG == null){
 			labelFrequenciasG = new JLabel("G");
+			labelFrequenciasG.setToolTipText("Guanina");
 		}
 		return labelFrequenciasG;
 		
@@ -992,6 +1055,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(labelFrequenciasT == null){
 			labelFrequenciasT = new JLabel("T");
+			labelFrequenciasT.setToolTipText("Timina");
 		}
 		return labelFrequenciasT;
 		
@@ -1002,6 +1066,7 @@ public class DIGRAFU extends JFrame {
 		if(sliderFrequenciasA == null){
 			sliderFrequenciasA = new JSlider(JSlider.HORIZONTAL, 0, 100, 25);
 			sliderFrequenciasA.setPreferredSize(new Dimension(120, 20));
+			sliderFrequenciasA.setToolTipText("Frequência de adenina");
 		}
 		return sliderFrequenciasA;
 		
@@ -1012,6 +1077,7 @@ public class DIGRAFU extends JFrame {
 		if(sliderFrequenciasC == null){
 			sliderFrequenciasC = new JSlider(JSlider.HORIZONTAL, 0, 100, 25);
 			sliderFrequenciasC.setPreferredSize(new Dimension(120, 20));
+			sliderFrequenciasC.setToolTipText("Frequência de citosina");
 		}
 		return sliderFrequenciasC;
 		
@@ -1022,6 +1088,7 @@ public class DIGRAFU extends JFrame {
 		if(sliderFrequenciasG == null){
 			sliderFrequenciasG = new JSlider(JSlider.HORIZONTAL, 0, 100, 25);
 			sliderFrequenciasG.setPreferredSize(new Dimension(120, 20));
+			sliderFrequenciasG.setToolTipText("Frequência de guanina");
 		}
 		return sliderFrequenciasG;
 		
@@ -1032,6 +1099,7 @@ public class DIGRAFU extends JFrame {
 		if(sliderFrequenciasT == null){
 			sliderFrequenciasT = new JSlider(JSlider.HORIZONTAL, 0, 100, 25);
 			sliderFrequenciasT.setPreferredSize(new Dimension(120, 20));
+			sliderFrequenciasT.setToolTipText("Frequência de timina");
 		}
 		return sliderFrequenciasT;
 		
@@ -1046,6 +1114,7 @@ public class DIGRAFU extends JFrame {
 			spinnerFrequenciasA.setPreferredSize(new Dimension(50, 20));
 			//spinnerFrequenciasA.setBounds(new Rectangle(0, 110, 100, 200));
 			//spinnerFrequenciasA.setEnabled(false);
+			spinnerFrequenciasA.setToolTipText("Frequência de adenina");
 		}
 		return spinnerFrequenciasA;
 		
@@ -1060,6 +1129,7 @@ public class DIGRAFU extends JFrame {
 			spinnerFrequenciasC.setPreferredSize(new Dimension(50, 20));
 			//spinnerFrequenciasC.setBounds(new Rectangle(0, 110, 100, 200));
 			//spinnerFrequenciasC.setEnabled(false);
+			spinnerFrequenciasC.setToolTipText("Frequência de citosina");
 		}
 		return spinnerFrequenciasC;
 		
@@ -1074,6 +1144,7 @@ public class DIGRAFU extends JFrame {
 			spinnerFrequenciasG.setPreferredSize(new Dimension(50, 20));
 			//spinnerFrequenciasG.setBounds(new Rectangle(0, 110, 100, 200));
 			//spinnerFrequenciasG.setEnabled(false);
+			spinnerFrequenciasG.setToolTipText("Frequência de guanina");
 		}
 		return spinnerFrequenciasG;
 		
@@ -1088,6 +1159,7 @@ public class DIGRAFU extends JFrame {
 			spinnerFrequenciasT.setPreferredSize(new Dimension(50, 20));
 			//spinnerFrequenciasT.setBounds(new Rectangle(0, 110, 100, 200));
 			//spinnerFrequenciasT.setEnabled(false);
+			spinnerFrequenciasT.setToolTipText("Frequência de timina");
 		}
 		return spinnerFrequenciasT;
 		
@@ -1127,6 +1199,11 @@ public class DIGRAFU extends JFrame {
 			bordaTitulo.setTitleFont(new Font("Arial", Font.BOLD, 12));
 			painelCategorias.setBorder(bordaTitulo);
 			// painelCategorias.add(getLabelCategoriasDefinir());
+			painelCategorias.setToolTipText(
+					"<html>" +
+					"Definição de categorias<br>" +
+					"*Valores relativos entre si" +
+					"</html>");
 			
 			c.gridx = 0;
 			c.gridy = 0;
@@ -1368,6 +1445,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(campoNumericoCategoria1 == null){
 			campoNumericoCategoria1 = new JTextField();
+			campoNumericoCategoria1.setToolTipText("Valor deve ser não negativo");
 		}
 		return campoNumericoCategoria1;
 		
@@ -1386,6 +1464,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(campoNumericoCategoria2 == null){
 			campoNumericoCategoria2 = new JTextField();
+			campoNumericoCategoria2.setToolTipText("Valor deve ser não negativo");
 		}
 		return campoNumericoCategoria2;
 		
@@ -1404,6 +1483,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(campoNumericoCategoria3 == null){
 			campoNumericoCategoria3 = new JTextField();
+			campoNumericoCategoria3.setToolTipText("Valor deve ser não negativo");
 		}
 		return campoNumericoCategoria3;
 		
@@ -1422,6 +1502,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(campoNumericoCategoria4 == null){
 			campoNumericoCategoria4 = new JTextField();
+			campoNumericoCategoria4.setToolTipText("Valor deve ser não negativo");
 		}
 		return campoNumericoCategoria4;
 		
@@ -1440,6 +1521,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(campoNumericoCategoria5 == null){
 			campoNumericoCategoria5 = new JTextField();
+			campoNumericoCategoria5.setToolTipText("Valor deve ser não negativo");
 		}
 		return campoNumericoCategoria5;
 		
@@ -1458,6 +1540,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(campoNumericoCategoria6 == null){
 			campoNumericoCategoria6 = new JTextField();
+			campoNumericoCategoria6.setToolTipText("Valor deve ser não negativo");
 		}
 		return campoNumericoCategoria6;
 		
@@ -1476,6 +1559,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(campoNumericoCategoria7 == null){
 			campoNumericoCategoria7 = new JTextField();
+			campoNumericoCategoria7.setToolTipText("Valor deve ser não negativo");
 		}
 		return campoNumericoCategoria7;
 		
@@ -1494,6 +1578,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(campoNumericoCategoria8 == null){
 			campoNumericoCategoria8 = new JTextField();
+			campoNumericoCategoria8.setToolTipText("Valor deve ser não negativo");
 		}
 		return campoNumericoCategoria8;
 		
@@ -1512,6 +1597,7 @@ public class DIGRAFU extends JFrame {
 		
 		if(campoNumericoCategoria9 == null){
 			campoNumericoCategoria9 = new JTextField();
+			campoNumericoCategoria9.setToolTipText("Valor deve ser não negativo");
 		}
 		return campoNumericoCategoria9;
 		
@@ -1560,6 +1646,11 @@ public class DIGRAFU extends JFrame {
 		if(areaTextoCategorias == null){
 			areaTextoCategorias = new JTextArea(3, 16);
 			//areaTextoCategorias.setBounds(new Rectangle(5, 130, 90, 100));
+			areaTextoCategorias.setToolTipText(
+					"<html>" +
+					"Indique as categorias que serão seguidas pelos sítios " +
+					"correspondentes<br>" +
+					"</html>");
 		}
 		return areaTextoCategorias;
 	}
@@ -1571,6 +1662,7 @@ public class DIGRAFU extends JFrame {
 			botaoCategoriasAbrir.setSize(new Dimension(30, 20));
 			botaoCategoriasAbrir.setFont(new Font("Dialog", Font.BOLD, 10));
 			botaoCategoriasAbrir.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			botaoCategoriasAbrir.setToolTipText("Abrir arquivo de categorias");
 		}
 		return botaoCategoriasAbrir;
 	}
@@ -1579,6 +1671,10 @@ public class DIGRAFU extends JFrame {
 		
 		if(radioBotaoCategoriasManual == null){
 			radioBotaoCategoriasManual = new JRadioButton("Manual");
+			radioBotaoCategoriasManual.setToolTipText(
+					"<html>" +
+					"Atribuir categorias aos sítios manualmente<br>" +
+					"</html>");
 		}
 		return radioBotaoCategoriasManual;
 		
@@ -1588,6 +1684,10 @@ public class DIGRAFU extends JFrame {
 		
 		if(radioBotaoCategoriasDoArquivo == null){
 			radioBotaoCategoriasDoArquivo = new JRadioButton("Do arquivo");
+			radioBotaoCategoriasDoArquivo.setToolTipText(
+					"<html>" +
+					"Utilizar um arquivo de categorias<br>" +
+					"</html>");
 		}
 		return radioBotaoCategoriasDoArquivo;
 		
@@ -1621,6 +1721,7 @@ public class DIGRAFU extends JFrame {
 			botaoLimparCategorias.setSize(new Dimension(30, 20));
 			botaoLimparCategorias.setFont(new Font("Dialog", Font.BOLD, 10));
 			botaoLimparCategorias.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			botaoLimparCategorias.setToolTipText("Limpar caixa de texto");
 		}
 		return botaoLimparCategorias;
 		
@@ -1633,6 +1734,7 @@ public class DIGRAFU extends JFrame {
 			botaoEditarCategorias.setSize(new Dimension(30, 20));
 			botaoEditarCategorias.setFont(new Font("Dialog", Font.BOLD, 10));
 			botaoEditarCategorias.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			botaoEditarCategorias.setToolTipText("Editar arquivo de categorias");
 		}
 		return botaoEditarCategorias;
 		
@@ -1728,6 +1830,7 @@ public class DIGRAFU extends JFrame {
 			// painelPreferencia.add(getLabelPreferencia());
 			painelPreferencia.add(getCheckBoxExatidao());
 			painelPreferencia.add(getCheckBoxExecucao());
+			painelPreferencia.setToolTipText("Critérios preferencias de execução");
 		}
 		return painelPreferencia;
 		
@@ -1749,6 +1852,7 @@ public class DIGRAFU extends JFrame {
 			checkBoxExatidao.setText("Exatidão");
 			//checkBoxExatidao.setSelected(true);
 			//checkBoxExatidao.setSize(50, 30);
+			checkBoxExatidao.setToolTipText("Priorizar exatidão do método");
 		}
 		return checkBoxExatidao;
 	}
@@ -1758,6 +1862,7 @@ public class DIGRAFU extends JFrame {
 		if(checkBoxExecucao == null){
 			checkBoxExecucao = new JCheckBox();
 			checkBoxExecucao.setText("Tempo");
+			checkBoxExecucao.setToolTipText("Priorizar tempo de execução");
 		}
 		return checkBoxExecucao;
 	}
