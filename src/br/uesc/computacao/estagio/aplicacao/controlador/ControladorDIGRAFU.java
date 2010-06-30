@@ -906,7 +906,15 @@ public class ControladorDIGRAFU
 	        ControladorDIGRAFU.guardaNomeSequencia = "INPUT " + ControladorDIGRAFU.guardaNomeSequencia;
                     
 			if(GeraParametrosDIGRAFU.trataParametrosSequencia()){
-				if((GeraParametrosDIGRAFU.trataParametrosDNA())){
+				if((GeraParametrosDIGRAFU.getTipo() == "dna") &&
+				    GeraParametrosDIGRAFU.trataParametrosDNA()){
+					ControladorIGrafu.digrafu.setEnabled(false);
+					ControladorIGrafu.digrafu.getDialogoModoExecucao().setVisible(true);
+					ControladorIGrafu.digrafu.getPainelModoExecucao().setVisible(true);
+					ControladorIGrafu.digrafu.getPainelModoExecucao().setEnabled(true);
+				}
+				else if((GeraParametrosDIGRAFU.getTipo() == "proteina") &&
+						 GeraParametrosDIGRAFU.trataParametrosProteina()){
 					ControladorIGrafu.digrafu.setEnabled(false);
 					ControladorIGrafu.digrafu.getDialogoModoExecucao().setVisible(true);
 					ControladorIGrafu.digrafu.getPainelModoExecucao().setVisible(true);
@@ -934,8 +942,8 @@ public class ControladorDIGRAFU
 
 			Thread threadDigrafu = new Thread(new Runnable() {
 				public void run() {
-					// ControlaExecucao.executaDIGRAFU();
-                    Processo.processarDIGRAFU();
+					ControlaExecucao.executaDIGRAFU();
+                    // Processo.processarDIGRAFU();
 					ControladorIGrafu.digrafu.getBarraProgressoExecucao().setVisible(false);
 				}
 			});
