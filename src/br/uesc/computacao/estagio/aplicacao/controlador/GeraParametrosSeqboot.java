@@ -62,8 +62,8 @@ public class GeraParametrosSeqboot {
 		if (ControladorIGrafu.seqboot.getJTextFieldArquivoSequencia().getText().length() == 0) {
 			JOptionPane.showMessageDialog(null, ARQUIVO, SEQUENCIA,	JOptionPane.INFORMATION_MESSAGE);
 			return false;
-		} else
-			ControladorSeqboot.guardaNomeSequencia = ControladorIGrafu.seqboot.getJTextFieldArquivoSequencia().getText();
+		} /*else
+			ControladorSeqboot.guardaNomeSequencia = ControladorIGrafu.seqboot.getJTextFieldArquivoSequencia().getText();*/
 
 		if (ControladorIGrafu.seqboot.getJNumberFieldSemente().getText().length() == 0) {
 			JOptionPane.showMessageDialog(null, "Informe um valor impar!", "Semente", JOptionPane.INFORMATION_MESSAGE);
@@ -238,14 +238,14 @@ public class GeraParametrosSeqboot {
 		if(ControladorIGrafu.seqboot.getJNumberFieldMaiorAncestral().getText().length() != 0)
 			ControladorSeqboot.trataParametrosConsense += " " + "ROOT " + ControladorIGrafu.seqboot.getJNumberFieldMaiorAncestral().getText();
 
-		if(ControladorIGrafu.seqboot.getJCheckBoxArvoreArquivoSaidaDesenhar().isSelected())
-			ControladorSeqboot.trataParametrosConsense += " " + "TREE";
-
 		if(ControladorIGrafu.seqboot.getJCheckBoxEspeciesArquivoSaidaIndicar().isSelected())
 			ControladorSeqboot.trataParametrosConsense += " " + "PRINT";
 
 		if(ControladorIGrafu.seqboot.getJCheckBoxExecucaoIndicar().isSelected())
 			ControladorSeqboot.trataParametrosConsense += " " + "RUN";
+
+		if(ControladorIGrafu.seqboot.getJCheckBoxArvoreArquivoSaidaDesenhar().isSelected())
+			ControladorSeqboot.trataParametrosConsense += " " + "TREE";
 
 		if(ControladorIGrafu.seqboot.getJTextFieldArvore().getText().length() != 0)
 			ControladorSeqboot.trataParametrosConsense += " " + "FILE " + ControladorIGrafu.seqboot.getJTextFieldArvore().getText();

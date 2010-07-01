@@ -332,7 +332,7 @@ public class Processo {
 
     	try {
     		String inicio = "cd " + pegaCaminho + "/programas/jack/ ; " + (pegaCaminho + corrigeCaminho + "jre/bin/java ") + "DigrafuSequencial ";
-    		String seqboot = pegaCaminho + "/programas/seqboot/seqboot " + ControladorSeqboot.guardaNomeSequencia + ControladorSeqboot.trataParametrosSeqboot + " ";
+    		String seqboot = pegaCaminho + "/programas/seqboot/seqboot " + (ControladorSeqboot.guardaNomeSequencia) + ControladorSeqboot.trataParametrosSeqboot + " ";
     		String digrafuSeqboot = "";
     		String consense = pegaCaminho + "/programas/consense/consense " +	ControladorSeqboot.trataParametrosConsense;
 
@@ -344,11 +344,11 @@ public class Processo {
 
                 	consense = pegaCaminho + "/programas/consense/consense " +	ControladorSeqboot.trataParametrosConsense + " ; exit";
 
-                	digrafuSeqboot += ((pegaCaminho) + (corrigeCaminho) + ("/programas/digrafu/Run.pl ") + (ControladorDIGRAFU.guardaNomeSequencia) +  (ControladorDIGRAFU.guardaArquivo) + " ");
+                	digrafuSeqboot += ((pegaCaminho) + (corrigeCaminho) + ("/programas/digrafu/Run.pl ") +  (ControladorDIGRAFU.guardaArquivo) + " ");
 
                 }
                 else {
-                	digrafuSeqboot += ((pegaCaminho) + (corrigeCaminho) + ("/programas/digrafu/Run.pl ") +  (ControladorDIGRAFU.guardaNomeSequencia) +  (ControladorDIGRAFU.guardaArquivo) + " ");
+                	digrafuSeqboot += ((pegaCaminho) + (corrigeCaminho) + ("/programas/digrafu/Run.pl ") +  (ControladorDIGRAFU.guardaArquivo) + " ");
 
                 }
 

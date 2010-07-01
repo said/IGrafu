@@ -903,6 +903,7 @@ public class ControladorDIGRAFU
 	        ControladorDIGRAFU.guardaNomeSequencia = GerarParametrosConversor.ChamaConversorIGrafu();
 	        ControladorIGrafu.conversor.getJTextFieldArquivoEntrada().setText(ControladorDIGRAFU.guardaNomeSequencia);
 	        //ControladorIGrafu.digrafu.getLabelSequencia().setText("Sequência: " + ControladorDIGRAFU.guardaNomeSequencia);
+	        ControladorSeqboot.guardaNomeSequencia = ControladorDIGRAFU.guardaNomeSequencia;
 	        ControladorDIGRAFU.guardaNomeSequencia = "INPUT " + ControladorDIGRAFU.guardaNomeSequencia;
                     
 			if(GeraParametrosDIGRAFU.trataParametrosSequencia()){
