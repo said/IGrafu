@@ -152,7 +152,7 @@ public class GeraParametrosSeqboot {
 
 		if(ControladorIGrafu.seqboot.getJNumberFieldBloco().isEnabled()) {
 			if(ControladorIGrafu.seqboot.getJNumberFieldBloco().getValue() > 0)
-				ControladorSeqboot.trataParametrosSeqboot += " " + ControladorIGrafu.seqboot.getJNumberFieldBloco().getText();
+				ControladorSeqboot.trataParametrosSeqboot += " BLOCO " + ControladorIGrafu.seqboot.getJNumberFieldBloco().getText();
 		}
 
 		if(ControladorIGrafu.seqboot.getJTextFieldPesos().isEnabled()) {
@@ -208,9 +208,9 @@ public class GeraParametrosSeqboot {
 
 		if(ControladorIGrafu.seqboot.getJRadioButtonRaizSim().isSelected() || ControladorIGrafu.seqboot.getJRadioButtonRaizNao().isSelected()) {
 			if(ControladorIGrafu.seqboot.getJRadioButtonRaizSim().isSelected())
-				ControladorSeqboot.trataParametrosConsense += "S";
+				ControladorSeqboot.trataParametrosConsense += " S";
 
-			else if(ControladorIGrafu.seqboot.getJRadioButtonRaizSim().isSelected())
+			else if(ControladorIGrafu.seqboot.getJRadioButtonRaizNao().isSelected())
 				ControladorSeqboot.trataParametrosConsense += " " + "N";
 		}
 		else {
