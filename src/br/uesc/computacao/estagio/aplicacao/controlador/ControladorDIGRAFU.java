@@ -80,6 +80,8 @@ public class ControladorDIGRAFU
 	public static boolean perfil = false;
 
 	public static String nomePerfil = "";
+	
+	public int naoConvertido = 1;
 
 	/*
 	 * Construtor
@@ -900,11 +902,14 @@ public class ControladorDIGRAFU
 		if (e.getSource() == ControladorIGrafu.digrafu.getBotaoExecutar()) {
 			
 	        // Convertendo para phylip sequencial
-	        ControladorDIGRAFU.guardaNomeSequencia = GerarParametrosConversor.ChamaConversorIGrafu();
-	        ControladorIGrafu.conversor.getJTextFieldArquivoEntrada().setText(ControladorDIGRAFU.guardaNomeSequencia);
-	        //ControladorIGrafu.digrafu.getLabelSequencia().setText("Sequência: " + ControladorDIGRAFU.guardaNomeSequencia);
-	        ControladorSeqboot.guardaNomeSequencia = ControladorDIGRAFU.guardaNomeSequencia;
-	        ControladorDIGRAFU.guardaNomeSequencia = "INPUT " + ControladorDIGRAFU.guardaNomeSequencia;
+			if(naoConvertido == 1){
+				ControladorDIGRAFU.guardaNomeSequencia = GerarParametrosConversor.ChamaConversorIGrafu();
+		        ControladorIGrafu.conversor.getJTextFieldArquivoEntrada().setText(ControladorDIGRAFU.guardaNomeSequencia);
+		        //ControladorIGrafu.digrafu.getLabelSequencia().setText("Sequência: " + ControladorDIGRAFU.guardaNomeSequencia);
+		        ControladorSeqboot.guardaNomeSequencia = ControladorDIGRAFU.guardaNomeSequencia;
+		        ControladorDIGRAFU.guardaNomeSequencia = "INPUT " + ControladorDIGRAFU.guardaNomeSequencia;
+				naoConvertido = 0;
+			}
                     
 			if(GeraParametrosDIGRAFU.trataParametrosSequencia()){
 				if((GeraParametrosDIGRAFU.getTipo() == "dna") &&
