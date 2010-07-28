@@ -1,6 +1,8 @@
 package br.uesc.computacao.estagio.aplicacao.util;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 
 import javax.swing.JOptionPane;
 
@@ -286,34 +288,57 @@ public class Processo {
      * @return void
      */
     public static void processarDIGRAFU() {
-    	
+
+		BufferedReader buffer;
+		String output = "";
     	pegaCaminho();
     	
     	//String linhaExecucao = pegaCaminho + corrigeCaminho + "/programas/digrafu/Run.pl "
     	//					   + ControladorDIGRAFU.guardaNomeSequencia + ControladorDIGRAFU.guardaArquivo;
 
-        // JOptionPane.showMessageDialog(null, linhaExecucao, EXEC_DIGRAFU_1, JOptionPane.INFORMATION_MESSAGE);
         try {
         	
         	/*
         	 * Execução do DiGrafu
         	 */
+        	if(ManipulaArquivo.existeArquivo(pegaCaminho + "/arquivos_saida/digrafu/out_" + ControladorConversor.arquivoSaida))
+        		ManipulaArquivo.deletaArquivo(pegaCaminho + "/arquivos_saida/digrafu/out_" + ControladorConversor.arquivoSaida);
+        	
         	System.out.println("\nLog - DiGrafu executado sequencialmente:\n" + (pegaCaminho) + (corrigeCaminho) + ("/programas/digrafu/Run.pl ")
 					   + (ControladorDIGRAFU.guardaNomeSequencia) + (ControladorDIGRAFU.guardaArquivo));
         	digrafu = Runtime.getRuntime().exec((pegaCaminho) + (corrigeCaminho) + ("/programas/digrafu/Run.pl ")
 					   + (ControladorDIGRAFU.guardaNomeSequencia) + (ControladorDIGRAFU.guardaArquivo));
-        	//digrafu = Runtime.getRuntime().exec("/home/gilmar/workspace/igrafu/deploy//programas/digrafu/Run.pl INPUT /home/gilmar/workspace/igrafu/deploy/programas/digrafu/Sequencias/reais_dna/m62.seq OUTPUT /home/gilmar/workspace/igrafu/deploy/arquivos_saida/digrafu/out_teste PREFERENCE a TYPE dna MODEL kimura RATIO 2");
-            int saida = digrafu.waitFor();
+        	
+        	buffer = new BufferedReader(new InputStreamReader(digrafu.getInputStream()));
+        	digrafu.waitFor();
 
+        	int count = 0;
+			String tempout = buffer.readLine();
+			while( (tempout != null) && (count < 6) ){
+				output += tempout + "\n";
+				tempout = buffer.readLine();
+				count++;
+			}
+
+			buffer=null;
+			
             digrafu.destroy();
-            if(ControladorDIGRAFU.perfil == true) {
-				ManipulaArquivo.gravaArquivo(pegaCaminho + (corrigeCaminho) + "/perfil/" + "nomes_perfil", ControladorDIGRAFU.nomePerfil);
-				ManipulaArquivo.gravaArquivo(pegaCaminho + (corrigeCaminho) + "/perfil/" + ControladorDIGRAFU.nomePerfil, ((pegaCaminho) + (corrigeCaminho) + ("/programas/digrafu/Run.pl INPUT ")));
-            	ManipulaArquivo.gravaArquivo(pegaCaminho + (corrigeCaminho) + "/perfil/" + ControladorDIGRAFU.nomePerfil, (ControladorDIGRAFU.guardaArquivo));
+            
+            if(output != ""){
+            	JOptionPane.showMessageDialog(null, output, ERRO, JOptionPane.ERROR_MESSAGE);
             }
-            ControladorDIGRAFU.perfil = false;
-
-            JOptionPane.showMessageDialog(null, EXEC_DIGRAFU, EXEC_DIGRAFU_1, JOptionPane.INFORMATION_MESSAGE);
+            else{
+            
+	            if(ControladorDIGRAFU.perfil == true) {
+					ManipulaArquivo.gravaArquivo(pegaCaminho + (corrigeCaminho) + "/perfil/" + "nomes_perfil", ControladorDIGRAFU.nomePerfil);
+					ManipulaArquivo.gravaArquivo(pegaCaminho + (corrigeCaminho) + "/perfil/" + ControladorDIGRAFU.nomePerfil, ((pegaCaminho) + (corrigeCaminho) + ("/programas/digrafu/Run.pl INPUT ")));
+	            	ManipulaArquivo.gravaArquivo(pegaCaminho + (corrigeCaminho) + "/perfil/" + ControladorDIGRAFU.nomePerfil, (ControladorDIGRAFU.guardaArquivo));
+	            }
+	            ControladorDIGRAFU.perfil = false;
+	
+	            JOptionPane.showMessageDialog(null, EXEC_DIGRAFU, EXEC_DIGRAFU_1, JOptionPane.INFORMATION_MESSAGE);
+	            
+            }
             
         }
         catch(Exception expection) {
