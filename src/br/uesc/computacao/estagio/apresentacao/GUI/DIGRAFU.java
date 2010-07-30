@@ -23,6 +23,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -33,6 +34,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
@@ -79,10 +81,23 @@ public class DIGRAFU extends JFrame {
 	public static int y;
 	
 	private JPanel painelPrincipal = null;
+	
+	// Menu
 	private JMenuBar barraMenuPrincipal = null;
 	private JMenu menuArquivo = null;
 	private JMenu menuConfiguracao = null;
 	private JMenu menuAjuda = null;
+	private JMenu menuIdioma = null;
+	private ButtonGroup grupoBotoesIdioma = null;
+	private JCheckBoxMenuItem checkBoxItemMenuEnglish = null;
+	private JCheckBoxMenuItem checkBoxItemMenuPortuguese = null;
+	private JRadioButtonMenuItem radioBotaoItemMenuEnglish = null;
+	private JRadioButtonMenuItem radioBotaoItemMenuPortuguese = null;
+	private JMenuItem itemMenuFechar = null;
+	private JMenuItem itemMenuSobre = null;
+	private JDialog dialogoSobre = null;
+	private JPanel painelImagemSobre = null;
+	private JTextArea areaTextoSobre = null;
 	private JProgressBar barraProgressoExecucao = null;
 	
 	
@@ -254,6 +269,168 @@ public class DIGRAFU extends JFrame {
 		
 	}
 	
+	public JMenu getMenuArquivo(){
+		
+		if(menuArquivo == null){
+			menuArquivo = new JMenu("Arquivo");
+			menuArquivo.setName("menuArquivo");
+			menuArquivo.add(getItemMenuFechar());
+		}
+		return menuArquivo;
+		
+	}
+	
+	public JMenu getMenuConfiguracao(){
+		
+		if(menuConfiguracao == null){
+			menuConfiguracao = new JMenu("Configuracao");
+			menuConfiguracao.setName("menuConfiguracao");
+			menuConfiguracao.add(getMenuIdioma());
+		}
+		return menuConfiguracao;
+		
+	}
+	
+	public JMenu getMenuAjuda(){
+		
+		if(menuAjuda == null){
+			menuAjuda = new JMenu("Ajuda");
+			menuAjuda.setName("menuAjuda");
+			menuAjuda.add(getItemMenuSobre());
+		}
+		return menuAjuda;
+		
+	}
+
+	public JMenu getMenuIdioma(){
+		
+		if (menuIdioma == null){
+			menuIdioma = new JMenu();
+			menuIdioma.setName("menuIdioma");
+			menuIdioma.setText("Idioma");
+			menuIdioma.add(getCheckBoxItemMenuEnglish());
+			menuIdioma.add(getCheckBoxItemMenuPortuguese());
+		}
+		return menuIdioma;
+		
+	}
+	
+	public ButtonGroup getGrupoBotoesIdioma(){
+		
+		if(grupoBotoesIdioma == null){
+			grupoBotoesIdioma = new ButtonGroup();
+			grupoBotoesIdioma.add(getCheckBoxItemMenuEnglish());
+			grupoBotoesIdioma.add(getCheckBoxItemMenuPortuguese());
+		}
+		return grupoBotoesIdioma;
+		
+	}
+
+	public JCheckBoxMenuItem getCheckBoxItemMenuEnglish(){
+		
+		if (checkBoxItemMenuEnglish == null){
+			checkBoxItemMenuEnglish = new JCheckBoxMenuItem();
+			checkBoxItemMenuEnglish.setName("checkBoxItemMenuEnglish");
+			checkBoxItemMenuEnglish.setText("Inglês");
+		}
+		return checkBoxItemMenuEnglish;
+		
+	}
+
+	public JCheckBoxMenuItem getCheckBoxItemMenuPortuguese(){
+		
+		if (checkBoxItemMenuPortuguese == null){
+			checkBoxItemMenuPortuguese = new JCheckBoxMenuItem();
+			checkBoxItemMenuPortuguese.setName("checkBoxItemMenuPortuguese");
+			checkBoxItemMenuPortuguese.setText("Português");
+		}
+		return checkBoxItemMenuPortuguese;
+		
+	}
+
+	public JMenuItem getItemMenuFechar(){
+		
+		if (itemMenuFechar == null){
+			itemMenuFechar = new JMenuItem();
+			itemMenuFechar.setName("itemMenuFechar");
+			itemMenuFechar.setText("Sair");
+			itemMenuFechar.setIcon(new ImageIcon(getClass().getResource("/br/uesc/computacao/estagio/apresentacao/figuras/fechar.gif")));
+		}
+		return itemMenuFechar;
+		
+	}
+
+	public JMenuItem getItemMenuSobre(){
+		
+		if (itemMenuSobre == null){
+			itemMenuSobre = new JMenuItem();
+			itemMenuSobre.setName("itemMenuSobre");
+			itemMenuSobre.setText("Sobre a IGRAFU");
+		}
+		return itemMenuSobre;
+	}
+	
+	public JDialog getDialogoSobre(){
+		
+		if (dialogoSobre == null){
+			dialogoSobre = new JDialog(this);
+			dialogoSobre.setName("dialogoSobre");
+			dialogoSobre.setSize(new Dimension(535, 200));
+			dialogoSobre.setTitle("Sobre a IGRAFU");
+			dialogoSobre.setResizable(false);
+			dialogoSobre.getContentPane().setLayout(null);
+			dialogoSobre.getContentPane().setBackground(Color.white);
+			dialogoSobre.getContentPane().add(getPainelImagemSobre(), null);
+			dialogoSobre.getContentPane().add(getAreaTextoSobre(), null);
+			dialogoSobre.addWindowListener(new java.awt.event.WindowAdapter(){
+				public void windowClosing(WindowEvent evt){
+					dialogoSobre.removeNotify();
+				}
+			});
+		}
+		return dialogoSobre;
+		
+	}
+	
+	public JPanel getPainelImagemSobre(){
+		
+		if (painelImagemSobre == null){
+			final ImageIcon imagem = new ImageIcon(getClass().getResource("/br/uesc/computacao/estagio/apresentacao/figuras/camaleao.png"));
+			painelImagemSobre = new JPanel(){
+				public static final long serialVersionUID = 1L;
+
+				protected void paintComponent( Graphics g ){
+                    super.paintComponent(g);
+                    imagem.paintIcon(this,g,0,5);
+                }
+            };
+            painelImagemSobre.setName("painelImagemSobre");
+            painelImagemSobre.setLayout(null);
+            painelImagemSobre.setLocation(new Point(0, 0));
+            painelImagemSobre.setBackground(Color.white);
+            painelImagemSobre.setSize(new Dimension(143, 143));
+		}
+		return painelImagemSobre;
+		
+	}
+	
+	public JTextArea getAreaTextoSobre(){
+		
+		if (areaTextoSobre == null){
+			areaTextoSobre = new JTextArea();
+			areaTextoSobre.setName("areaTextoSobre");
+			areaTextoSobre.setText("IGRAFU \nVersão: 2.0\nEste produto inclui os programas:\n   " +
+				"- DIGRAFU (Cristiano Martins)\n   - PHYML\n   - Seqboot\n   " +
+				"- Consense.\n\nAutores: Zilton Junior & Martha Ximena");
+			areaTextoSobre.setLocation(new Point(150, 5));
+			areaTextoSobre.setFont(new Font("Dialog", Font.BOLD, 14));
+			areaTextoSobre.setEditable(false);
+			areaTextoSobre.setSize(new Dimension(370, 164));
+		}
+		return areaTextoSobre;
+		
+	}
+	
 	public JPanel getPainelPrincipal(){
 				
 		if(painelPrincipal == null){
@@ -278,36 +455,10 @@ public class DIGRAFU extends JFrame {
 			painelPrincipal.add(getBotaoExecutar());
 			painelPrincipal.add(getBotaoVisualizar());
 			painelPrincipal.add(getBarraProgressoExecucao());
-						
+
+			getGrupoBotoesIdioma();
 		}
 		return painelPrincipal;
-		
-	}
-	
-	public JMenu getMenuArquivo(){
-		
-		if(menuArquivo == null){
-			menuArquivo = new JMenu("Arquivo");
-		}
-		return menuArquivo;
-		
-	}
-	
-	public JMenu getMenuConfiguracao(){
-		
-		if(menuConfiguracao == null){
-			menuConfiguracao = new JMenu("Configuracao");
-		}
-		return menuConfiguracao;
-		
-	}
-	
-	public JMenu getMenuAjuda(){
-		
-		if(menuAjuda == null){
-			menuAjuda = new JMenu("Ajuda");
-		}
-		return menuAjuda;
 		
 	}
 	

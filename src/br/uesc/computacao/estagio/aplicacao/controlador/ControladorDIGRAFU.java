@@ -129,10 +129,19 @@ public class ControladorDIGRAFU
 
                 
 	}
-	 
+	
+	/**
+	 * 
+	 * Inicializa listeners dos componentes da tela do DiGrafu
+	 *
+	 */
 	public void inicializaGerencia() {
 
 		// ControladorIGrafu.digrafu.getComboTipo().addActionListener(this);
+		ControladorIGrafu.digrafu.getCheckBoxItemMenuEnglish().addActionListener(this);
+		ControladorIGrafu.digrafu.getCheckBoxItemMenuPortuguese().addActionListener(this);
+		ControladorIGrafu.digrafu.getItemMenuFechar().addActionListener(this);
+		ControladorIGrafu.digrafu.getItemMenuSobre().addActionListener(this);
 		ControladorIGrafu.digrafu.getComboTipo().addItemListener(this);
 		ControladorIGrafu.digrafu.getComboModeloDNA().addActionListener(this);
 		ControladorIGrafu.digrafu.getComboModeloProteina().addActionListener(this);
@@ -208,6 +217,7 @@ public class ControladorDIGRAFU
 	
 	public void inicializaCampos() {
 		
+		ControladorIGrafu.digrafu.getCheckBoxItemMenuPortuguese().setSelected(true);
 		ControladorIGrafu.digrafu.getComboTipo().setSelectedIndex(0);
 		// ControladorIGrafu.digrafu.getComboModelo().setSelectedIndex(0);
 		ControladorIGrafu.digrafu.getComboModeloDNA().setSelectedIndex(0);
@@ -620,18 +630,50 @@ public class ControladorDIGRAFU
 	 
 	public void actionPerformed(ActionEvent e) {
 
-		// DNA
-		
-		if(e.getSource() == ControladorIGrafu.digrafu.getComboModeloDNA()){
+		// Menu Configuracao -> Idiomas
+		if(e.getSource() == ControladorIGrafu.digrafu.getCheckBoxItemMenuEnglish() ||
+		   e.getSource() == ControladorIGrafu.digrafu.getCheckBoxItemMenuPortuguese()){
+			if(ControladorIGrafu.digrafu.getCheckBoxItemMenuEnglish().isSelected())
+				Tradutor.setLinguage(1);
+			else
+				Tradutor.setLinguage(0);
+			// traduzir();
+		}
+
+		// Menu Arquivo -> Fechar
+		if(e.getSource() == ControladorIGrafu.digrafu.getItemMenuFechar()) {
 			
-			atualizaPainelPrincipal(ControladorIGrafu.digrafu.getComboModeloDNA().getSelectedIndex());
+			Object[] opcoes = { SAIR, CANCELAR };
+			int opcao = JOptionPane.showOptionDialog(null, FECHAR, "IGRAFU 2.0",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+						null, opcoes, opcoes[1]);
+
+			if(opcao == JOptionPane.YES_OPTION)
+				System.exit(0);
 			
 		}
+
+		// Menu Ajuda -> Sobre
+		if(e.getSource() == ControladorIGrafu.digrafu.getItemMenuSobre()) {
+
+			Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+			ControladorIGrafu.digrafu.getDialogoSobre().setLocation(
+					(dimension.width - ControladorIGrafu.digrafu.getX() - 300)/2,
+					(dimension.height - ControladorIGrafu.digrafu.getY() - 50)/2
+					);
+			ControladorIGrafu.digrafu.getDialogoSobre().setVisible(true);
+			ControladorIGrafu.digrafu.getDialogoSobre().repaint();
+			
+		}
+
+		// DNA
+		if(e.getSource() == ControladorIGrafu.digrafu.getComboModeloDNA()){
+			atualizaPainelPrincipal(ControladorIGrafu.digrafu.getComboModeloDNA().getSelectedIndex());
+		}
 		
+		// Proteina
 		if(e.getSource() == ControladorIGrafu.digrafu.getComboModeloProteina()){
-			
 			atualizaPainelPrincipal(ControladorIGrafu.digrafu.getComboModeloProteina().getSelectedIndex());
-			
 		}
 
 /*		
