@@ -72,7 +72,6 @@ public class ControladorModoExecucao implements ActionListener {
 		ControladorIGrafu.modoExecucao.getJCheckBoxMenuItemPortuguese().setSelected(true);
 		ControladorIGrafu.modoExecucao.getJMenuItemSobre().addActionListener(this);
 		ControladorIGrafu.modoExecucao.getJMenuItemFechar().addActionListener(this);
-		ControladorIGrafu.modoExecucao.getJMenuItemSobre().addActionListener(this);
 		ControladorIGrafu.modoExecucao.getJButtonExecutarPerfil().addActionListener(this);
 		ControladorIGrafu.modoExecucao.getJRadioButtonModoExecucaoAutomatico().addActionListener(this);
 		ControladorIGrafu.modoExecucao.getJRadioButtonModoExecucaoManual().addActionListener(this);
