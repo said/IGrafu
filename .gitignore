@@ -6,3 +6,5 @@ nbproject/
 .classpath
 .project
 deploy/IGRAFU.jar
+lib/uispec4j-2.3-jdk16.jar
+src/br/uesc/computacao/estagio/test/*
