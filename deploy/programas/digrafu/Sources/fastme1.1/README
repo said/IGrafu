@@ -1,0 +1,39 @@
+9/20/2006:
+
+An initial attempt to put together the program.
+
+Files include:
+
+main.c - the main program
+bme.c - BME functions
+gme.c - GME functions
+NNI.c - FastNNI functions
+bNNI.c - BNNI functions
+inputs.c - for inputting matrices
+graph.c - basic functions for tree creation
+newick.c - functions for inputting and outputting trees in Newick format
+heap.c - routines for handling heap for NNI and BNNI
+BIONJ.C - NJ and BIONJ functions
+traverse.c - functions to move through tree
+interface_options.c - PHYLIP like interface
+interface_utilities.c - useful function for PHYLIP like interface
+interface_free.c - functions to free memory allocated for PHYLIP like interface
+
+The program can be used through the PHYLIP like interface. In that case, just
+run it with no parameter.
+
+With the command line interface, the program takes six different flags:
+Usage: fastme -ibnstw
+-i filename of distance matrix.
+-b method for building initial tree: (b)alanced_GME (default), (O)LS_GME,
+   B(I)ONJ or (N)J.
+-n number of trees/matrices input (default = 1).
+-s specify type of tree swapping (NNIs): (b)alanced (default), (O)LS, or (n)one.
+-t (optional) filename of starting tree topology.
+-w (b)alanced or (O)LS weights. (n)one is available only with NJ or BIONJ tree
+   building method.
+-help to get this message.
+
+FastME creates two output files:
+- The output tree: {matrix_filename}_tree.txt
+- The statistical informations: {matrix_filename}_stat.txt

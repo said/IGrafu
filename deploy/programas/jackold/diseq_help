@@ -1,0 +1,78 @@
+Deve-se passar os parametros, alguns sao OBRIGATORIOS:
+	DigrafuSequencial [endereco_seqboot] [arquivo_entrada] [arquivo_saida] [seed] [R] [D] [J] [I] [16] [A,F,C] [E] [B] [W]  [S] [X] [N] [%,P] [1] [.] [endereco_DiGrafu] [entradas_opcionais] [endereco_consense] [R] [C] [O] [1] [2] [3] [4] [5]
+
+[endereco_seqboot] -- deve passar o diretorio onde se encontra o executavel do SeqBoot.
+[entrada_seqboot] -- indicar o diretorio/arquivo para leitura do arquivo entrada do seqboot -- PARAMETRO OBRIGATORIO
+[seed] -- semente, aceitando somente VALOR impar -- PARAMETRO OBRIGATORIO
+[R] -- quantidade de replicas, aceitando VALOR ex: 100 -- PARAMETRO OBRIGATORIO
+[D] -- tipo da sequencia, pode ser:
+SEQUENCIA MOLECULAR:(SEQU); MORFOLOGIA DISCRETA: (MORF) ; RESTRICAO DE SITIOS: (REST); FREQUENCIA DE GENES:(FREQ) -- PARAMETRO OBRIGATORIO
+[J] -- modelo de permutacao, pode ser:
+BOOTSTRAP:(boot); JACKKNIFE:(jack); PERMUTE CHARACTER:(perm); PERMUTE CHARACTER ORDER:(pord);PERMUTE WHITH SPECIES:(pspec);  -- PARAMETRO OBRIGATORIO
+[I] -- formato do arquivo_entrada,sendo INTERLEAVED(i) ou SEQUENCIAL(s) -- PARAMETRO OBRIGATORIO
+[16] -- indica tipo da sequencia avaliada,pode ser:
+	 dna(DNA); rna(RNA);proteina(PRO) -- PARAMETRO OBRIGATORIO
+[A,F,C] -- arquivo de informacoes extra sobre as categorias de sitios ou fatores ou alelos, deve passar dois parametro:
+	o primeiro a palavra chave: ALL ou CAT ou FAC, 
+	o segundo o diretorio/NOME_ARQUIVO 
+	--  PARAMETRO NAO OBRIGATORIO 
+[E] -- informa as enzimas no arquivo entrada, deve passar no parametro a palavra ENZIMA -- PARAMETRO NAO OBRIGATORIO 
+[B] -- tamanho do bloco que divide a sequencia,deve passar dois parametro:
+	 o primeiro a palavra BLOCO,
+	 o segunto o tamanho (valor)que sera dividido as sequencias
+	 -- PARAMETRO NAO OBRIGATORIO
+[W] -- arquivo que contem os pesos do caracter, deve passar dois parametros:
+	 o primeito a palavra WEIGHT,
+	 o segundo o diretorio/NOME_ARQUIVO
+	 -- PARAMETRO NAO OBRIGATORIO
+[S] -- produce multiple output files, deve passar como parametro o nome:JUSTW( just weight) ou OUTD(out data) -- PARAMETRO NAO OBRIGATORIO
+[X] -- arquivo_mixture, deve passar dois parametro 
+	 o primeiro a palavra MIX, 
+	 o segundo o  Diretorio/NOME_ARQUIVO
+	--PARAMETRO NAO OBRIGATORIO 
+[N] -- arquivo_ancestral, deve passar dois parametro 
+	 o primeiro a palavra ANC, 
+	 o segundo o diretorio/NOME_ARQUIVO
+	 -- PARAMETRO NAO OBRIGATORIO
+[%] -- indicar a porcentagem das amaostras, deve passar dois parametro:
+	 o primeiro a palavra FRACAO,
+	 o segundo o valor da porcentagem das amostras 
+	--PARAMETRO NAO OBRIGATORIO
+[P] -- formato saida para rescrever o arquivo,deve passar dois parametros
+	 o primeiro a palavra RESC, 
+	 o segundo uma das palavras: PHY(formato phylip),NEX(formato nexus),XML(formato xml)
+	 -- PARAMETRO NAO OBRIGATORIO
+[1] -- escrever os dados de saida, deve passar como parametro a palavra PRINT -- PARAMETRO NAO OBRIGATORIO
+[2] -- indicar execucao,deve passar como parametro a palavra RUN -- PARAMETRO NAO OBRIGATORIO
+[.] -- usar o dot-differencing, deve passar como parametro a palavra DIFFER -- PARAMETRO NAO OBRIGATORIO
+[endereco_DiGrafu] -- deve passar o diretorio/Run.pl onde se encontra o executavel do Digrafu.
+[entradas_opcionais] -- Nao deve-se passar arquivo entrada e saida para o digrafu,os outros argumentos sao opcional
+[endereco_consense]-- deve passar o diretorio onde se encontra o executavel
+[R] -- Se trata a arvore com ou sem raiz: SIM(S) ou NAO(N).
+--PARAMETRO OBRIGATORIO
+[C] -- tipo de avaliacao, pode ser: EXTENDED MAJORITY RULE(MRE); STRICT(STR); MAJORITY RULE(MR); ML(ML).
+--PARAMETRO OBRIGATORIO
+[O] -- opcao para definir raiz(maior ancestral), deve-se passar dois parametro:
+	 o primeiro a palavra ROOT,
+	 o segundo indicar a posicao da especie no arquivo considerando a ordem.EX: 3 (a terceira especie).
+--PARAMETRO NAO OBRIGATORIO
+[1] --  indicar as especies no arquivo saida,deve-se escrever a palavra PRINT. 
+--PARAMETRO NAO OBRIGATORIO
+
+[2] -- indicar execucao,deve-se escrever a palavra RUN.
+--PARAMETRO NAO OBRIGATORIO
+
+[3] -- desenhar arvore resultado no arquivo saida, deve-se escrever a palavra TREE.
+--PARAMETRO NAO OBRIGATORIO
+
+[4] -- escrever a arvore em outro arquivo,deve-se escrever dois parametros:
+	o primeira a palavra FILE,
+	o segundo o diretorio/Nome_arquivo onde sera salvo o arquivo.
+	--PARAMETRO NAO OBRIGATORIO
+
+[5] -- Fraction (l) of times a branch must appear, somente considerado se op�ao C = ML.Deve-se passar dois parametro:
+	 o primeiro a palavra FRACTION,
+	 o segundo o valor entre 0.5 - 1.0 EX.0.5
+	--PARAMETRO NAO OBRIGATORIO 
+
+Modelo:	 java DigrafuSequencial DIRETORIO/seqboot DIRETORIO/exem5 3 100 SEQU BOOT S DNA /DIRETORIO/Run.pl  /DIRETORIO/consense S MRE PRINT RUN TREE 

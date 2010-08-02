@@ -1,0 +1,29 @@
+
+ - FastME v1.1 - 
+
+
+
+Papers to be cited:
+
+FastME algorithms (balanced and OLS GME, balanced and OLS NNI, balanced and OLS branch length optimization):
+	Desper R., Gascuel O. 2002. Fast and accurate phylogeny reconstruction algorithms based on the minimum-evolution principle.
+	Journal of Computational Biology. 9(5):687-705.
+BIONJ algorithm:
+	Gascuel O. 1997. BIONJ: an improved version of the NJ algorithm based on a simple model of sequence data.
+	Molecular Biology and Evolution, 14(7):685-695
+NJ algorithm:
+	Saitou N., Nei M. 1987. The neighbor-joining method: a new method for reconstructing phylogenetic trees.
+	Molecular Biology and Evolution, 1987 4(4):406-25
+
+-------------------------------------------------------------------------------
+Settings for this run:
+
+  B  Initial tree: build method (balanced_GME, OLS_GME, BIONJ or NJ) or user tree  balanced_GME    
+  N                                                      Number of matrices/trees  1               
+  S                           Type of tree swapping (NNI) (balanced, OLS or none)  balanced        
+
+Dataset n° 1
+	Before performing NNI(s), tree length is: 1.913041
+	Number of NNI(s) performed: 4
+	Tree length is: 1.910512
+

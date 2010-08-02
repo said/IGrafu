@@ -4,28 +4,30 @@ public class DigrafuSequencial {
 
         public static void main (String[] args) throws Exception{
 
-                        String diretorio, arquivo ,paramProc;
-                    int amostra=0,contador=0,aux=0;
-                    Vector<String> nomeArquivo2,nomeArquivo;
+        	String diretorio, arquivo ,paramProc;
+                int amostra=0, contador=0, aux=0;
+                Vector<String> nomeArquivo2, nomeArquivo;
 
                 ArquivoManip   man          = new ArquivoManip();
                 Parametros     argumentos   = new Parametros();
-                               nomeArquivo2 = new Vector<String>();
 
-            argumentos.help(args,2);
+                nomeArquivo2 = new Vector<String>();
+
+		argumentos.help(args,2);
+
                 diretorio = argumentos.qualDiretorio(args[1]);
                 arquivo   = diretorio+"outSample";
                 contador  = argumentos.qualPosicao(args, "Run");
 
-                paramProc=argumentos.paraSeqboot(args, diretorio,contador);
+                paramProc=argumentos.paraSeqboot(args, diretorio, contador);
                 Processo.criarProcesso(paramProc);
 
                 if(!argumentos.existeArquivo(arquivo)){
                         System.out.println("o arquivo "+arquivo+" nao foi criado. Impossivel continuar.");
-                    System.exit(1);
-            }
+               		System.exit(1);
+           	 }
 
-            nomeArquivo = man.newFileOut( man.getFileVector(arquivo),diretorio);
+            	nomeArquivo = man.newFileOut( man.getFileVector(arquivo),diretorio);
                 amostra     = Integer.parseInt( args[3]);// quantidade de seqboot
                 aux         = argumentos.qualPosicao(args, "consense");
 
@@ -43,6 +45,7 @@ public class DigrafuSequencial {
                 paramProc= argumentos.paraConsense(args, diretorio,arquivo,aux, args.length);
                 Processo.criarProcesso(paramProc);
                 System.gc();
-            System.exit(0);
-                }
+            	System.exit(0);
+
+	}
 }

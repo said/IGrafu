@@ -1,0 +1,48 @@
+O pacote contem todos os codigos.
+Para compilar o seqboot:
+	$ gcc seq.c seqboot.c phylip.c -lm -o seqboot
+
+Para compilar o consense
+	$ gcc cons.c consense.c phylip.c -lm -o consense
+
+Para rodar o phyml sequencial basta compilar o PhymlSequencial.java.
+	$ javac PhymlSequencial.java
+
+Desta forma ele compilará todas as outras classes necessaria. Para ver a ajuda basta rodar passando o parametro 'ajuda' ou sem parametro.No final da cada ajuda existe um MODELO. 
+
+ajuda: $java PhymlSequencial ajuda
+
+$ java PhymlSequencial /home/jacke/seqboot /home/jacke/exem5 3 100 SEQU BOOT S DNA /home/jacke/phyml_v2.4.5/phyml JC69 1.0 e 1 1.0 BIONJ n n /home/jacke/consense S MRE RUN PRINT TREE
+
+Para rodar o Phyml Paralelo,compile:
+	$ javac PhymlParalelo.java
+
+ajuda: $ java PhymlParalelo
+
+$java PhymlParalelo /home/jackeline/Projeto/seqboot /home/jackeline/exem5 3 15 SEQU BOOT S DNA 2 /home/jackeline/phyml-paralelo-bootstrap-v2.4.5/phyml JC69 1.0 e 1 1.0 BIONJ y y /home/jackeline/Projeto/consense S MRE TREE PRINT RUN 
+
+para rodar o digrafu sequencial:
+	$ javac DigrafuSequencial.java
+ajuda:  $ java  DigrafuSequencial
+	$ java DigrafuSequencial /home/jackeline/Projeto/seqboot /home/jackeline/exem5 3 10 SEQU BOOT S DNA /home/jackeline/DiGrafu/Run.pl /home/jackeline/Projeto/consense S MRE TREE PRINT RUN   
+ 
+Para rodar o phyml Distrbuido
+	$ javac PhylipDist.java
+ajuda:  $ java PhylipDist
+	$ java PhylipDist /home/jackeline/Projeto/seqboot /home/jackeline/exem5 3 10 SEQU BOOT S DNA 2 /home/jackeline/phyml_v2.4.5/phyml JC69 1.0 e 1 1.0 BIONJ y y /home/jackeline/Projeto/consense S MRE TREE PRINT RUN 
+
+Neste caso, ele ira compilar todas as classes necessarias, terá que tirar da pasta os executaveis: ProcessoImp.class ; ProcessoRemoto.class ; ProcessoServer.class . (tem q ficar fora de todas as pastas)
+
+IMPORTANTE: Dependendo do  parametro que escolhe quantas maquinas ira usar, deve-se ativar os servidores, no caso do exemplo (definiu 2) fazer:
+no no1 ... java ProcessoServer no1
+no no2 ... java ProcessoServer no2
+(rodar o PhylipDist em nó diferente.)
+
+IMPORTANTE: No mesmo diretorio que esta o arquivo entrada para seqboot deve ter um arquivo host com o nome das maquinas (estou enviando modelo)
+
+para rodar o digrafu distribuido:
+	$ javac DigrafuDist.java
+ajuda:  $ java DigrafuDist
+	$ java DigrafuDist /home/jackeline/Projeto/seqboot /home/jackeline/exem5 3 10 SEQU BOOT S DNA 3 /home/jackeline/DiGrafu/Run.pl /home/jackeline/Projeto/consense S MRE TREE PRINT RUN
+
+Importante: O digrafu tambem segue os mesmos cuidados o PhylipDist ( arquivo host e ativa servidor).
