@@ -72,27 +72,87 @@ public class ControlaExecucao {
 
     }
 
-	/*
-	 * Metodo de controle da execucao do DiGrafu
+	/**
+	 * Método responsável por executar o DiGrafu através da classe Processo.
+	 * O método verifica se todos os parâmetros estão validados através das
+	 * classes "GeraParametros" bem como se está se fazendo uso de bootstrap.  
 	 */
 	public static void executaDIGRAFU() {
 		
 		ControladorDIGRAFU.guardaArquivo = "";
 		
-        if(GeraParametrosDIGRAFU.trataParametrosSequencia())
-            if(GeraParametrosDIGRAFU.trataParametrosDNA()){
-            	
-            	if(ControladorModoManualBootstrap.bootstrap == true) {
-            		GeraParametrosSeqboot.trataAbasSequenciaSeqboot();
-					GeraParametrosSeqboot.trataAbaConsense();
-                    Processo.processarSeqbootDIGRAFUSequencial();
+        if(GeraParametrosDIGRAFU.trataParametrosSequencia()){
+			if(tipoDNAValidado() || tipoProteinaValidado()){
+            	if(ControladorModoManualBootstrap.bootstrap == true){
+            		if(bootstrapValidado()){
+            			// Temporariamente este método irá tratar também a
+            			// execução paralela
+            			Processo.processarSeqbootDIGRAFUSequencial();
+            		}
             	}
-            	else Processo.processarDIGRAFU();
-            	
-            	ControladorDIGRAFU.guardaArquivo = "";
-            	
+            	else
+            		Processo.processarDIGRAFU();
             }
+        }
+        else{
+			System.out.println("Erro em parâmetro(s) da sequência");
+        }
         
+    	ControladorDIGRAFU.guardaArquivo = "";
+        
+	}
+	
+	/**
+	 * Verifica parâmetros de DNA
+	 * @return true se os parâmtros de DNA estiverem validados
+	 */
+	private static boolean tipoDNAValidado(){
+		
+		if((GeraParametrosDIGRAFU.getTipo() == "dna") &&
+			GeraParametrosDIGRAFU.trataParametrosDNA())
+			return true;
+		else{
+			System.out.println("Erro em parâmetro(s) de dna");
+			return false;
+		}
+		
+	}
+
+	/**
+	 * Verifica parâmetros de proteína
+	 * @return true se os parâmtros de DNA estiverem validados
+	 */
+	private static boolean tipoProteinaValidado(){
+		
+		if((GeraParametrosDIGRAFU.getTipo() == "proteina") &&
+			GeraParametrosDIGRAFU.trataParametrosProteina())
+			return true;
+		else{
+			System.out.println("Erro em parâmetro(s) de proteína");
+			return false;
+		}
+		
+	}
+
+	/**
+	 * Verifica parâmetros de bootstrap
+	 * @return true se os parâmtros de bootstrap estiverem validados
+	 */
+	private static boolean bootstrapValidado(){
+		
+		if(GeraParametrosSeqboot.trataAbasSequenciaSeqboot()){
+			if(GeraParametrosSeqboot.trataAbaConsense())
+				return true;
+			else{
+				System.out.println("Erro em parâmetro(s) da aba Consense");
+				return false;
+			}
+		}
+		else{
+			System.out.println("Erro em parâmetro(s) da aba Seqboot");
+			return false;
+		}
+		
 	}
 	
 }

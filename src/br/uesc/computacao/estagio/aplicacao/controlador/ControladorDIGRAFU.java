@@ -952,8 +952,13 @@ public class ControladorDIGRAFU
 		        ControladorDIGRAFU.guardaNomeSequencia = "INPUT " + ControladorDIGRAFU.guardaNomeSequencia;
 				naoConvertido = 0;
 			}
-                    
-			if(GeraParametrosDIGRAFU.trataParametrosSequencia()){
+            
+			ControladorIGrafu.digrafu.setEnabled(false);
+			ControladorIGrafu.digrafu.getDialogoModoExecucao().setVisible(true);
+			ControladorIGrafu.digrafu.getPainelModoExecucao().setVisible(true);
+			ControladorIGrafu.digrafu.getPainelModoExecucao().setEnabled(true);
+			
+/*			if(GeraParametrosDIGRAFU.trataParametrosSequencia()){
 				if((GeraParametrosDIGRAFU.getTipo() == "dna") &&
 				    GeraParametrosDIGRAFU.trataParametrosDNA()){
 					ControladorIGrafu.digrafu.setEnabled(false);
@@ -968,7 +973,8 @@ public class ControladorDIGRAFU
 					ControladorIGrafu.digrafu.getPainelModoExecucao().setVisible(true);
 					ControladorIGrafu.digrafu.getPainelModoExecucao().setEnabled(true);
 				}
-			}
+			}*/
+			
 		}
 		
 		if(e.getSource() == ControladorIGrafu.digrafu.getBotaoModoExecucaoExecutar()){
