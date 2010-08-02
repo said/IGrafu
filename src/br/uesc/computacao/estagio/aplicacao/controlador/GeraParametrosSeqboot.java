@@ -151,7 +151,8 @@ public class GeraParametrosSeqboot {
 		}
 
 		if(ControladorIGrafu.seqboot.getJNumberFieldBloco().isEnabled()) {
-			if(ControladorIGrafu.seqboot.getJNumberFieldBloco().getValue() > 0)
+			if((ControladorIGrafu.seqboot.getJNumberFieldBloco().getlength() > 0) &&
+			   (ControladorIGrafu.seqboot.getJNumberFieldBloco().getValue() > 1))
 				ControladorSeqboot.trataParametrosSeqboot += " BLOCO " + ControladorIGrafu.seqboot.getJNumberFieldBloco().getText();
 		}
 
