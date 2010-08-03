@@ -283,7 +283,7 @@ public class Processo {
 
 
     /**
-     * Metodo utilizado para executar o Grafu Distancia
+     * Metodo que efetivamente executa o DiGrafu
      *
      * @return void
      */
@@ -291,27 +291,45 @@ public class Processo {
 
 		BufferedReader buffer;
 		String output = "";
+		
     	pegaCaminho();
-    	
-    	//String linhaExecucao = pegaCaminho + corrigeCaminho + "/programas/digrafu/Run.pl "
-    	//					   + ControladorDIGRAFU.guardaNomeSequencia + ControladorDIGRAFU.guardaArquivo;
-
+    	String outfile = pegaCaminho + "/arquivos_saida/digrafu/out_" +
+    					 ControladorConversor.arquivoSaida;
+/*    	
+    	String linhaExecucao = pegaCaminho + corrigeCaminho +
+    						   "/programas/digrafu/Run.pl " +
+    						   ControladorDIGRAFU.guardaNomeSequencia +
+    						   ControladorDIGRAFU.guardaArquivo;
+*/
         try {
         	
-        	/*
-        	 * Execução do DiGrafu
-        	 */
-        	if(ManipulaArquivo.existeArquivo(pegaCaminho + "/arquivos_saida/digrafu/out_" + ControladorConversor.arquivoSaida))
-        		ManipulaArquivo.deletaArquivo(pegaCaminho + "/arquivos_saida/digrafu/out_" + ControladorConversor.arquivoSaida);
+        	// Remove arquivo gerado na última execução
+        	if(ManipulaArquivo.existeArquivo(outfile))
+        		ManipulaArquivo.deletaArquivo(outfile);
         	
-        	System.out.println("\nLog - DiGrafu executado sequencialmente:\n" + (pegaCaminho) + (corrigeCaminho) + ("/programas/digrafu/Run.pl ")
-					   + (ControladorDIGRAFU.guardaNomeSequencia) + (ControladorDIGRAFU.guardaArquivo));
-        	digrafu = Runtime.getRuntime().exec((pegaCaminho) + (corrigeCaminho) + ("/programas/digrafu/Run.pl ")
-					   + (ControladorDIGRAFU.guardaNomeSequencia) + (ControladorDIGRAFU.guardaArquivo));
+        	System.out.println(
+        			"\nLog - DiGrafu executado sequencialmente:\n" +
+        			(pegaCaminho) + (corrigeCaminho) +
+        			("/programas/digrafu/Run.pl ") +
+        			(ControladorDIGRAFU.guardaNomeSequencia) +
+        			(ControladorDIGRAFU.guardaArquivo)
+        		);
         	
-        	buffer = new BufferedReader(new InputStreamReader(digrafu.getInputStream()));
+        	// Execução do DiGrafu
+        	digrafu = Runtime.getRuntime().exec(
+        				(pegaCaminho) + (corrigeCaminho) +
+        				("/programas/digrafu/Run.pl ") +
+        				(ControladorDIGRAFU.guardaNomeSequencia) +
+        				(ControladorDIGRAFU.guardaArquivo)
+        			  );
+        	buffer = new BufferedReader(
+        				new InputStreamReader(digrafu.getInputStream())
+        			 );
         	digrafu.waitFor();
 
+        	// Se a execução do DiGrafu gerar mensagens de saída, referentes a
+        	// erros, warnings, etc., as seis primeiras linhas são capturadas
+        	// para informar o usuário sobre o erro 
         	int count = 0;
 			String tempout = buffer.readLine();
 			while( (tempout != null) && (count < 6) ){
@@ -319,30 +337,49 @@ public class Processo {
 				tempout = buffer.readLine();
 				count++;
 			}
-
 			buffer=null;
 			
             digrafu.destroy();
             
+            // Qualquer mensagem obtida com a saída do DiGrafu será considerada
+            // um erro
             if(output != ""){
-            	JOptionPane.showMessageDialog(null, output, ERRO, JOptionPane.ERROR_MESSAGE);
+            	JOptionPane.showMessageDialog(
+            			null, output, ERRO, JOptionPane.ERROR_MESSAGE);
             }
             else{
             
 	            if(ControladorDIGRAFU.perfil == true) {
-					ManipulaArquivo.gravaArquivo(pegaCaminho + (corrigeCaminho) + "/perfil/" + "nomes_perfil", ControladorDIGRAFU.nomePerfil);
-					ManipulaArquivo.gravaArquivo(pegaCaminho + (corrigeCaminho) + "/perfil/" + ControladorDIGRAFU.nomePerfil, ((pegaCaminho) + (corrigeCaminho) + ("/programas/digrafu/Run.pl INPUT ")));
-	            	ManipulaArquivo.gravaArquivo(pegaCaminho + (corrigeCaminho) + "/perfil/" + ControladorDIGRAFU.nomePerfil, (ControladorDIGRAFU.guardaArquivo));
+					ManipulaArquivo.gravaArquivo(
+							pegaCaminho + (corrigeCaminho) + "/perfil/" +
+							"nomes_perfil", ControladorDIGRAFU.nomePerfil
+						);
+					ManipulaArquivo.gravaArquivo(
+							pegaCaminho + (corrigeCaminho) + "/perfil/" +
+							ControladorDIGRAFU.nomePerfil, ((pegaCaminho) +
+							(corrigeCaminho) +
+							("/programas/digrafu/Run.pl INPUT "))
+						);
+	            	ManipulaArquivo.gravaArquivo(
+	            			pegaCaminho + (corrigeCaminho) + "/perfil/" +
+	            			ControladorDIGRAFU.nomePerfil,
+	            			(ControladorDIGRAFU.guardaArquivo)
+	            		);
 	            }
 	            ControladorDIGRAFU.perfil = false;
-	
-	            JOptionPane.showMessageDialog(null, EXEC_DIGRAFU, EXEC_DIGRAFU_1, JOptionPane.INFORMATION_MESSAGE);
+
+	            // DiGrafu executado com sucesso
+	            JOptionPane.showMessageDialog(null,
+	            							  EXEC_DIGRAFU,
+	            							  EXEC_DIGRAFU_1,
+	            							  JOptionPane.INFORMATION_MESSAGE);
 	            
             }
             
         }
         catch(Exception expection) {
-            JOptionPane.showMessageDialog(null, ERRO2, ERRO, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+            		null, ERRO2, ERRO, JOptionPane.ERROR_MESSAGE);
         }
         
     }
