@@ -499,6 +499,120 @@ public class Processo {
     }
 
     /**
+     * Executa o DiGrafu integrado ao Seqboot e Consense de forma paralela
+     *
+     * @return void
+     */
+    public static void processarSeqbootDIGRAFUParalelo() {
+    	
+		BufferedReader buffer;
+		String output = "";
+    	
+    	pegaCaminho();
+
+    	try {
+    		
+        	// Remove arquivo gerado na última execução
+        	if(ManipulaArquivo.existeArquivo(
+        			pegaCaminho + "/arquivos_saida/digrafu/outConsense"))
+        		ManipulaArquivo.deletaArquivo(
+        				pegaCaminho + "/arquivos_saida/digrafu/outConsense");
+    		
+    		String inicio = "cd " + pegaCaminho + "/programas/jack/ ; " +
+    						(pegaCaminho + corrigeCaminho + "jre/bin/java ") +
+    						"DigrafuSequencial ";
+    		String seqboot = pegaCaminho + "/programas/seqboot/seqboot " +
+    						 (ControladorSeqboot.guardaNomeSequencia) +
+    						 ControladorSeqboot.trataParametrosSeqboot + " ";
+    		String consense = pegaCaminho + "/programas/consense/consense " +
+    						  ControladorSeqboot.trataParametrosConsense + " ; ";
+    		String limpaDir = "rm " +
+    						  pegaCaminho + "/arquivos_saida/digrafu/outD* " +
+    						  pegaCaminho + "/arquivos_saida/digrafu/outS* " +
+    						  pegaCaminho + "/arquivos_saida/digrafu/tree* ";
+    		String digrafuSeqboot = "";
+
+            if(ControladorIGrafu.digrafu.getComboModoExecucaoSequencial().getSelectedItem() !=
+               ControladorIGrafu.digrafu.getComboModoExecucaoSequencial().getItemAt(0)) {
+
+            	inicio = "ssh " + ControladorIGrafu.phyml.
+            			 getJComboBoxTipoExecucaoSequencial().getSelectedItem() +
+            			 " ; " + "cd " + pegaCaminho + "/programas/jack/ ; " +
+   			 			 (pegaCaminho + corrigeCaminho + "jre/bin/java ") +
+   			 			 "DigrafuSequencial ";
+            	
+            	limpaDir += " ; exit";
+            	
+            }
+        	digrafuSeqboot += ((pegaCaminho) + (corrigeCaminho) +
+        					  ("/programas/digrafu/Run.pl ") +
+        					  (ControladorDIGRAFU.guardaArquivo) + " ");
+
+            String comando = inicio + seqboot + digrafuSeqboot + consense +
+            				 limpaDir;
+
+    		if(ManipulaArquivo.existeArquivo("exec_digrafu_bootstrap_sequencial.sh")) {
+    			ManipulaArquivo.deletaArquivo("exec_digrafu_bootstrap_sequencial.sh");
+    		}
+
+    		ManipulaArquivo.gravaArquivo("exec_digrafu_bootstrap_sequencial.sh",
+    									 comando );
+
+    		System.out.println(
+    				"Log - DiGrafu executado com bootstrap sequencial:\n" +
+    				comando);
+    		
+    		seqbootDIGRAFU = Runtime.getRuntime().exec(
+    				"chmod 777 exec_digrafu_bootstrap_sequencial.sh");
+    		seqbootDIGRAFU = Runtime.getRuntime().exec(
+    				"./exec_digrafu_bootstrap_sequencial.sh");
+        	buffer = new BufferedReader(
+        				new InputStreamReader(seqbootDIGRAFU.getInputStream())
+        			 );
+    		seqbootDIGRAFU.waitFor();
+
+        	// Imprime a saída gerada com a execução do script no terminal
+			output = buffer.readLine();
+			while( output != null ){
+				System.out.println(output);
+				output = buffer.readLine();
+			}
+			buffer=null;
+            
+        	seqbootDIGRAFU.destroy();
+            					
+			if(ControladorDIGRAFU.perfil == true) {
+				ManipulaArquivo.gravaArquivo(
+						pegaCaminho + (corrigeCaminho) + "/perfil/" +
+						"nomes_perfil", ControladorDIGRAFU.nomePerfil
+					);
+				ManipulaArquivo.gravaArquivo(
+						pegaCaminho + (corrigeCaminho) + "/perfil/" +
+						ControladorDIGRAFU.nomePerfil, (inicio + pegaCaminho +
+						"/programas/seqboot/seqboot ")
+					);
+            	ManipulaArquivo.gravaArquivo(
+            			pegaCaminho + (corrigeCaminho) + "/perfil/" +
+            			ControladorDIGRAFU.nomePerfil,
+            			(ControladorSeqboot.trataParametrosSeqboot + " " +
+    					digrafuSeqboot + consense)
+					);
+            }
+            ControladorDIGRAFU.perfil = false;
+
+			JOptionPane.showMessageDialog(null,
+					"DiGrafu com bootstrap terminou a execução!",
+					"DiGrafu - bootstrap", JOptionPane.INFORMATION_MESSAGE);
+
+    	}
+    	catch(Exception expection) {
+            JOptionPane.showMessageDialog(
+            		null, ERRO2, ERRO, JOptionPane.ERROR_MESSAGE);
+        }
+    	
+    }
+
+    /**
      * Metodo utilizado para executar o HyperTree sem bootstrap
      *
      * @return void

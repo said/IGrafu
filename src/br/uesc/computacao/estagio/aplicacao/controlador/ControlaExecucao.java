@@ -85,13 +85,26 @@ public class ControlaExecucao {
 			if(tipoDNAValidado() || tipoProteinaValidado()){
             	if(ControladorModoManualBootstrap.bootstrap == true){
             		if(bootstrapValidado()){
-            			// Temporariamente este método irá tratar também a
-            			// execução paralela
-            			Processo.processarSeqbootDIGRAFUSequencial();
+            			if(execucaoParalela()){
+            				System.out.println(
+									"Funcionalidade ainda não implementada");
+            				// Processo.processarSeqbootDIGRAFUParalelo();
+            			}
+            			else{
+            				Processo.processarSeqbootDIGRAFUSequencial();
+            			}
             		}
             	}
-            	else
-            		Processo.processarDIGRAFU();
+            	else{
+        			if(execucaoParalela()){
+        				System.out.println(
+        						"Funcionalidade ainda não implementada");
+        			}
+        			else{
+        				Processo.processarDIGRAFU();
+        			}
+            		
+            	}
             }
         }
         else{
@@ -152,6 +165,17 @@ public class ControlaExecucao {
 			System.out.println("Erro em parâmetro(s) da aba Seqboot");
 			return false;
 		}
+		
+	}
+	
+	/**
+	 * Indica se a execução do DiGrafu será paralela
+	 * @return true se a execução do digrafu paralela foi selecionada
+	 */
+	private static boolean execucaoParalela(){
+		
+		return ControladorIGrafu.digrafu.
+									getPainelModoExecucaoParalela().isVisible();
 		
 	}
 	
