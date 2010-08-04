@@ -507,9 +507,46 @@ public class Processo {
     	
 		BufferedReader buffer;
 		String output = "";
+		String initNos = "";
+		String hostFile = "";
+		int numProc;
     	
     	pegaCaminho();
 
+    	/*
+    	 * Algoritmo
+    	 * 1. Montar linha de execução
+    	 * 2. Gerar arquivo "host" com os nós
+    	 * 3. Logar em cada nó
+    	 * 4. Executar "ProcessoServer" em cada nó
+    	 * 5. Executar o DiGrafu no Servidor
+    	 * */
+    	
+    	numProc = Integer.parseInt(
+    					ControladorIGrafu.digrafu.
+    					getComboModoExecucaoParalela().getSelectedItem().
+    					toString()
+    			);
+
+    	String tmp = "";
+    	for(int i=1; i<=numProc; i++){
+    		tmp += "no" + i + "\n";
+    		initNos += "ssh -n no" + i +
+    				   "\'cd " + pegaCaminho + "/programas/jack/ ; " +
+    				   "nohup " +
+    				   (pegaCaminho + corrigeCaminho + "jre/bin/java ") +
+    				   "ProcessoServer no" + i + " > /dev/null &\' &\n";
+    	}
+    	
+/*    	hostFile = ControladorSeqboot.guardaNomeSequencia.substring(0,
+    				   ControladorSeqboot.guardaNomeSequencia.lastIndexOf("/")) +
+    				   "host";*/
+    	hostFile = pegaCaminho + "/arquivos_saida/digrafu/host";
+		if(ManipulaArquivo.existeArquivo(hostFile)) {
+			ManipulaArquivo.deletaArquivo(hostFile);
+		}
+    	ManipulaArquivo.gravaArquivo(hostFile, tmp);
+    	
     	try {
     		
         	// Remove arquivo gerado na última execução
@@ -520,52 +557,43 @@ public class Processo {
     		
     		String inicio = "cd " + pegaCaminho + "/programas/jack/ ; " +
     						(pegaCaminho + corrigeCaminho + "jre/bin/java ") +
-    						"DigrafuSequencial ";
+    						"DigrafuDist ";
+    		
     		String seqboot = pegaCaminho + "/programas/seqboot/seqboot " +
     						 (ControladorSeqboot.guardaNomeSequencia) +
     						 ControladorSeqboot.trataParametrosSeqboot + " ";
+    		
     		String consense = pegaCaminho + "/programas/consense/consense " +
     						  ControladorSeqboot.trataParametrosConsense + " ; ";
+    		
     		String limpaDir = "rm " +
     						  pegaCaminho + "/arquivos_saida/digrafu/outD* " +
     						  pegaCaminho + "/arquivos_saida/digrafu/outS* " +
     						  pegaCaminho + "/arquivos_saida/digrafu/tree* ";
-    		String digrafuSeqboot = "";
+    		
+    		String digrafuSeqboot = ((numProc) +
+        					  		(pegaCaminho) + (corrigeCaminho) +
+        					  		("/programas/digrafu/Run.pl ") +
+        					  		(ControladorDIGRAFU.guardaArquivo) + " ");
 
-            if(ControladorIGrafu.digrafu.getComboModoExecucaoSequencial().getSelectedItem() !=
-               ControladorIGrafu.digrafu.getComboModoExecucaoSequencial().getItemAt(0)) {
-
-            	inicio = "ssh " + ControladorIGrafu.phyml.
-            			 getJComboBoxTipoExecucaoSequencial().getSelectedItem() +
-            			 " ; " + "cd " + pegaCaminho + "/programas/jack/ ; " +
-   			 			 (pegaCaminho + corrigeCaminho + "jre/bin/java ") +
-   			 			 "DigrafuSequencial ";
-            	
-            	limpaDir += " ; exit";
-            	
-            }
-        	digrafuSeqboot += ((pegaCaminho) + (corrigeCaminho) +
-        					  ("/programas/digrafu/Run.pl ") +
-        					  (ControladorDIGRAFU.guardaArquivo) + " ");
-
-            String comando = inicio + seqboot + digrafuSeqboot + consense +
+            String comando = initNos + inicio + seqboot + digrafuSeqboot + consense +
             				 limpaDir;
 
-    		if(ManipulaArquivo.existeArquivo("exec_digrafu_bootstrap_sequencial.sh")) {
-    			ManipulaArquivo.deletaArquivo("exec_digrafu_bootstrap_sequencial.sh");
+    		if(ManipulaArquivo.existeArquivo("exec_digrafu_bootstrap_paralelo.sh")) {
+    			ManipulaArquivo.deletaArquivo("exec_digrafu_bootstrap_paralelo.sh");
     		}
 
-    		ManipulaArquivo.gravaArquivo("exec_digrafu_bootstrap_sequencial.sh",
+    		ManipulaArquivo.gravaArquivo("exec_digrafu_bootstrap_paralelo.sh",
     									 comando );
 
     		System.out.println(
-    				"Log - DiGrafu executado com bootstrap sequencial:\n" +
+    				"Log - DiGrafu executado com bootstrap paralelo:\n" +
     				comando);
     		
     		seqbootDIGRAFU = Runtime.getRuntime().exec(
-    				"chmod 777 exec_digrafu_bootstrap_sequencial.sh");
+    				"chmod 777 exec_digrafu_bootstrap_paralelo.sh");
     		seqbootDIGRAFU = Runtime.getRuntime().exec(
-    				"./exec_digrafu_bootstrap_sequencial.sh");
+    				"./exec_digrafu_bootstrap_paralelo.sh");
         	buffer = new BufferedReader(
         				new InputStreamReader(seqbootDIGRAFU.getInputStream())
         			 );
@@ -601,8 +629,9 @@ public class Processo {
             ControladorDIGRAFU.perfil = false;
 
 			JOptionPane.showMessageDialog(null,
-					"DiGrafu com bootstrap terminou a execução!",
-					"DiGrafu - bootstrap", JOptionPane.INFORMATION_MESSAGE);
+					"DiGrafu com bootstrap paralelo terminou a execução!",
+					"DiGrafu - bootstrap paralelo",
+					JOptionPane.INFORMATION_MESSAGE);
 
     	}
     	catch(Exception expection) {

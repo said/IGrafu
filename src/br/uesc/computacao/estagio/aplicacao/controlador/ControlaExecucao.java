@@ -86,9 +86,7 @@ public class ControlaExecucao {
             	if(ControladorModoManualBootstrap.bootstrap == true){
             		if(bootstrapValidado()){
             			if(execucaoParalela()){
-            				System.out.println(
-									"Funcionalidade ainda não implementada");
-            				// Processo.processarSeqbootDIGRAFUParalelo();
+            				Processo.processarSeqbootDIGRAFUParalelo();
             			}
             			else{
             				Processo.processarSeqbootDIGRAFUSequencial();
