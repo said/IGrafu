@@ -1352,8 +1352,15 @@ public class DIGRAFU extends JFrame {
 			// painelCategorias.add(getLabelCategoriasDefinir());
 			painelCategorias.setToolTipText(
 					"<html>" +
-					"Definição de categorias<br>" +
-					"*Valores relativos entre si" +
+					"<b>Definição de categorias</b><br>" +
+					"Defina a quantidade de categorias que deseja usar<br>" +
+					"(entre 1 e 9) e o valor de cada uma. Em seguida, atribua<br>" +
+					"uma categoria a cada um dos sítios da sequência de entrada<br>" +
+					"manualmente ou através de um arquivo de texto.<br>" +
+					"<b>OBS</b>: " +
+					"Os valores das categorias são relativos entre si, <br>" +
+					"logo, duas categorias com valores 2 e 5 são equivalentes <br>" +
+					"a duas categorias com valores 4 e 10, respectivamente." +
 					"</html>");
 			
 			c.gridx = 0;
