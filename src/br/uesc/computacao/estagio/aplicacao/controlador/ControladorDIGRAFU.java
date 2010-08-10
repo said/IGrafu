@@ -637,7 +637,7 @@ public class ControladorDIGRAFU
 				Tradutor.setLinguage(1);
 			else
 				Tradutor.setLinguage(0);
-			// traduzir();
+			traduzir();
 		}
 
 		// Menu Arquivo -> Fechar
@@ -1439,6 +1439,35 @@ public class ControladorDIGRAFU
 		
 	}
 
+	public void traduzir(){
+		ControladorIGrafu.digrafu.getBotaoCategoriasAbrir().setText(Tradutor.traduzir("Abrir", "Open"));
+		ControladorIGrafu.digrafu.getBotaoEditarCategorias().setText(Tradutor.traduzir("Editar", "Edit"));
+		ControladorIGrafu.digrafu.getBotaoEditarPesos().setText(Tradutor.traduzir("Editar", "Edit"));
+		ControladorIGrafu.digrafu.getBotaoExecutar().setText(Tradutor.traduzir("Executar", "Execute"));
+		ControladorIGrafu.digrafu.getBotaoInicio().setText(Tradutor.traduzir("Inicio", "Home"));
+		ControladorIGrafu.digrafu.getBotaoLimparCategorias().setText(Tradutor.traduzir("Limpar", "Clean"));
+		ControladorIGrafu.digrafu.getBotaoLimparPesos().setText(Tradutor.traduzir("Limpar", "Clean"));
+		ControladorIGrafu.digrafu.getBotaoModoExecucaoExecutar().setText(Tradutor.traduzir("Executar", "Execute"));
+		ControladorIGrafu.digrafu.getBotaoPesosAbrir().setText(Tradutor.traduzir("Abrir", "Open"));
+		ControladorIGrafu.digrafu.getBotaoVisualizar().setText(Tradutor.traduzir("Visualizar", "View"));
+		ControladorIGrafu.digrafu.getBotaoVoltar().setText(Tradutor.traduzir("Voltar", "Back"));
+		ControladorIGrafu.digrafu.getCheckBoxCategorias().setText(Tradutor.traduzir("Definir categorias", "Define categories"));
+		ControladorIGrafu.digrafu.getCheckBoxExatidao().setText(Tradutor.traduzir("Exatidao", "Accuracy"));
+		ControladorIGrafu.digrafu.getCheckBoxExecucao().setText(Tradutor.traduzir("Tempo", "Time"));
+		ControladorIGrafu.digrafu.getCheckBoxFrequenciasEmpiricas().setText(Tradutor.traduzir("Definir frequências", "Define frequencies"));
+		ControladorIGrafu.digrafu.getCheckBoxItemMenuEnglish().setText(Tradutor.traduzir("Inglês", "English"));
+		ControladorIGrafu.digrafu.getCheckBoxItemMenuPortuguese().setText(Tradutor.traduzir("Português", "Portuguese"));
+		ControladorIGrafu.digrafu.getCheckBoxPesos().setText(Tradutor.traduzir("Usar pesos para sítios", "Use site weights"));
+		ControladorIGrafu.digrafu.getItemMenuFechar().setText(Tradutor.traduzir("Sair", "Exit"));
+		ControladorIGrafu.digrafu.getItemMenuSobre().setText(Tradutor.traduzir("Sobre a IGRAFU", "About"));
+		ControladorIGrafu.digrafu.getLabelSitiosInvariantes().setText(Tradutor.traduzir("Sítios invariantes", "Invariant sites"));
+		ControladorIGrafu.digrafu.getMenuAjuda().setText(Tradutor.traduzir("Ajuda", "Help"));
+		ControladorIGrafu.digrafu.getMenuArquivo().setText(Tradutor.traduzir("Arquivo", "File"));
+		ControladorIGrafu.digrafu.getMenuConfiguracao().setText(Tradutor.traduzir("Configuracao", "Settings"));
+		ControladorIGrafu.digrafu.getMenuIdioma().setText(Tradutor.traduzir("Idioma", "Language"));
+		ControladorIGrafu.digrafu.getRadioBotaoCategoriasDoArquivo().setText(Tradutor.traduzir("Do arquivo", "From file"));
+		ControladorIGrafu.digrafu.getRadioBotaoPesosDoArquivo().setText(Tradutor.traduzir("Do arquivo", "From file"));
+	}
 	
 	 // Metodo de traducao Portugues/Ingles
 /*	 
