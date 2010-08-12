@@ -954,9 +954,9 @@ public class ControladorDIGRAFU
 			}
             
 			ControladorIGrafu.digrafu.setEnabled(false);
+			ControladorIGrafu.digrafu.getDialogoModoExecucao().validate();
+			// OBS: "validate" deve ser chamado ao mudar o componente
 			ControladorIGrafu.digrafu.getDialogoModoExecucao().setVisible(true);
-			ControladorIGrafu.digrafu.getPainelModoExecucao().setVisible(true);
-			ControladorIGrafu.digrafu.getPainelModoExecucao().setEnabled(true);
 			
 /*			if(GeraParametrosDIGRAFU.trataParametrosSequencia()){
 				if((GeraParametrosDIGRAFU.getTipo() == "dna") &&

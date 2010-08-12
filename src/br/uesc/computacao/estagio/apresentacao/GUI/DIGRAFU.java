@@ -2131,6 +2131,13 @@ public class DIGRAFU extends JFrame {
 			);
 
 			dialogoModoExecucao.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+			dialogoModoExecucao.addWindowListener(
+							new java.awt.event.WindowAdapter() {
+				public void windowClosing(WindowEvent evt) {
+					dialogoModoExecucao.removeNotify();
+					dialogoModoExecucao.setVisible(false);
+				}
+			});
 		}
 		return dialogoModoExecucao;
 	}
