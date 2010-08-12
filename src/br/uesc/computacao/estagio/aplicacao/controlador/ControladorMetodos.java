@@ -171,6 +171,7 @@ public class ControladorMetodos implements ActionListener {
 					else if (ControladorIGrafu.metodos.getJRadioButtonDistancia().isSelected()) {
 						if (ControladorIGrafu.programas == null) {
 							ControladorIGrafu.metodos.removeNotify();
+                            ControladorIGrafu.metodos.setVisible(false);
 							new ControladorProgramas();
 							ControladorProgramas.traduzir();
 							ControladorIGrafu.programas.getJRadioButtonPHYML().setVisible(false);
@@ -185,6 +186,7 @@ public class ControladorMetodos implements ActionListener {
 							ControladorIGrafu.programas.repaint();
 						} else {
 							ControladorIGrafu.metodos.removeNotify();
+                            ControladorIGrafu.metodos.setVisible(false);
 							ControladorProgramas.traduzir();
 							ControladorIGrafu.programas.getJRadioButtonPHYML().setVisible(false);
 							ControladorIGrafu.programas.getJRadioButtonPHYML().setSelected(false);

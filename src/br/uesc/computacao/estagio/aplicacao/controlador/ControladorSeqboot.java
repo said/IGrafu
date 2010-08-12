@@ -368,6 +368,7 @@ public class ControladorSeqboot implements ActionListener {
 					try {
 						if (ControladorIGrafu.metodos == null) {
 							ControladorIGrafu.seqboot.removeNotify();
+							ControladorIGrafu.seqboot.setVisible(false);
 							new ControladorMetodos();
 							ControladorMetodos.traduzir();
 
@@ -376,6 +377,7 @@ public class ControladorSeqboot implements ActionListener {
 							ControladorIGrafu.metodos.repaint();
 						} else {
 							ControladorIGrafu.seqboot.removeNotify();
+							ControladorIGrafu.seqboot.setVisible(false);
 							ControladorMetodos.traduzir();
 							ControladorIGrafu.metodos.setVisible(false);
 							ControladorIGrafu.metodos.setVisible(true);
@@ -493,6 +495,7 @@ public class ControladorSeqboot implements ActionListener {
 			try {
 				if (ControladorIGrafu.modoManualBootstrap == null) {
 					ControladorIGrafu.seqboot.removeNotify();
+					ControladorIGrafu.seqboot.setVisible(false);
 					new ControladorModoManualBootstrap();
 					ControladorModoManualBootstrap.traduzir();
 					ControladorIGrafu.modoManualBootstrap.setVisible(false);
@@ -500,6 +503,7 @@ public class ControladorSeqboot implements ActionListener {
 					ControladorIGrafu.modoManualBootstrap.repaint();
 				} else {
 					ControladorIGrafu.seqboot.removeNotify();
+					ControladorIGrafu.seqboot.setVisible(false);
 					ControladorModoManualBootstrap.traduzir();
 					ControladorIGrafu.modoManualBootstrap.setVisible(false);
 					ControladorIGrafu.modoManualBootstrap.setVisible(true);
