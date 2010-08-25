@@ -47,6 +47,7 @@ public class ControladorConversor implements ActionListener {
     public static File caminho;
     JFileChooser fc = new JFileChooser();
     public static String nomeArquivoIN, endereco, diretorioAtual=".";
+    public static boolean novoArquivo = true;
 
 
 

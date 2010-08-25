@@ -28,6 +28,12 @@ public  class GerarParametrosConversor {
     public static String ChamaConversorIGrafu(){
     	int converterPara = 1;
         Processo.pegaCaminho();
+        
+        if(ControladorConversor.novoArquivo == false){
+            System.out.print("\n\nARQUIVO JÁ CONVERTIDO, NÃO SE REALIZA CONVERSÃO\n\n");
+           return ControladorIGrafu.conversor.getJTextFieldArquivoEntrada().getText();
+        }
+        
        switch(arqEntrada){
            case 1:arqConvertidoPath = ReadSeqIGrafu();;break; //ACEDB
            case 2:arqConvertidoPath = ReadSeqIGrafu();break; //Clustal
@@ -47,6 +53,10 @@ public  class GerarParametrosConversor {
 
 
        }
+       
+       ControladorConversor.novoArquivo = false;
+       System.out.println("\n\nO arquivo é novo =" + ControladorConversor.novoArquivo);
+       
        // ManipulaArquivo.deletaArquivo(pathSaidaReadSeq);
        return arqConvertidoPath;
     }
